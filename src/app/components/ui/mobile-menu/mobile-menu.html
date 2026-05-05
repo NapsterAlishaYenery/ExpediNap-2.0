@@ -1,0 +1,45 @@
+<div class="menu-overlay" [class.is-open]="isOpen" (click)="close()"></div>
+
+<aside class="mobile-drawer" [class.is-open]="isOpen">
+
+  <div class="drawer-header">
+    <div class="brand">
+      <img src="/logo.png" alt class="logo-img">
+      <span class="brand-name">ExpediNap</span>
+    </div>
+    <button class="close-btn" (click)="close()">
+      <lucide-icon name="x"></lucide-icon>
+    </button>
+  </div>
+
+  <nav class="drawer-nav">
+    <ul>
+      @for (item of menuItems; track item.name) {
+      <li>
+        <a class="nav-link"
+          routerLinkActive="active"
+          (click)="close()"
+          [routerLink]="item.route">
+          <lucide-icon [name]="item.icon" class="nav-icon"></lucide-icon>
+          {{ item.name }}
+        </a>
+      </li>
+      }
+    </ul>
+  </nav>
+
+  <hr class="divider">
+
+  <div class="drawer-footer">
+    <div class="btn-container">
+      <a routerLink="/excursions">
+        <app-button
+          variant="accent"
+          size="xl"
+          class="btn-reserva">
+          Book Now
+        </app-button>
+      </a>
+    </div>
+  </div>
+</aside>

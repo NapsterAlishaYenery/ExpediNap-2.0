@@ -1,0 +1,74 @@
+<div class="yacht-card">
+  <div class="image-container">
+    <img [src]="yacht.images.main.url | imageUrl" [alt]="yacht.images.main.alt">
+    <div class="pax-badge">
+      <app-badge variant="secondary">
+        <lucide-icon name="users"></lucide-icon>
+        {{ yacht.maxPax }} Máx
+      </app-badge>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div class="header-row">
+      <h3 class="yacht-title">
+        <lucide-icon name="anchor" class="anchor-icon"></lucide-icon>
+        {{ yacht.name }}
+      </h3>
+    </div>
+
+    <p class="yacht-description">{{ yacht.description }}</p>
+
+    <div class="price-list">
+      @if (yacht.catalinaPrice?.halfDay) {
+      <div class="price-item">
+        <div class="label"><lucide-icon name="clock"></lucide-icon> Catalina -
+          Half day</div>
+        <div class="value">${{ yacht.catalinaPrice?.halfDay }}</div>
+      </div>
+      }
+      @if (yacht.catalinaPrice?.fullDay) {
+      <div class="price-item">
+        <div class="label"><lucide-icon name="clock"></lucide-icon> Catalina -
+          Full day</div>
+        <div class="value">${{ yacht.catalinaPrice?.fullDay }}</div>
+      </div>
+      }
+      @if (yacht.saonaPrice?.halfDay) {
+      <div class="price-item">
+        <div class="label"><lucide-icon name="clock"></lucide-icon> Saona -
+          Half day</div>
+        <div class="value">${{ yacht.saonaPrice?.halfDay }}</div>
+      </div>
+      }
+      @if (yacht.saonaPrice?.fullDay) {
+      <div class="price-item">
+        <div class="label"><lucide-icon name="clock"></lucide-icon> Saona -
+          Full day</div>
+        <div class="value">${{ yacht.saonaPrice?.fullDay }}</div>
+      </div>
+      }
+    </div>
+
+    <div class="includes-row">
+      @for (item of yacht.includes.slice(0, 4); track item) {
+      <app-badge variant="outline" class="include-badge">{{ item }}</app-badge>
+      }
+      @if (yacht.includes.length > 4) {
+      <app-badge variant="outline" class="include-badge">+{{
+        yacht.includes.length - 4 }} more</app-badge>
+      }
+    </div>
+
+    <div class="footer-action">
+      <a [routerLink]="['/yachts', yacht.slug]" class="no-underline w-full">
+        <app-button
+          variant="secondary"
+          size="default"
+          class="w-full">
+          SEE DETAILS
+        </app-button>
+      </a>
+    </div>
+  </div>
+</div>

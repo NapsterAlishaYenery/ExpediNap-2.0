@@ -1,0 +1,70 @@
+<div class="blog-page-wrapper">
+
+  <section class="hero-header">
+    <div class="hero-image-bg">
+      <img src="/img/blog-hero.webp" alt="Computer Travel Blog">
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">Travel Blog</h1>
+      <p class="hero-description">
+        Guides, tips and everything you need for your Caribbean adventure.
+      </p>
+    </div>
+    <div class="bottom-gradient-mask"></div>
+  </section>
+
+  <nav class="sticky-filter-bar">
+    <div class="container-custom">
+      <div class="filter-wrapper">
+        <label class="filter-label">
+          <lucide-icon name="list-filter" [size]="18"></lucide-icon>
+          Filter by:
+        </label>
+
+        <div class="select-container">
+          <select
+            id="category-select"
+            name="category"
+            class="custom-select"
+            (change)="onCategoryChange($event)">
+            @for (cat of categories; track cat.id) {
+            <option [value]="cat.id">{{ cat.label }}</option>
+            }
+          </select>
+          <lucide-icon name="chevron-down" class="select-icon"
+            [size]="16"></lucide-icon>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="featured-section">
+    <div class="container-custom">
+
+      @if (isLoading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading articles...</p>
+      </div>
+      } @else {
+
+      <div class="featured-grid">
+        @for (blog of blogs; track blog._id) {
+        <app-blog-card [blog]="blog"></app-blog-card>
+        }
+      </div>
+
+      @if (paginationData && paginationData.totalPages > 1) {
+      <app-pagination
+        [currentPage]="currentPage"
+        [totalPages]="paginationData.totalPages"
+        [hasNextPage]="paginationData.hasNextPage"
+        [hasPrevPage]="paginationData.hasPrevPage"
+        (pageChange)="loadBlogs($event)">
+      </app-pagination>
+      }
+      }
+
+    </div>
+  </section>
+</div>

@@ -1,0 +1,53 @@
+<section class="review-section">
+  <div class="container-custom">
+
+    <div class="reviews-header">
+      <div class="header-left">
+        <span class="sub-title">What our travelers say</span>
+        <h2 class="main-title">Customer Reviews</h2>
+      </div>
+
+      <div class="header-right">
+        <div class="rating-box">
+          <div class="rating-number">
+            <span>{{googleReviewData.rating}}</span>
+            <lucide-icon name="star" [size]="28"
+              class="star-icon"></lucide-icon>
+          </div>
+          <span class="total-reviews">{{googleReviewData.totalReviews}}
+            reviews</span>
+        </div>
+
+        <a href="https://g.page/r/CUuge9hb13oPEAI/review" target="_blank">
+          <app-button
+            variant="default"
+            size="xl"
+            className="gap-2 shadow-primary">
+            Leave review
+          </app-button>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="reviews-grid" (scroll)="updateActiveDot()" #scrollContainer>
+      @for (item of googleReviewData.reviews; track $index) {
+      <app-review-google-card [review]="item"></app-review-google-card>
+      }
+    </div>
+
+    <div class="dots-navigation">
+      @for (item of googleReviewData.reviews; track $index) {
+      <div
+        class="dot" [class.active]="$index === activeIndex"
+        (click)="scrollToIndex($index)"></div>
+      }
+    </div>
+
+    <p class="reviews-footer-text">
+      Showing the {{showingCount}} most recent reviews out of
+      {{googleReviewData.totalReviews}} total
+    </p>
+
+  </div>
+</section>

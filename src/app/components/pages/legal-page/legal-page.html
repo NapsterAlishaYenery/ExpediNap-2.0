@@ -1,0 +1,50 @@
+<div class="legal-container">
+  <header class="legal-header">
+    <div class="container-custom">
+      <h1 class="main-title">{{ content.title }}</h1>
+      <div class="header-meta">
+        <span class="meta-tag">
+          <lucide-icon name="calendar" size="18"></lucide-icon>
+          Last updated: {{ content.lastUpdated }}
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-custom">
+    <div class="legal-content-layout">
+      
+      <article class="legal-body">
+        @for (section of content.sections; track $index) {
+          <section class="legal-section">
+            @if (section.title) {
+              <h2 class="section-title">{{ section.title }}</h2>
+            }
+            
+            <p class="section-text">{{ section.content }}</p>
+            
+            @if (section.items && section.items.length > 0) {
+              <ul class="legal-list">
+                @for (item of section.items; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            }
+          </section>
+        }
+      </article>
+
+      <aside class="legal-sidebar">
+        <div class="support-card">
+          <lucide-icon name="shield-check" class="shield-icon" size="40"></lucide-icon>
+          <h3>Legal Support</h3>
+          <p>Questions about our policies? We're here to clarify.</p>
+          <a href="mailto:info@expedinap.com" class="support-link">
+            info@expedinap.com
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</div>

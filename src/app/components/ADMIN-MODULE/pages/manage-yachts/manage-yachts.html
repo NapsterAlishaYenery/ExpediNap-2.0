@@ -1,0 +1,90 @@
+<section class="activity-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Manage Yachts</h2>
+      <p class="section-subtitle">Control your fleet, pricing, and availability</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add" (click)="navigateToAdd()">
+        <lucide-icon name="plus" size="18"></lucide-icon>
+        Add New Yacht
+      </button>
+      <button class="btn-refresh" (click)="loadYachts()" [disabled]="loading">
+        <lucide-icon name="refresh-cw" size="16" [class.spinning]="loading"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Yacht Name</label>
+      <div class="input-with-icon">
+        <lucide-icon name="search" size="16"></lucide-icon>
+        <input type="text" [(ngModel)]="filters.name" 
+               (keyup.enter)="applyFilters()" placeholder="Search by name...">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>Sort By</label>
+      <select [(ngModel)]="filters.sortBy" (change)="applyFilters()">
+        <option value="createdAt">Date Created</option>
+        <option value="name">Name</option>
+        <option value="maxPax">Capacity</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Order</label>
+      <select [(ngModel)]="filters.order" (change)="applyFilters()">
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-primary" (click)="applyFilters()">
+        Filter
+      </button>
+      <button class="btn-ghost" (click)="resetFilters()">
+        <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-header">
+      <div class="header-left">
+        <lucide-icon name="anchor" size="20"></lucide-icon>
+        <h3>Registered Fleet List</h3>
+      </div>
+      <span class="count-badge">{{ paginationConfig.totalItems }} yachts</span>
+    </div>
+
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Fetching fleet data...</p>
+      </div>
+    } @else {
+      <app-generic-table
+        [columns]="columns"
+        [data]="yachts"
+        [currentPage]="paginationConfig.currentPage"
+        [limit]="paginationConfig.limit"
+        (edit)="handleEdit($event)"
+        (delete)="handleDelete($event)">
+      </app-generic-table>
+
+      <div class="pagination-wrapper">
+        <app-pagination
+          [currentPage]="paginationConfig.currentPage"
+          [totalPages]="paginationConfig.totalPages"
+          [hasNextPage]="paginationConfig.hasNextPage"
+          [hasPrevPage]="paginationConfig.hasPrevPage"
+          (pageChange)="handlePageChange($event)">
+        </app-pagination>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,93 @@
+<section class="activity-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Manage Excursions</h2>
+      <p class="section-subtitle">Create, edit and organize your tour
+        catalog</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add" (click)="navigateToAdd()">
+        <lucide-icon name="plus" size="18"></lucide-icon>
+        Add New Excursion
+      </button>
+      <button class="btn-refresh" (click)="loadExcursions()"
+        [disabled]="loading">
+        <lucide-icon name="refresh-cw" size="16"
+          [class.spinning]="loading"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Excursion Name</label>
+      <div class="input-with-icon">
+        <lucide-icon name="search" size="16"></lucide-icon>
+        <input type="text" [(ngModel)]="filters.name"
+          (keyup.enter)="applyFilters()" placeholder="Search by name...">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>Category</label>
+      <select [(ngModel)]="filters.category" (change)="applyFilters()">
+        <option value>All Categories</option>
+        <option value="sea">Sea</option>
+        <option value="land">Land</option>
+        <option value="adventure">Adventure</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Location</label>
+      <input type="text" [(ngModel)]="filters.location"
+        (keyup.enter)="applyFilters()" placeholder="Punta Cana, Saona...">
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-primary" (click)="applyFilters()">
+        Filter
+      </button>
+      <button class="btn-ghost" (click)="resetFilters()">
+        <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-header">
+      <div class="header-left">
+        <lucide-icon name="map" size="20"></lucide-icon>
+        <h3>Active Excursions List</h3>
+      </div>
+      <span class="count-badge">{{ paginationConfig.totalItems }}
+        excursions</span>
+    </div>
+
+    @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Fetching excursions...</p>
+    </div>
+    } @else {
+    <app-generic-table
+      [columns]="columns"
+      [data]="excursions"
+      [currentPage]="paginationConfig.currentPage"
+      [limit]="paginationConfig.limit"
+      (edit)="handleEdit($event)"
+      (delete)="handleDelete($event)">
+    </app-generic-table>
+
+    <div class="pagination-wrapper">
+      <app-pagination
+        [currentPage]="paginationConfig.currentPage"
+        [totalPages]="paginationConfig.totalPages"
+        [hasNextPage]="paginationConfig.hasNextPage"
+        [hasPrevPage]="paginationConfig.hasPrevPage"
+        (pageChange)="handlePageChange($event)">
+      </app-pagination>
+    </div>
+    }
+  </div>
+</section>

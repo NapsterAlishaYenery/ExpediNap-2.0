@@ -1,0 +1,77 @@
+<footer class="main-footer">
+  <div class="container-custom py-16">
+    <div class="footer-grid">
+
+      <div class="footer-col branding">
+        <div class="footer-logo">
+          <img src="company-logo.png" alt="ExpediNap Logo" class="logo-img">
+          <div class="logo-text">
+            <h3>ExpediNap</h3>
+            <p>Trips you dream of, Adventures you live.</p>
+          </div>
+        </div>
+        <p class="brand-desc">
+          Experiencias turísticas exclusivas en la República Dominicana,
+          conectando viajeros con la esencia del Caribe. Tu aventura comienza
+          aquí.
+        </p>
+        <div class="social-links">
+          @for (social of socials; track social.icon) {
+          <a [href]="social.route" target="_blank" class="social-icon">
+            <i [class]="'bi ' + social.icon"></i>
+          </a>
+          }
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explora</h4>
+        <ul class="footer-links">
+          @for (link of exploraLinks; track link.name) {
+          <li><a [routerLink]="link.route">{{ link.name }}</a></li>
+          }
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          @for (link of legalLinks; track link.label) {
+          <li><a [routerLink]="link.route">{{ link.label }}</a></li>
+          }
+        </ul>
+      </div>
+
+      <div class="footer-col contact-info">
+        <h4>Contacto</h4>
+        <ul>
+          <li>
+            <lucide-icon name="map-pin" class="icon-accent"></lucide-icon>
+            <span>Av. Pablo Gerrero #27, San Pedro, Higuey, Rep. Dom.</span>
+          </li>
+          <li>
+            <lucide-icon name="phone" class="icon-accent"></lucide-icon>
+            <a href="https://wa.me/18298369303" target="_blank">+1 (809) 836-9303 (WhatsApp)</a>
+          </li>
+          <li>
+            <lucide-icon name="mail" class="icon-accent"></lucide-icon>
+            <a href="mailto:info@expedinap.com" target="_blank">info@expedinap.com</a>
+          </li>
+          <li>
+            <lucide-icon name="mail" class="icon-accent"></lucide-icon>
+            <a href="mailto:expedinap@gmail.com" target="_blank">expedinap@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container-custom">
+      <div class="bottom-flex">
+        <p>© {{ currentYear }} ExpediNap. Todos los derechos reservados.</p>
+        <p>Hecho con ❤️ en República Dominicana</p>
+      </div>
+    </div>
+  </div>
+</footer>

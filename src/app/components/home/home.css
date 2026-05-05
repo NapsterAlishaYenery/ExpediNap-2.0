@@ -1,0 +1,47 @@
+.reviews-section {
+  padding: 80px 0;
+  background-color: hsl(var(--background));
+}
+
+.reviews-grid {
+  display: grid;
+  gap: 2rem;
+  /* Por defecto en móvil: Scroll horizontal */
+  grid-auto-flow: column;
+  grid-auto-columns: 320px; /* El ancho fijo que le dimos al card */
+  overflow-x: auto;
+  padding: 1rem 0 2rem;
+  scroll-snap-type: x mandatory;
+}
+
+/* Para que el scroll sea suave */
+.reviews-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.reviews-grid::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+/* Tablet: 2 columnas fijas o scroll */
+@media (min-width: 768px) {
+  .reviews-grid {
+    grid-auto-flow: row; /* Cambiamos a filas */
+    grid-template-columns: repeat(2, 1fr);
+    overflow-x: visible;
+  }
+}
+
+/* PC: 4 columnas */
+@media (min-width: 1200px) {
+  .reviews-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Evita que los cards se estiren feo si el grid es muy ancho */
+app-review-card {
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: center;
+}

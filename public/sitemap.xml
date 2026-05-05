@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main pages -->
+  <url><loc>https://www.expedinap.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.expedinap.com/yachts</loc><priority>0.9</priority></url>
+  <url><loc>https://www.expedinap.com/excursions</loc><priority>0.9</priority></url>
+  <url><loc>https://www.expedinap.com/blogs</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/transfers</loc><priority>0.7</priority></url>
+  <url><loc>https://www.expedinap.com/contact</loc><priority>0.6</priority></url>
+  <url><loc>https://www.expedinap.com/faq</loc><priority>0.5</priority></url>
+
+  <!-- Excursions -->
+  <url><loc>https://www.expedinap.com/excursions/saona-island-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/saona-island-vip-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/buggys-macao-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/cocobongo-nightclub-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/catalina-island-snorkeling-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/catalina-island-scuba-diving-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/dolphin-explorer-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/santo-domingo-colonial-tour-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/scape-park-full-admission-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/canopy-zip-lines-bavaro-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/samana-rincon-beach-and-whales-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/samana-land-explorer-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/hacienda-tuko-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/excursions/deep-sea-fishing-punta-cana-2026-01-07</loc><priority>0.8</priority></url>
+
+  <!-- Yachts -->
+  <url><loc>https://www.expedinap.com/yachts/princess-60-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/fairline-43-white-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/azimut-55-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/princess-42-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/atomic-46-power-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/majesty-60-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/aicon-60-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/fairline-43-2026-01-07</loc><priority>0.8</priority></url>
+  <url><loc>https://www.expedinap.com/yachts/cruiser-yachts-40-2026-01-07</loc><priority>0.8</priority></url>
+
+  <!-- Blogs -->
+  <url><loc>https://www.expedinap.com/blogs/essential-tips-for-a-safe-and-enjoyable-excursion-in-the-dominican-republic-2026-01-07</loc><priority>0.7</priority></url>
+  <url><loc>https://www.expedinap.com/blogs/beyond-the-beaches-3-secret-destinations-in-the-dominican-republic-2026-01-07</loc><priority>0.7</priority></url>
+  <url><loc>https://www.expedinap.com/blogs/dive-into-history-exploring-santo-domingo-the-first-city-of-the-americas-2026-01-07</loc><priority>0.7</priority></url>
+  <url><loc>https://www.expedinap.com/blogs/transfers-in-dominican-republic-shuttle-or-private-complete-guide-2026-01-07</loc><priority>0.7</priority></url>
+  <url><loc>https://www.expedinap.com/blogs/luxury-yacht-day-pass-in-punta-cana-your-ultimate-guide-2026-01-07</loc><priority>0.7</priority></url>
+  <url><loc>https://www.expedinap.com/blogs/the-5-must-do-excursions-in-punta-cana-for-your-first-visit-2026-01-07</loc><priority>0.7</priority></url>
+
+  <!-- Legal -->
+  <url><loc>https://www.expedinap.com/privacy-policy</loc><priority>0.3</priority></url>
+  <url><loc>https://www.expedinap.com/terms-and-conditions</loc><priority>0.3</priority></url>
+  <url><loc>https://www.expedinap.com/cookie-policy</loc><priority>0.3</priority></url>
+</urlset>

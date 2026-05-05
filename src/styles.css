@@ -1,1 +1,123 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  /* 1. Mapeo de Colores (Usando tus variables HSL) */
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  
+  --color-card: hsl(var(--card));
+  --color-border: hsl(var(--border));
+  
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  /* 2. Tipografías */
+  --font-sans: 'Inter', ui-sans-serif, system-ui;
+  --font-serif: 'Playfair Display', ui-serif, Georgia;
+
+  /* 3. Personalización de Radio y Sombras */
+  --radius-xl: 1rem;
+  --radius-3xl: 28px;
+  
+  --shadow-primary: 0 10px 30px -10px hsl(15 75% 45% / 0.4);
+  --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.3);
+}
+
+/* ====================================================== */
+/* VARIABLES HSL (Mantenemos la lógica de Temas)          */
+/* ====================================================== */
+:root {
+  --primary: 8 85% 50%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 217 91% 60%;
+  --accent-foreground: 0 0% 100%;
+  --secondary: 280 65% 55%;
+  --secondary-foreground: 0 0% 100%;
+
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --border: 214 32% 91%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 222 47% 6%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 8%;
+  --border: 217 33% 17%;
+  --primary: 8 85% 55%;
+  --accent: 217 91% 65%;
+  --secondary: 280 65% 60%;
+  --muted: 217 33% 15%;
+}
+
+/* ====================================================== */
+/* ESTILOS BASE Y UTILIDADES GLOBALES                   */
+/* ====================================================== */
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased min-h-screen;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  /* Reset de enlaces */
+  a {
+    @apply no-underline border-none outline-none transition-colors;
+    color: inherit;
+  }
+}
+
+/* ====================================================== */
+/* COMPONENTES CUSTOM (Imágenes rotas e inputs)         */
+/* ====================================================== */
+
+@layer components {
+  /* Estilo para imágenes rotas */
+  img.yacht-img, img.excursion-img, img.blog-img {
+    @apply relative block w-full h-full object-cover text-transparent;
+    text-indent: -10000px;
+  }
+
+  img::before {
+    @apply content-[''] absolute inset-0 bg-muted/40 z-10;
+  }
+
+  img::after {
+    content: attr(alt);
+    @apply absolute inset-0 flex items-center justify-center p-6 z-20
+           text-muted-foreground text-sm font-medium text-center border border-dashed border-border;
+    text-indent: 0;
+  }
+
+  /* Iconos de Calendario */
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    @apply opacity-60 cursor-pointer transition-opacity hover:opacity-100;
+  }
+
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    @apply opacity-80;
+  }
+}

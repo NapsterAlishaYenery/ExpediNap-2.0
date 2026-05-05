@@ -1,0 +1,20 @@
+<div class="accordion-container">
+  @for (item of items; track $index) {
+    <div class="accordion-item" [class.is-open]="item.isOpen">
+      <button class="accordion-trigger" (click)="toggleItem($index)">
+        <span class="question-text">{{ item.question }}</span>
+        <lucide-icon 
+          name="chevron-down" 
+          class="chevron-icon"
+          [class.rotate]="item.isOpen">
+        </lucide-icon>
+      </button>
+
+      <div class="accordion-content" [style.max-height]="item.isOpen ? '500px' : '0'">
+        <div class="content-inner">
+          {{ item.answer }}
+        </div>
+      </div>
+    </div>
+  }
+</div>

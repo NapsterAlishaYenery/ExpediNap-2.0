@@ -1,0 +1,32 @@
+<section class="why-section">
+  <div class="bg-decor">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section-header">
+      <span class="sub-title">Why choose us?</span>
+      <h2 class="main-title">The ExpediNap Difference</h2>
+      <p class="section-description">
+        More than a decade creating unique experiences in the Dominican Caribbean.
+      </p>
+    </div>
+
+    <div class="benefits-grid">
+      @for (benefit of benefits; track benefit.title) {
+        <div class="benefit-card">
+          <div class="icon-wrapper">
+            <div class="iconbg">
+              <lucide-icon [name]="benefit.icon" class="icon" [strokeWidth]="1.5" [size]="60"></lucide-icon>
+            </div>
+            <div class="icon-glow"></div>
+          </div>
+          
+          <h3 class="benefit-title">{{ benefit.title }}</h3>
+          <p class="benefit-description">{{ benefit.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

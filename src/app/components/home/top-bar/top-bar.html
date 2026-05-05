@@ -1,0 +1,27 @@
+<div class="top-bar" [class.hide-topbar]="isScrollingDown">
+  <div class="top-bar-container">
+    <div class="weather-info hide-mobile">
+      <img
+        [src]="'https://openweathermap.org/img/wn/' + weatherDetails?.icon + '@2x.png'"
+        [alt]="weatherDetails?.description"
+        class="weather-dynamic-icon" />
+
+      <span class="city">{{weatherDetails?.name}}</span>
+      <span class="temp">Temp: {{weatherDetails?.temp}}°C</span>
+      <lucide-icon name="droplets" class="icon-sm humidity-icon"></lucide-icon>
+      <span class="humidity">humidity: {{weatherDetails?.humidity}}%</span>
+    </div>
+
+    <div class="schedule-info">
+      <lucide-icon name="clock" class="icon-sm"></lucide-icon>
+      <span>Lun - Sáb: 8:00 AM - 6:00 PM</span>
+    </div>
+
+    <div class="contact-action">
+      <app-button variant="whatsapp" size="sm" (onClick)="onWhatsApp()">
+        <i class="bi bi-whatsapp icon-sm"></i>
+        <span class="btn-text">WhatsApp</span>
+      </app-button>
+    </div>
+  </div>
+</div>

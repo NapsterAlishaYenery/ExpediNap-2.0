@@ -1,0 +1,38 @@
+<div class="review-card google-variant">
+  <div class="card-header">
+    <app-avatar [src]="review.photo" [fallbackText]="getInitials(review.author)"></app-avatar>
+    
+    <div class="user-info">
+      <h4 class="user-name">{{ review.author }}</h4>
+      <p class="user-meta">Google Maps • {{ review.relativeTime }}</p>
+    </div>
+    
+    <div class="google-badge">
+      <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google" class="google-icon">
+    </div>
+  </div>
+
+  <div class="stars-row">
+    @for (star of [1,2,3,4,5]; track star) {
+      <lucide-icon 
+        name="star" 
+        [size]="16" 
+        [class.star-filled]="review.rating >= star"
+        [class.star-empty]="review.rating < star">
+      </lucide-icon>
+    }
+  </div>
+
+  <p class="review-text">
+    "{{ review.text }}"
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="card-footer">
+    <div class="google-verification">
+      <lucide-icon name="CircleCheck" [size]="14" class="check-icon"></lucide-icon>
+      <span class="label-verified">Verified Customer Review</span>
+    </div>
+  </div>
+</div>

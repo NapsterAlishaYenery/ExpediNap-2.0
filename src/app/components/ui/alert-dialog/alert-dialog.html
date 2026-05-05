@@ -1,0 +1,28 @@
+@if (open) {
+<div class="alert-dialog-overlay" (click)="cancel()"></div>
+
+<div class="alert-dialog-wrapper">
+  <div class="alert-dialog-content">
+    <div class="alert-dialog-header">
+      <h2 class="alert-dialog-title">{{ title }}</h2>
+      <p class="alert-dialog-description">{{ description }}</p>
+    </div>
+
+    <div class="alert-dialog-footer">
+      <app-button 
+        variant="outline" 
+        size="default" 
+        (click)="cancel()">
+        {{ cancelText }}
+      </app-button>
+      
+      <app-button 
+        [variant]="confirmVariant" 
+        size="default" 
+        (click)="confirm()">
+        {{ confirmText }}
+      </app-button>
+    </div>
+  </div>
+</div>
+}

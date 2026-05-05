@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# No indexar la API directamente
+Disallow: /api/
+
+# BLOQUEO DE SECCIÓN ADMINISTRATIVA Y ACCESOS
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /password-recovery/
+
+# Ruta al sitemap
+Sitemap: https://www.expedinap.com/sitemap.xml

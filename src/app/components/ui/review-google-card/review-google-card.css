@@ -1,0 +1,110 @@
+/* --- TUS ESTILOS ORIGINALES --- */
+.review-card {
+  width: 320px;
+  height: 320px;
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user-info { overflow: hidden; }
+
+.user-name {
+  font-weight: 800;
+  font-size: 1rem;
+  color: hsl(var(--foreground));
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.user-meta {
+  font-size: 0.8rem;
+  color: hsl(var(--muted-foreground));
+  margin: 0;
+}
+
+.stars-row {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 1rem;
+  color: #eab308;
+}
+
+.star-filled { fill: #eab308; }
+.star-empty { color: hsl(var(--muted) / 0.5); }
+
+.review-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: hsl(var(--foreground));
+  font-style: italic;
+  margin-bottom: auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Un poco más de espacio para Google */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+.divider {
+  height: 1px;
+  background-color: hsl(var(--border));
+  margin: 1rem 0;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* --- DETALLES EXCLUSIVOS PARA GOOGLE --- */
+.google-variant {
+  border-bottom: 4px solid #4285F4; /* Línea azul característica de Google */
+}
+
+.google-badge {
+  margin-left: auto;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.google-verification {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1a73e8;
+}
+
+.label-verified {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Tu media query para móviles */
+@media (max-width: 480px) {
+  .review-card {
+    width: 250px;
+    height: 250px;
+    padding: 1.10rem;
+    border-radius: 1.25rem;
+  }
+}

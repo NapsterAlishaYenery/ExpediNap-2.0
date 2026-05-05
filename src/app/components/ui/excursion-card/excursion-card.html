@@ -1,0 +1,56 @@
+<div class="excursion-card">
+  <div class="image-wrapper">
+    <img [src]="excursion.images.main.url | imageUrl" [alt]="excursion.name">
+
+    <div class="badge-overlay left">
+      <app-badge variant="accent">{{ mainCategory }}</app-badge>
+    </div>
+
+    @if (excursion.offerPriceUsd) {
+    <div class="badge-overlay right">
+      <app-badge variant="default">OFFER</app-badge>
+    </div>
+    }
+  </div>
+
+  <div class="card-body">
+    <h3 class="title">{{ excursion.name }}</h3>
+
+    <p class="description">
+      {{ excursion.description }}
+    </p>
+
+    <div class="details-row">
+      <div class="detail-item">
+        <lucide-icon name="map-pin"></lucide-icon>
+        <span>{{ excursion.location }}</span>
+      </div>
+      <div class="detail-item">
+        <lucide-icon name="clock"></lucide-icon>
+        <span>{{ excursion.duration.time }} {{ excursion.duration.unit }}</span>
+      </div>
+      <div class="detail-item">
+        <lucide-icon name="users"></lucide-icon>
+        <span> + {{ excursion.minimumAge }} años</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="card-footer">
+      <div class="price-container">
+        @if (excursion.regularPriceUsd) {
+        <span class="regular-price">${{ excursion.regularPriceUsd }}</span>
+        }
+        <span class="offer-price">${{ excursion.offerPriceUsd }}</span>
+      </div>
+      <a [routerLink]="['/excursions', excursion.slug]">
+        <app-button
+          variant="accent"
+          size="default">
+          BOOKING
+        </app-button>
+      </a>
+    </div>
+  </div>
+</div>

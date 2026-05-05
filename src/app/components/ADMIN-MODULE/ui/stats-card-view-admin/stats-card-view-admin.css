@@ -1,0 +1,111 @@
+:host {
+  display: block;
+}
+
+.stat-card {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.stat-card:hover {
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: var(--shadow-primary);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* El color de fondo se define en las variantes abajo */
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: hsl(var(--muted-foreground));
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.main-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  margin-bottom: 0.5rem;
+}
+
+/* Grid de detalles (pendientes, pagados, etc) */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid hsl(var(--border));
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.card-footer {
+  margin-top: auto;
+  font-size: 0.75rem;
+  color: hsl(var(--accent));
+  font-weight: 500;
+}
+
+/* VARIANTES BASADAS EN TUS VARIABLES */
+.card-variant-primary .icon-box { 
+    background-color: hsl(var(--primary) / 0.15); 
+    color: hsl(var(--primary)); 
+}
+
+.card-variant-accent .icon-box { 
+    background-color: hsl(var(--accent) / 0.15); 
+    color: hsl(var(--accent)); 
+}
+
+.card-variant-secondary .icon-box { 
+    background-color: hsl(var(--secondary) / 0.15); 
+    color: hsl(var(--secondary)); 
+}
+
+.card-variant-danger .icon-box { 
+    background-color: hsla(0, 85%, 50%, 0.15); 
+    color: hsl(0, 85%, 50%); 
+}
+
+.card-variant-success .icon-box { 
+    background-color: hsla(142, 70%, 45%, 0.15); 
+    color: hsl(142, 70%, 45%); 
+}

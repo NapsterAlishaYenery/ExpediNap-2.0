@@ -1,0 +1,67 @@
+<section class="summary-container">
+  <div class="summary-header">
+    <h2 class="summary-title">Operations Summary</h2>
+    <p class="summary-subtitle">Key metrics and current inventory status</p>
+  </div>
+
+  @if (!loading && summaryData) {
+    <div class="stats-grid">
+      
+      <app-stats-card-view-admin
+        title="Excursions"
+        [mainValue]="(summaryData.excursions.revenue | currency) ?? ''"
+        icon="map"
+        variant="primary"
+        [statsDetails]="[
+          { label: 'Reservations', value: summaryData.excursions.totalOrders },
+          { label: 'Pending', value: summaryData.excursions.statusCount.pending }
+        ]"
+        footerText="Total cumulative sales of excursions">
+      </app-stats-card-view-admin>
+
+      <app-stats-card-view-admin
+        title="Yachts"
+        [mainValue]="(summaryData.yachts.revenue | currency) ?? ''"
+        icon="ship"
+        variant="accent"
+        [statsDetails]="[
+          { label: 'Reservations', value: summaryData.yachts.totalOrders },
+          { label: 'Pending', value: summaryData.yachts.statusCount.pending }
+        ]"
+        footerText="Yacht rental income">
+      </app-stats-card-view-admin>
+
+      <app-stats-card-view-admin
+        title="Transportation"
+        [mainValue]="(summaryData.transfers.revenue | currency) ?? ''"
+        icon="car"
+        variant="secondary"
+        [statsDetails]="[
+          { label: 'Transfers', value: summaryData.transfers.totalOrders },
+          { label: 'Ticket Prom.', value: (summaryData.transfers.averageTicket | currency) ?? '0' }
+        ]"
+        footerText="Transfer services performed">
+      </app-stats-card-view-admin>
+
+      @if (summaryData.ncf && summaryData.ncf.length > 0) {
+        <app-stats-card-view-admin
+          title="NCF Consumption"
+          [mainValue]="summaryData.ncf[0].available"
+          icon="file-text"
+          [variant]="summaryData.ncf[0].available < 15 ? 'danger' : 'success'"
+          [statsDetails]="[
+            { label: 'Used', value: summaryData.ncf[0].used },
+            { label: 'Expired', value: summaryData.ncf[0].expired }
+          ]"
+          [footerText]="summaryData.ncf[0].available < 15 ? 'Restock NCF soon!' : 'Stock available'">
+        </app-stats-card-view-admin>
+      }
+
+    </div>
+  } @else if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading statistics...</p>
+    </div>
+  }
+</section>

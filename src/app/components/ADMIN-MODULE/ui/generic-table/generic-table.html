@@ -1,0 +1,56 @@
+<div class="table-wrapper">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-number">No.</th>
+          
+          @for (col of columns; track col.key) {
+          <th>{{ col.label }}</th>
+          }
+          <th class="text-right">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of data; track row._id || $index) {
+        <tr>
+          <td class="col-number">
+            <span class="row-index">#{{ getGlobalIndex($index) }}</span>
+          </td>
+
+          @for (col of columns; track col.key) {
+          <td>
+            @let value = getValue(row, col.key);
+
+            @switch (col.type) {
+            @case ('currency') { {{ value | currency:'USD' }} }
+            @case ('date') { {{ value | date:'dd/MM/yyyy' }} }
+            @case ('badge') {
+            <span class="badge" [ngClass]="value?.toLowerCase()">{{ value }}</span>
+            }
+            @default { {{ value }} }
+            }
+          </td>
+          }
+          <td>
+            <div class="actions-cell">
+              <button (click)="edit.emit(row)" class="btn-action btn-edit" title="Editar">
+                <lucide-icon name="pencil" size="16"></lucide-icon>
+              </button>
+              <button (click)="delete.emit(row)" class="btn-action btn-delete" title="Eliminar">
+                <lucide-icon name="trash" size="16"></lucide-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td [attr.colspan]="columns.length + 2" class="empty-state">
+            No records were found.
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

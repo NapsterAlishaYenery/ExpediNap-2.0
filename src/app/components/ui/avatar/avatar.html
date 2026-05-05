@@ -1,0 +1,15 @@
+<div class="avatar-root" [class]="customClass">
+  @if (src && src !== 'null' && src !== '' && !hasError) {
+    <img 
+      [src]="src" 
+      [alt]="alt" 
+      class="avatar-image" 
+      (error)="handleError()"
+    />
+  } @else {
+    <div class="avatar-fallback">
+    {{ fallbackText }}
+      <ng-content></ng-content>
+    </div>
+  }
+</div>

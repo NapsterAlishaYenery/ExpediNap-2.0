@@ -1,0 +1,56 @@
+<div class="yachts-page-wrapper">
+
+  <!-- HERO -->
+  <section class="hero-header">
+    <div class="hero-image-bg">
+      <img src="/img/yacht-luxury.webp" alt="Luxury Yachts">
+    </div>
+
+    <div class="container-custom">
+      <div class="hero-content">
+        <h1 class="hero-title">Luxury Yachts</h1>
+        <p class="hero-description">
+          Sail the crystal-clear waters of the Caribbean on our exclusive yachts.
+          Private experiences tailored to your needs.
+        </p>
+      </div>
+    </div>
+
+    <div class="bottom-gradient-mask"></div>
+  </section>
+
+  <!-- LISTADO -->
+  <section class="featured-section">
+    <div class="container-custom">
+
+      @if (isLoading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading exclusive fleet...</p>
+      </div>
+      } @else {
+
+        <!-- Grid de yates  -->
+      <div class="yachts-grid">
+        @for (item of yachts; track item._id) {
+        <app-yacht-card [yacht]="item"></app-yacht-card>
+        }
+      </div>
+
+      <!-- Pagination  -->
+      @if (paginationData && paginationData.totalPages > 1) {
+      <app-pagination
+        [currentPage]="currentPage"
+        [totalPages]="paginationData.totalPages"
+        [hasNextPage]="paginationData.hasNextPage"
+        [hasPrevPage]="paginationData.hasPrevPage"
+        (pageChange)="loadYachts($event)">
+      </app-pagination>
+      }
+
+      }
+
+    </div>
+  </section>
+
+</div>

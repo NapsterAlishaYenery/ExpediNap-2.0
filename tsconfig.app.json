@@ -4,6 +4,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "rootDir": "src",    // <--- ESTO LE DICE: "Todo empieza en src"
     "types": []
   },
   "include": [

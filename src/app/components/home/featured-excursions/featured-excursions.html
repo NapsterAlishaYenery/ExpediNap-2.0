@@ -1,0 +1,40 @@
+<section class="featured-section">
+    <div class="container mx-auto px-4">
+
+        <div class="section-header">
+            <span class="sub-title">Unique Experiences</span>
+            <h2 class="main-title">Top Excursions</h2>
+            <p class="section-description">
+                Discover the most exciting adventures in the Dominican
+                Caribbean.
+                <br>
+                From paradise beaches to lush jungles.
+            </p>
+        </div>
+
+        @if (isLoading) {
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading adventures...</p>
+        </div>
+        } @else {
+        <div class="featured-grid">
+            @for (item of featuredList; track item._id) {
+            <app-excursion-card [excursion]="item"></app-excursion-card>
+            }
+        </div>
+
+        <div class="cta-wrapper">
+            <div class="cta-button-container">
+                <a routerLink="/excursions">
+                    <app-button variant="accent" size="xl">
+                        VIEW ALL EXCURSIONS
+                    </app-button>
+                </a>
+
+            </div>
+        </div>
+        }
+
+    </div>
+</section>

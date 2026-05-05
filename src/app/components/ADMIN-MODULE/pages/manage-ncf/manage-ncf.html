@@ -1,0 +1,88 @@
+<section class="activity-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">NCF Pool Management</h2>
+      <p class="section-subtitle">Monitor and manage tax receipt numbers (DGII)</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add" (click)="openBulkUpload()">
+        <lucide-icon name="plus-circle" size="18"></lucide-icon>
+        Bulk Load NCF
+      </button>
+      <button class="btn-refresh" (click)="loadNcfs()" [disabled]="loading">
+        <lucide-icon name="refresh-cw" size="16" [class.spinning]="loading"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Search NCF</label>
+      <div class="input-with-icon">
+        <lucide-icon name="hash" size="16"></lucide-icon>
+        <input type="text" [(ngModel)]="filters.ncf" 
+               (keyup.enter)="applyFilters()" placeholder="B020000...">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>NCF Type</label>
+      <select [(ngModel)]="filters.tipoNcf" (change)="applyFilters()">
+        @for (type of ncfTypes; track type.id) {
+          <option [value]="type.id">{{ type.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Status</label>
+      <select [(ngModel)]="filters.estado" (change)="applyFilters()">
+        @for (st of statusOptions; track st.id) {
+          <option [value]="st.id">{{ st.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-primary" (click)="applyFilters()">Search</button>
+      <button class="btn-ghost" (click)="resetFilters()">
+        <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-header">
+      <div class="header-left">
+        <lucide-icon name="receipt" size="20"></lucide-icon>
+        <h3>Available Receipts Pool</h3>
+      </div>
+      <span class="count-badge">{{ paginationConfig.totalItems }} records</span>
+    </div>
+
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading NCF pool...</p>
+      </div>
+    } @else {
+      <app-generic-table
+        [columns]="columns"
+        [data]="ncfs"
+        [currentPage]="paginationConfig.currentPage"
+        [limit]="paginationConfig.limit"
+        (delete)="handleDelete($event)">
+      </app-generic-table>
+
+      <div class="pagination-wrapper">
+        <app-pagination
+          [currentPage]="paginationConfig.currentPage"
+          [totalPages]="paginationConfig.totalPages"
+          [hasNextPage]="paginationConfig.hasNextPage"
+          [hasPrevPage]="paginationConfig.hasPrevPage"
+          (pageChange)="handlePageChange($event)">
+        </app-pagination>
+      </div>
+    }
+  </div>
+</section>

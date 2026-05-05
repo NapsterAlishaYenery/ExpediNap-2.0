@@ -1,0 +1,86 @@
+<section class="activity-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Content Management</h2>
+      <p class="section-subtitle">Manage your blog posts, guides, and articles</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add" (click)="navigateToAdd()">
+        <lucide-icon name="file-plus" size="18"></lucide-icon>
+        Write New Post
+      </button>
+      <button class="btn-refresh" (click)="loadBlogs()" [disabled]="loading">
+        <lucide-icon name="refresh-cw" size="16" [class.spinning]="loading"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Search Title</label>
+      <div class="input-with-icon">
+        <lucide-icon name="search" size="16"></lucide-icon>
+        <input type="text" [(ngModel)]="filters.title" 
+               (keyup.enter)="applyFilters()" placeholder="Article title...">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>Category</label>
+      <select [(ngModel)]="filters.category" (change)="applyFilters()">
+        @for (cat of categories; track cat.id) {
+          <option [value]="cat.id">{{ cat.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Author</label>
+      <input type="text" [(ngModel)]="filters.author" 
+             (keyup.enter)="applyFilters()" placeholder="Author name...">
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-primary" (click)="applyFilters()">Filter</button>
+      <button class="btn-ghost" (click)="resetFilters()">
+        <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-header">
+      <div class="header-left">
+        <lucide-icon name="book-open" size="20"></lucide-icon>
+        <h3>All Blog Posts</h3>
+      </div>
+      <span class="count-badge">{{ paginationConfig.totalItems }} articles</span>
+    </div>
+
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading articles...</p>
+      </div>
+    } @else {
+      <app-generic-table
+        [columns]="columns"
+        [data]="blogs"
+        [currentPage]="paginationConfig.currentPage"
+        [limit]="paginationConfig.limit"
+        (edit)="handleEdit($event)"
+        (delete)="handleDelete($event)">
+      </app-generic-table>
+
+      <div class="pagination-wrapper">
+        <app-pagination
+          [currentPage]="paginationConfig.currentPage"
+          [totalPages]="paginationConfig.totalPages"
+          [hasNextPage]="paginationConfig.hasNextPage"
+          [hasPrevPage]="paginationConfig.hasPrevPage"
+          (pageChange)="handlePageChange($event)">
+        </app-pagination>
+      </div>
+    }
+  </div>
+</section>

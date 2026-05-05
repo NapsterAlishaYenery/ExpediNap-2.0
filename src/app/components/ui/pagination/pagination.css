@@ -1,0 +1,37 @@
+.pagination-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.page-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.page-btn:not(:disabled):hover {
+  background: hsl(var(--accent));
+  color: white;
+  border-color: hsl(var(--accent));
+}
+
+.page-info {
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+}

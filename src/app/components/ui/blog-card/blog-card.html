@@ -1,0 +1,43 @@
+<div class="blog-card">
+  <div class="image-wrapper">
+    <img [src]="blog.image | imageUrl" [alt]="blog.alt">
+  </div>
+
+  <div class="card-body">
+    <div class="category-row">
+      @for (cat of blog.category; track cat) {
+      <app-badge variant="outline" class="square-badge">{{ cat }}</app-badge>
+      }
+    </div>
+
+    <h3 class="title">{{ blog.title }}</h3>
+
+    <p class="description">
+      {{ blog.excerpt }}
+    </p>
+
+    <div class="blog-footer">
+      <div class="meta-info">
+        <div class="meta-item">
+          <lucide-icon name="calendar"></lucide-icon>
+          <span>{{blog.createdAt | date}}</span>
+        </div>
+        <div class="meta-item">
+          <lucide-icon name="user"></lucide-icon>
+          <span>{{blog.author}}</span>
+        </div>
+      </div>
+
+      <a [routerLink]="['/blogs', blog.slug]">
+        <app-button
+          variant="hero"
+          size="sm"
+          class="read-more-btn">
+          Read more
+          <lucide-icon name="arrow-right" class="arrow"></lucide-icon>
+        </app-button>
+      </a>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+/* --- ESTRUCTURA PRINCIPAL --- */
+.table-wrapper {
+    width: 100%;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+    overflow: hidden;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    font-size: 0.875rem;
+    table-layout: auto;
+}
+
+/* --- CELDAS Y CABECERAS --- */
+th {
+    padding: 1rem;
+    background-color: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid hsl(var(--border));
+    white-space: nowrap;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    color: hsl(var(--foreground));
+    white-space: nowrap;
+    min-width: 100px;
+    background-color: hsl(var(--card));
+    position: relative;
+    z-index: 1;
+}
+
+/* --- COLUMNA NUMERACIÓN --- */
+.col-number {
+    width: 60px;
+    min-width: 60px !important;
+    text-align: center;
+}
+
+.row-index {
+    background: hsl(var(--muted) / 0.8);
+    color: hsl(var(--muted-foreground));
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+/* --- COLUMNAS STICKY (REPARADO) --- */
+
+/* 1. Columna No. (Fija a la izquierda) */
+th:nth-child(1),
+td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 12;
+    background-color: hsl(var(--card)) !important;
+    border-right: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* 2. Columna Nombre/Customer (Fija al lado de la numeración) */
+th:nth-child(2),
+td:nth-child(2) {
+    position: sticky;
+    left: 60px; /* Ancho de la col-number */
+    z-index: 11;
+    background-color: hsl(var(--card)) !important;
+    border-right: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* 3. Columna Acciones (Fija a la derecha) */
+th:last-child,
+td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 10;
+    background-color: hsl(var(--card)) !important;
+    border-left: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* Ajuste de fondo para Headers Sticky */
+th:nth-child(1), th:nth-child(2), th:last-child {
+    background-color: hsl(var(--muted)) !important;
+    z-index: 20;
+}
+
+/* --- LÓGICA DE HOVER --- */
+tbody tr:hover td {
+    background-color: color-mix(in srgb, hsl(var(--accent)), #8899aa 40%) !important;
+    color: hsl(var(--foreground));
+    transition: background-color 0.15s ease;
+}
+
+tbody tr:hover td:nth-child(1),
+tbody tr:hover td:nth-child(2),
+tbody tr:hover td:last-child {
+    background-color: color-mix(in srgb, hsl(var(--accent)), #8899aa 40%) !important;
+}
+
+/* --- COMPONENTES INTERNOS --- */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge.pending { background: #fef3c7; color: #92400e; }
+.badge.confirmed { background: #dcfce7; color: #166534; }
+.badge.paid { background: #dbeafe; color: #1e40af; }
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid hsl(var(--border));
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-edit:hover { background: hsl(var(--primary)); color: white; border-color: hsl(var(--primary)); }
+.btn-delete:hover { background: #ef4444; color: white; border-color: #ef4444; }
+
+/* --- SCROLLBAR --- */
+.table-container::-webkit-scrollbar { height: 8px; }
+.table-container::-webkit-scrollbar-track { background: hsl(var(--muted) / 0.2); }
+.table-container::-webkit-scrollbar-thumb { background: hsl(var(--muted)); border-radius: 10px; }
+.table-container::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
+
+.empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: hsl(var(--muted-foreground));
+}

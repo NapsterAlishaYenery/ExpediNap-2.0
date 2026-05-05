@@ -1,0 +1,43 @@
+<nav class="navbar" [class.nav-up]="isScrollingDown">
+  <div class="nav-container">
+    <a routerLink="/">
+      <div class="nav-brand">
+        <img src="/logo.png" alt="ExpediNap Logo" class="nav-logo">
+        <div class="brand-text">
+          <span class="brand-name">ExpediNap</span>
+          <span class="brand-slogan">Trips you dream of, Adventures you
+            live</span>
+        </div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      @for (item of menuItems; track item.name) {
+      <li>
+        <a [routerLink]="item.route" routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{exact: true}">
+          {{ item.name }}
+        </a>
+      </li>
+      }
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" (click)='toggleTheme()'>
+        <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'"></lucide-icon>
+      </button>
+
+      <a routerLink="/excursions">
+        <div class="hide-tablet">
+          <app-button variant="accent" size="sm">
+            <i class="bi bi-book"></i>
+            booking
+          </app-button>
+        </div>
+      </a>
+
+      <button class="menu-burger show-tablet" (click)="openMobileMenu()">
+        <lucide-icon name="menu"></lucide-icon>
+      </button>
+    </div>
+  </div>
+</nav>

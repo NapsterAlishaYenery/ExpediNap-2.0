@@ -1,0 +1,89 @@
+<section class="activity-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Yacht Orders</h2>
+      <p class="section-subtitle">Manage private charters, destinations, and
+        fleet scheduling</p>
+    </div>
+    <button class="btn-refresh" (click)="loadOrders()" [disabled]="loading">
+      <lucide-icon name="refresh-cw" size="16"
+        [class.spinning]="loading"></lucide-icon>
+      Sync Data
+    </button>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Search Customer</label>
+      <div class="input-with-icon">
+        <lucide-icon name="search" size="16"></lucide-icon>
+        <input type="text" [(ngModel)]="filters.customerName"
+          (keyup.enter)="applyFilters()" placeholder="Customer name...">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>Status</label>
+      <select [(ngModel)]="filters.status" (change)="applyFilters()">
+        <option value>All Status</option>
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="paid">Paid</option>
+        <option value="completed">Completed</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Order #</label>
+      <input type="text" [(ngModel)]="filters.orderNumber"
+        (keyup.enter)="applyFilters()" placeholder="YT-000...">
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-primary" (click)="applyFilters()">
+        Filter
+      </button>
+      <button class="btn-ghost" (click)="resetFilters()" title="Clear Filters">
+        <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-header">
+      <div class="header-left">
+        <lucide-icon name="anchor" size="20"></lucide-icon>
+        <h3>Master Yacht Bookings List</h3>
+      </div>
+      <span class="count-badge">{{ paginationConfig.totalItems }} total
+        records</span>
+    </div>
+
+    @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Updating yacht list...</p>
+    </div>
+    } @else {
+    <app-generic-table
+      [columns]="columns"
+      [data]="orders"
+      [currentPage]="paginationConfig.currentPage"
+      [limit]="paginationConfig.limit"
+      (edit)="handleEdit($event)"
+      (delete)="handleDelete($event)">
+    </app-generic-table>
+
+    <div class="pagination-wrapper">
+      <app-pagination
+        [currentPage]="paginationConfig.currentPage"
+        [totalPages]="paginationConfig.totalPages"
+        [hasNextPage]="paginationConfig.hasNextPage"
+        [hasPrevPage]="paginationConfig.hasPrevPage"
+        (pageChange)="handlePageChange($event)">
+      </app-pagination>
+    </div>
+    }
+  </div>
+</section>

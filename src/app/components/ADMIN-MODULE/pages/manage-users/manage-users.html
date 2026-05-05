@@ -1,0 +1,86 @@
+<section class="activity-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">User Accounts</h2>
+      <p class="section-subtitle">Manage system access, roles, and permissions</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-add">
+        <lucide-icon name="user-plus" size="18"></lucide-icon>
+        Create User
+      </button>
+      <button class="btn-refresh" (click)="loadUsers()" [disabled]="loading">
+        <lucide-icon name="refresh-cw" size="16" [class.spinning]="loading"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label>Full Name</label>
+      <input type="text" [(ngModel)]="filters.name" (keyup.enter)="applyFilters()" placeholder="Search name...">
+    </div>
+
+    <div class="filter-group">
+      <label>Username</label>
+      <input type="text" [(ngModel)]="filters.username" (keyup.enter)="applyFilters()" placeholder="Search user...">
+    </div>
+
+    <div class="filter-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="filters.email" (keyup.enter)="applyFilters()" placeholder="user@expedinap.com">
+    </div>
+
+    <div class="filter-group">
+      <label>Role</label>
+      <select [(ngModel)]="filters.role" (change)="applyFilters()">
+        @for (r of roles; track r.id) {
+          <option [value]="r.id">{{ r.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-primary" (click)="applyFilters()">Filter</button>
+      <button class="btn-ghost" (click)="resetFilters()">
+        <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="card-header">
+      <div class="header-left">
+        <lucide-icon name="users" size="20"></lucide-icon>
+        <h3>Registered Users</h3>
+      </div>
+      <span class="count-badge">{{ paginationConfig.totalItems }} users</span>
+    </div>
+
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading users...</p>
+      </div>
+    } @else {
+      <app-generic-table
+        [columns]="columns"
+        [data]="users"
+        [currentPage]="paginationConfig.currentPage"
+        [limit]="paginationConfig.limit"
+        (edit)="handleEdit($event)"
+        (delete)="handleDelete($event)">
+      </app-generic-table>
+
+      <div class="pagination-wrapper">
+        <app-pagination
+          [currentPage]="paginationConfig.currentPage"
+          [totalPages]="paginationConfig.totalPages"
+          [hasNextPage]="paginationConfig.hasNextPage"
+          [hasPrevPage]="paginationConfig.hasPrevPage"
+          (pageChange)="handlePageChange($event)">
+        </app-pagination>
+      </div>
+    }
+  </div>
+</section>

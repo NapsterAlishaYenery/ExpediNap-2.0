@@ -1,0 +1,81 @@
+<div class="page-container">
+  <div class="brand-side">
+    <div class="brand-bg-image"></div>
+    <div class="brand-overlay"></div>
+    
+    <div class="brand-content">
+      <div class="brand-logo">
+        <lucide-icon name="shield-check" size="64"></lucide-icon>
+      </div>
+      <h2 class="brand-title">ExpediNap <span>Security</span></h2>
+      <p class="brand-tagline">Secure access for our administrators.</p>
+    </div>
+  </div>
+
+  <div class="form-side">
+    <div class="form-container">
+      
+      <header class="step-header">
+        <h1>Admin Access</h1>
+        <p>Enter your credentials to manage ExpediNap</p>
+      </header>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+        
+        <div class="input-group">
+          <label for="username">Username</label>
+          <div class="input-wrapper">
+            <lucide-icon name="user" size="18" class="icon"></lucide-icon>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="username" 
+              placeholder="admin_expedinap"
+              [class.error]="isValidField('username')">
+          </div>
+          @if (isValidField('username')) {
+            <span class="error-text">Username is required</span>
+          }
+        </div>
+
+        <div class="input-group">
+          <div class="label-header">
+            <label for="password">Password</label>
+            <a routerLink="/password-recovery" class="forgot-link">Forgot password?</a>
+          </div>
+          <div class="input-wrapper">
+            <lucide-icon name="lock" size="18" class="icon"></lucide-icon>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password" 
+              placeholder="••••••••"
+              [class.error]="isValidField('password')">
+          </div>
+          @if (isValidField('password')) {
+            <span class="error-text">Password is required (min 6 chars)</span>
+          }
+        </div>
+
+        <div class="form-actions">
+          <app-button 
+            variant="default" 
+            className="w-full btn-responsive" 
+            [disabled]="isLoading">
+            {{ isLoading ? 'AUTHENTICATING...' : 'SIGN IN' }}
+          </app-button>
+        </div>
+
+      </form>
+
+      <footer class="form-footer">
+        <p>© 2026 ExpediNap Tours & Rentals</p>
+        <a routerLink="/" class="back-link">
+          <lucide-icon name="chevron-left" size="18"></lucide-icon>
+          Return to website
+        </a>
+      </footer>
+
+    </div>
+  </div>
+</div>

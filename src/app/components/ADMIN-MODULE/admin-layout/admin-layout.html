@@ -1,0 +1,90 @@
+<div class="admin-wrapper" [class.is-collapsed]="isSidebarCollapsed()">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <img src="/new-logo.png" alt="ExpediNap Logo"
+                    class="admin-logo-img">
+                @if (!isSidebarCollapsed()) {
+                <span class="logo-text">Expedi<span>Nap</span></span>
+                }
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            @for (group of menuGroups; track group.title) {
+            <div class="nav-group">
+                @if (!isSidebarCollapsed()) {
+                <p class="group-label">{{ group.title }}</p>
+                }
+
+                @for (item of group.items; track item.name) {
+                <a [routerLink]="item.route"
+                    routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="nav-item"
+                    [title]="item.name">
+                    <lucide-icon [name]="item.icon" size="20"></lucide-icon>
+                    @if (!isSidebarCollapsed()) {
+                    <span class="nav-text">{{ item.name }}</span>
+                    @if (item.badge) {
+                    <span class="nav-badge">{{ item.badge }}</span>
+                    }
+                    }
+                </a>
+                }
+            </div>
+            }
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="nav-item logout-btn" (click)="onLogout()">
+                <lucide-icon name="log-out" size="20"></lucide-icon>
+                @if (!isSidebarCollapsed()) {
+                <span>LOGOUT</span>
+                }
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="action-btn" (click)="toggleSidebar()">
+                    <lucide-icon
+                        [name]="isSidebarCollapsed() ? 'panel-left-open' : 'panel-left'"
+                        size="22"></lucide-icon>
+                </button>
+                <div class="admin-breadcrumb-wrapper">
+                    <app-breadcrumb></app-breadcrumb>
+                </div>
+            </div>
+
+            <div class="top-bar-right">
+
+                <a routerLink="/" target="_blank" class="action-btn"
+                    title="View Public Site">
+                    <lucide-icon name="external-link" size="20"></lucide-icon>
+                </a>
+                <button class="action-btn" (click)="toggleTheme()">
+                    <lucide-icon [name]="isDarkMode() ? 'sun' : 'moon'"
+                        size="20"></lucide-icon>
+                </button>
+
+                <div class="user-profile-simple">
+                    <div class="user-text">
+                        <span class="u-name">{{ currentUser()?.name }}</span>
+                        <span class="u-role">{{ currentUser()?.role }}</span>
+                    </div>
+                    <div class="simple-avatar">
+                        {{ currentUser()?.name[0] }}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-container">
+            <router-outlet></router-outlet>
+        </section>
+    </main>
+</div>

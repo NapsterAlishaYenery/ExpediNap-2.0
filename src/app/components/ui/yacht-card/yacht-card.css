@@ -1,0 +1,181 @@
+:host { display: block; }
+
+.yacht-card {
+  display: flex;
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Altura reducida para que sea un rectángulo equilibrado */
+/* Altura FIJA para asegurar uniformidad total */
+  height: 400px; 
+  transition: all 0.4s ease;
+}
+
+.yacht-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* IMAGEN (50%) */
+.image-container {
+  position: relative;
+  width: 50%; 
+  height: 100%;
+  /* Ocupa el 100% de los 400px del padre */
+  flex-shrink: 0; /* No deja que el contenido de la derecha la aplaste */
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.yacht-card:hover .image-container img { transform: scale(1.1); }
+
+/* Badge PAX sobre la imagen */
+.pax-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+/* CONTENIDO (50%) */
+.content-container {
+  width: 50%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye mejor los elementos de arriba a abajo */
+  overflow: hidden; /* Evita que el texto extra rompa la card */
+}
+
+/* TÍTULO Y ANCLA */
+.yacht-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  transition: color 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.anchor-icon {
+  color: hsl(var(--secondary));
+  width: 1.6rem;
+  height: 1.6rem;
+  stroke-width: 2.5px;
+  display: flex;
+}
+
+.yacht-card:hover .yacht-title {
+  color: hsl(var(--secondary));
+}
+
+/* DESCRIPCIÓN: Color unificado con los precios */
+.yacht-description {
+  font-size: 0.85rem;
+  color: hsl(var(--foreground) /  0.5); /* Ahora es negro/foreground como pediste */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  min-height: 2.3rem; /* Asegura que siempre ocupe el espacio de 2 líneas */
+}
+
+/* LISTA DE PRECIOS: Alineación de iconos corregida */
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+  flex-grow: 1; /* Esto hace que el área de precios use el espacio disponible */
+  justify-content: center; /* Centra los precios si hay pocos */
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.price-item .label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: hsl(var(--foreground) / 0.5);
+  line-height: 1;
+}
+
+/* Ajuste del reloj para que no sea más grande que la letra y esté alineado */
+.price-item .label lucide-icon { 
+  width: 0.85rem; 
+  height: 0.85rem;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.price-item .value {
+  color: hsl(var(--secondary));
+  font-weight: 700;
+}
+
+/* INCLUDES */
+.includes-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+::ng-deep .include-badge .badge {
+  border-radius: 6px !important;
+  font-size: 0.65rem;
+  border-color: hsl(var(--secondary) / 0.3) !important;
+  color: hsl(var(--secondary)) !important;
+  text-transform: capitalize;
+  background-color: transparent !important;
+}
+
+/* BOTÓN MORADO A TODO EL ANCHO */
+.footer-action {
+  width: 100%;
+}
+
+::ng-deep .footer-action .btn {
+  width: 100% !important;
+  background-color: hsl(var(--secondary)) !important;
+  color: hsl(var(--secondary-foreground)) !important;
+  border: none !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* RESPONSIVIDAD */
+@media (max-width: 1024px) {
+  .yacht-card { height: 380px; }
+}
+
+@media (max-width: 640px) {
+  .yacht-card {
+    flex-direction: column;
+    height: auto;
+  }
+  .image-container, .content-container {
+    width: 100%;
+  }
+  .image-container { height: 250px; }
+  .content-container { padding: 1.25rem; }
+}

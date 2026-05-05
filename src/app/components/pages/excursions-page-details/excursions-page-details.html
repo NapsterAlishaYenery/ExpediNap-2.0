@@ -1,0 +1,120 @@
+<div class="breadcrumb-wrapper">
+  <div class="breadcrumb-container">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+</div>
+
+@if (!isLoading && excursion) {
+<main class="detail-container container-custom">
+  <header class="detail-header">
+    <h1 class="text-3xl font-bold">{{ excursion.name | titlecase }}</h1>
+    <div class="header-meta">
+      <span class="location-tag">
+        <lucide-icon name="map-pin" size="18"></lucide-icon> {{ excursion.location | titlecase }}, RD
+      </span>
+      <span class="duration-tag">
+        <lucide-icon name="clock" size="18"></lucide-icon> {{ excursion.duration.time }} {{ excursion.duration.unit }}(s)
+      </span>
+      <span class="age-tag">
+        <lucide-icon name="baby" size="18"></lucide-icon> Min. {{ excursion.minimumAge }} years
+      </span>
+    </div>
+  </header>
+
+  <div class="content-grid">
+    <!-- COLUMNA IZQUIERDA (66%) -->
+    <div class="main-column">
+      <section class="gallery-section">
+        <app-image-gallery [images]="excursion.images"></app-image-gallery>
+      </section>
+
+      <div class="info-column">
+        <div class="description-card">
+          <h3>About this experience</h3>
+          <p>{{ excursion.description }}</p>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-block">
+            <h3>What does it include?</h3>
+            <ul class="check-list">
+              @for (item of excursion.includes; track item) {
+              <li><i class="bi bi-check-circle text-green"></i> {{ item }}</li>
+              }
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h3>Recommendations</h3>
+            <ul class="check-list">
+              @for (rec of excursion.recommendations; track rec) {
+              <li><lucide-icon name="info" class="text-accent"></lucide-icon> {{ rec }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="itinerary-section">
+          <h3>Itinerary</h3>
+          <p class="itinerary-text">{{ excursion.itinerary }}</p>
+          <div class="meeting-point">
+            <lucide-icon name="flag"></lucide-icon>
+            <span><strong>Meeting point:</strong> {{ excursion.startingPoint }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA (33% STICKY) -->
+    <aside class="booking-column">
+      <div class="booking-card-sticky">
+        <div class="price-header">
+          <div class="price-row">
+            <div class="price-box">
+              @if (excursion.regularPriceUsd > excursion.offerPriceUsd) {
+                <span class="old-price">${{ excursion.regularPriceUsd }}</span>
+              }
+              <span class="price-label">Regular</span>
+            </div>
+            <div class="price-box">
+              <span class="current-price">${{ excursion.offerPriceUsd }}</span>
+              <span class="price-label">Offer per person</span>
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="bookingForm" class="booking-form">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" formControlName="fullName" placeholder="Ej. Juan Pérez">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Prefix</label>
+              <select formControlName="phonePrefix">
+                <option value="+1">🇩🇴 +1</option>
+                <option value="+34">🇪🇸 +34</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" formControlName="phone" placeholder="809-000-0000">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="travelDate">Travel Date</label>
+            <input type="date" id="travelDate" formControlName="travelDate" [min]="minDate">
+          </div>
+
+          <div class="button-row">
+            <app-button variant="whatsapp" size="lg" (onClick)="onWhatsApp()">
+              WHATSAPP
+            </app-button>
+          </div>
+        </form>
+      </div>
+    </aside>
+  </div>
+</main>
+}

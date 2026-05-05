@@ -1,0 +1,65 @@
+.propuesta-section {
+    padding: 20px 0 !important;
+    background-color: hsl(var(--background));
+}
+
+.container-custom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+}
+
+.propuesta-content {
+    max-width: 900px;
+    /* Limitamos el ancho para que el texto sea fácil de leer */
+    margin: 0 auto;
+    text-align: center;
+    /* Centrado por defecto en todas las pantallas */
+}
+
+.propuesta-title {
+    font-size: clamp(1.8rem, 2vw, 1.4rem);
+    font-weight: 800;
+    color: hsl(var(--foreground));
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.propuesta-text {
+    font-size: clamp(1.rem, 1vw, 0.9rem);
+    line-height: 1.8;
+    color: hsl(var(--muted-foreground));
+}
+
+/* Colores específicos de la propuesta */
+.text-primary {
+    color: hsl(var(--primary));
+    font-weight: 700;
+}
+
+.text-accent {
+    color: hsl(var(--accent));
+    font-weight: 700;
+}
+
+.text-secondary {
+    color: hsl(var(--secondary));
+    /* Color morado */
+    font-weight: 700;
+}
+
+/* Ajustes para pantallas grandes (PC) */
+@media (min-width: 1024px) {
+    .propuesta-section {
+        padding: 120px 0;
+    }
+}
+
+/* Ajustes para Tablet/Cell: Ya está centrado por defecto, 
+   solo nos aseguramos que no pegue de los bordes (gracias al container-custom) */
+@media (max-width: 768px) {
+    .propuesta-title {
+        margin-bottom: 1.5rem;
+    }
+}

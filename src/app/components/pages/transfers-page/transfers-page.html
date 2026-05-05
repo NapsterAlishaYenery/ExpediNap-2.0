@@ -1,0 +1,231 @@
+<div class="transfers-page-wrapper">
+  <section class="hero-header">
+    <div class="hero-image-bg">
+      <img src="/img/airport-transfer.webp" alt="Servicio de Traslados">
+    </div>
+    <div class="hero-content">
+      <span class="hero-sub-title">Door to Door Service</span>
+      <h1 class="hero-title">Private Transfers</h1>
+      <p class="hero-description">
+        Travel comfortably and safely from the airport to your hotel and back.
+      </p>
+    </div>
+    <div class="bottom-gradient-mask"></div>
+  </section>
+
+  <section class="main-content">
+    <div class="container-custom content-layout">
+
+      <div class="form-container">
+        <h2 class="form-main-title">Request your transfer</h2>
+
+        <form [formGroup]="transferForm" (ngSubmit)="onSubmit()"
+          class="transfer-form">
+
+          <div class="form-group full-width">
+            <label for="transferType">Transfer Type</label>
+            <select formControlName="transferType" class="form-control"
+              id="transferType"
+              [class.is-invalid]="isInvalid('transferType')">
+              <option value="airport-hotel">Airport - Hotel</option>
+              <option value="hotel-airport">Hotel - Airport</option>
+              <option value="round-trip">Round Trip</option>
+              <option value="hotel-hotel">Hotel - Hotel</option>
+              <option value="country">Interior of the country</option>
+            </select>
+            @if (isInvalid('transferType')) { <span class="error-msg">Select a
+              transfer
+              type</span> }
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="pickUpLocation"><lucide-icon name="map-pin"
+                  [size]="16"></lucide-icon> Pickup Location</label>
+              <input id="pickUpLocation" formControlName="pickUpLocation"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('pickUpLocation')"
+                placeholder="Example: Punta Cana Airport">
+              @if (isInvalid('pickUpLocation')) { <span
+                class="error-msg">Required
+                pickup Location</span> }
+            </div>
+            <div class="form-group">
+              <label for="destination"><lucide-icon name="hotel"
+                  [size]="16"></lucide-icon> Destination</label>
+              <input id="destination" formControlName="destination" type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('destination')"
+                placeholder="Example: Hard Rock Hotel">
+              @if (isInvalid('destination')) { <span class="error-msg">Required
+                destination</span> }
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="flightNumber"><lucide-icon name="plane"
+                  [size]="16"></lucide-icon> Flight number</label>
+              <input id="flightNumber" formControlName="flightNumber"
+                type="text"
+                class="form-control"
+                [class.is-invalid]="isInvalid('flightNumber')"
+                placeholder="Example: DL221">
+              @if (isInvalid('flightNumber')) { <span class="error-msg">Flight
+                Number is Required</span> }
+            </div>
+            <div class="form-group">
+              <label for="numPassengers"><lucide-icon name="users"
+                  [size]="16"></lucide-icon> Passengers</label>
+              <input id="numPassengers" formControlName="numPassengers"
+                type="number"
+                class="form-control"
+                [class.is-invalid]="isInvalid('numPassengers')">
+              @if (isInvalid('numPassengers')) { <span class="error-msg">Minimum
+                1</span> }
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="pickUpDate"><lucide-icon name="calendar"
+                  [size]="16"></lucide-icon> Date</label>
+              <input id="pickUpDate"
+                formControlName="pickUpDate"
+                type="date"
+                class="form-control"
+                [min]="minDate"
+                [class.is-invalid]="isInvalid('pickUpDate')">
+              @if (isInvalid('pickUpDate')) { <span class="error-msg">Invalid
+                date</span> }
+            </div>
+            <div class="form-group">
+              <label for="arrivalTime"><lucide-icon name="clock"
+                  [size]="16"></lucide-icon> Arrival Time</label>
+              <input id="arrivalTime" formControlName="arrivalTime" type="time"
+                class="form-control"
+                [class.is-invalid]="isInvalid('arrivalTime')">
+              @if (isInvalid('arrivalTime')) { <span class="error-msg">Invalid
+                time</span> }
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="email"><lucide-icon name="mail"
+                  [size]="16"></lucide-icon> Email</label>
+              <input id="email" formControlName="email" type="email"
+                class="form-control" autocomplete="email"
+                [class.is-invalid]="isInvalid('email')"
+                placeholder="your@email.com">
+              @if (isInvalid('email')) { <span class="error-msg">Invalid
+                email</span> }
+            </div>
+            <div class="form-group">
+              <label for="phone"><lucide-icon name="phone"
+                  [size]="16"></lucide-icon> Phone / WhatsApp</label>
+              <input id="phone" formControlName="phone" type="tel"
+                class="form-control" autocomplete="tel-national"
+                [class.is-invalid]="isInvalid('phone')" placeholder="+1 829...">
+              @if (isInvalid('phone')) { <span class="error-msg">Telephone is
+                required</span> }
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="fullName"><lucide-icon name="user"
+                [size]="16"></lucide-icon> Full Name</label>
+            <input id="fullName" formControlName="fullName" type="text"
+              class="form-control" autocomplete="name"
+              [class.is-invalid]="isInvalid('fullName')"
+              placeholder="Name and Surname">
+            @if (isInvalid('fullName')) { <span class="error-msg">Full name is
+              required</span> }
+          </div>
+
+          <div class="payment-info-box">
+            <p><strong>Payment upon collection.</strong> Our driver will be
+              waiting for you with a sign with your name in the arrivals
+              area.</p>
+          </div>
+
+          <div class="btn-center-wrapper">
+            <app-button
+              variant="default"
+              size="xl"
+              [disabled]="isProcessing">
+              {{ isProcessing ? 'PROCESSING...' : 'BOOK TRANSFER' }}
+            </app-button>
+          </div>
+        </form>
+      </div>
+
+      <div class="info-sidebar">
+        <div class="info-card">
+          <h3>Why choose our service?</h3>
+          <ul class="check-list">
+            <li><lucide-icon name="check" [size]="18"
+                class="text-green"></lucide-icon> Modern, air-conditioned
+              vehicles</li>
+            <li><lucide-icon name="check" [size]="18"
+                class="text-green"></lucide-icon> Bilingual professional
+              drivers</li>
+            <li><lucide-icon name="check" [size]="18"
+                class="text-green"></lucide-icon> Real-time flight tracking</li>
+            <li><lucide-icon name="check" [size]="18"
+                class="text-green"></lucide-icon> Child seats available</li>
+            <li><lucide-icon name="check" [size]="18"
+                class="text-green"></lucide-icon> Free WiFi on board</li>
+            <li><lucide-icon name="check" [size]="18"
+                class="text-green"></lucide-icon> Complimentary cold water</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Types of Vehicles</h3>
+          <div class="vehicle-item">
+            <div class="vehicle-info"><strong>Private Sedan</strong><span>1-3
+                pasajeros</span></div>
+            <div class="vehicle-price">Desde $35</div>
+          </div>
+          <div class="vehicle-item">
+            <div class="vehicle-info"><strong>SUV Premium</strong><span>1-5
+                passengers</span></div>
+            <div class="vehicle-price">From $50</div>
+          </div>
+          <div class="vehicle-item">
+            <div class="vehicle-info"><strong>Van Executive</strong><span>1-10
+                passengers</span></div>
+            <div class="vehicle-price">From $65</div>
+          </div>
+          <div class="vehicle-item">
+            <div class="vehicle-info"><strong>Minibus</strong><span>11-20
+                passengers</span></div>
+            <div class="vehicle-price">From $120</div>
+          </div>
+          <div class="vehicle-item">
+            <div class="vehicle-info"><strong>Bus</strong><span>21-45
+                passengers</span></div>
+            <div class="vehicle-price">From $200</div>
+          </div>
+        </div>
+
+        <div class="info-card help-card">
+          <h3>Do you need help?</h3>
+          <p>Contact us via WhatsApp and we'll help you coordinate your
+            transfer.</p>
+          <div class="btn-center-wrapper">
+            <app-button
+              variant="whatsapp"
+              class="w-full"
+              (onClick)="onWhatsAppQuery()"
+              [disabled]="isProcessing">
+              Write on WhatsApp
+            </app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,16 @@
+<nav class="breadcrumb-wrapper">
+      <div class="breadcrumb-container">
+        <ol class="breadcrumb-list">
+          @for (crumb of (breadcrumbService.breadcrumbs$ | async); track crumb.url; let last = $last) {
+            <li class="breadcrumb-item">
+              @if (!last) {
+                <a [routerLink]="crumb.url" class="breadcrumb-link">{{ crumb.label }}</a>
+                <i class="bi bi-chevron-right separator"></i>
+              } @else {
+                <span class="breadcrumb-current">{{ crumb.label }}</span>
+              }
+            </li>
+          }
+        </ol>
+      </div>
+    </nav>

@@ -1,0 +1,190 @@
+.navbar {
+  height: 80px;
+  width: 100%;
+/* Usamos --card que es un poco más claro que --background en dark mode */
+  background-color: hsl(var(--card));
+  /* Un borde sutil para definir el límite */
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  position: fixed;
+  top: 40px;
+  /* Debajo del topbar */
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* Si quieres que sea un poco más claro aún solo en el Dark Mode */
+:host-context(.dark) .navbar {
+  /* Elevamos un poco el brillo del card solo aquí si lo sientes muy oscuro */
+  background-color: hsl(222 47% 12%); 
+  border-bottom: 1px solid hsl(var(--border) / 0.2);
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Comportamiento Scroll */
+.nav-up {
+  transform: translateY(-100%);
+  top: 0;
+}
+
+/* Logo & Slogan */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo {
+  height: 45px;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  /* Aumentamos un pelín */
+  font-weight: 700;
+  color: hsl(var(--primary));
+  line-height: 1;
+  letter-spacing: 2px;
+  /* <--- ESTO hace que el nombre se vea más largo y elegante */
+  text-transform: uppercase;
+  /* Opcional: En mayúsculas suele verse más premium */
+}
+
+.brand-slogan {
+  font-size: 0.6rem;
+  font-weight: 400;
+  /* Muted foreground es gris en light y gris claro en dark */
+  color: hsl(var(--foreground) / 0.8);
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+  white-space: nowrap;
+  /* Evita que se rompa en dos líneas */
+  display: block;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  gap: 5px;
+  list-style: none;
+  color: hsl(var(--foreground) / 0.8);
+}
+
+.nav-links a {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: hsl(var(--foreground) / 0.8);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  /* En lugar de azul fijo, usamos la variable de acento con mucha transparencia */
+  background: hsl(var(--accent) / 0.15);
+  /* El texto se mantiene en el color de acento para que resalte */
+  color: hsl(var(--accent));
+}
+
+/* Ajuste específico para cuando el usuario está en Modo Oscuro */
+:host-context(.dark) .nav-links a:hover {
+  /* En modo oscuro, el azul claro se vería mal, 
+     usamos un fondo que haga resaltar la letra blanca o azul */
+  background: hsl(var(--accent) / 0.2);
+  color: hsl(var(--accent));
+}
+
+.active-link {
+  /* Fondo más sólido para el link activo */
+  background: hsl(var(--accent) / 0.2) !important;
+  color: hsl(var(--accent)) !important;
+  font-weight: 600;
+}
+
+/* Acciones */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-toggle,
+.menu-burger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: hsl(var(--foreground) / 0.8);
+  display: flex;
+  align-items: center;
+}
+
+.show-tablet {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+
+  .nav-links,
+  .hide-tablet {
+    display: none;
+  }
+
+  .show-tablet {
+    display: flex;
+  }
+
+  .navbar {
+    height: 70px;
+  }
+
+  /* Ajuste para Tablet: Un poco más compacto */
+  .brand-name {
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+  }
+  .nav-logo {
+    height: 36px; /* Un poco más pequeño en tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+  }
+
+  .brand-slogan {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+    /* Reducimos el tamaño */
+    letter-spacing: 1px;
+    /* Reducimos el espacio entre letras */
+  }
+  .nav-logo {
+    height: 32px; /* Tamaño ideal para que el barquito se vea claro pero no gigante */
+  }
+}

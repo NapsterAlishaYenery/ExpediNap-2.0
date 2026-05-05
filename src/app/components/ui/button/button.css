@@ -1,0 +1,90 @@
+/* BASE */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* VARIANTE: Default (Rojo Vivo) */
+.btn.variant-default {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  box-shadow: var(--shadow-primary);
+}
+
+/* VARIANTE: Accent (Azul Eléctrico) */
+.btn.variant-accent {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  box-shadow: var(--shadow-glow);
+}
+
+/* VARIANTE: Hero (Luxury Style con Gradiente) */
+.btn.variant-hero {
+  background: var(--gradient-brand);
+  color: hsl(var(--primary-foreground));
+  box-shadow: var(--shadow-primary);
+}
+
+/* VARIANTE: Outline */
+.btn.variant-outline {
+  background: transparent;
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+/* VARIANTE: Glass (Efecto Cristal) */
+.btn.variant-glass {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsla(0, 0%, 100%, 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* VARIANTE: Ghost */
+.btn.variant-ghost {
+  background: transparent;
+}
+.btn.variant-ghost:hover {
+  background-color: hsl(var(--muted));
+}
+/* VARIANTE: WhatsApp */
+.btn.variant-whatsapp {
+  background-color: #25D366;
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+/* HOVER UNIVERSAL */
+.btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* VARIANTE: Hero Outline (100% Dinámica con Variables) */
+.btn.variant-heroOutline {
+  background: transparent;
+  /* Se adapta solo: Blanco en modo claro, Negro en modo oscuro */
+  color: hsl(var(--on-image));
+  border: 2px solid hsl(var(--on-image-border));
+}
+
+/* TAMAÑOS (Usando rem para consistencia) */
+.btn.size-default { height: 2.5rem; padding: 0 1rem; }
+.btn.size-sm      { height: 2rem; padding: 0 0.75rem; font-size: 0.75rem; }
+.btn.size-lg      { height: 3rem; padding: 0 2rem; font-size: 1rem; }
+.btn.size-xl      { height: 3.5rem; padding: 0 2.5rem; font-size: 1.125rem; }
+.btn.size-icon    { width: 2.5rem; height: 2.5rem; padding: 0; }

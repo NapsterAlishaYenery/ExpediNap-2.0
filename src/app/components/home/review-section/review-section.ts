@@ -1,0 +1,90 @@
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IconsModule } from '../../../core/icons.module';
+import { Button } from '../../ui/button/button';
+import { ReviewService } from '../../../core/services/review/review.service';
+import { Subject, takeUntil } from 'rxjs';
+import { GoogleReviewData } from '../../../core/interfaces/review/google-review.interface';
+import { ReviewGoogleCard } from '../../ui/review-google-card/review-google-card';
+
+
+@Component({
+  selector: 'app-review-section',
+  imports: [IconsModule, ReviewGoogleCard, Button],
+  templateUrl: './review-section.html',
+  styleUrl: './review-section.css',
+})
+export class ReviewSection implements OnInit, OnDestroy {
+
+  private reviewServices = inject(ReviewService);
+  private readonly destroy$ = new Subject<void>();
+
+  googleReviewData: GoogleReviewData = {
+    rating: 0,
+    totalReviews: 0,
+    businessName: '',
+    reviews: [] // <--- Importante para que el carrusel no rompa al inicio
+  };
+
+  showingCount: number = 0
+
+  isLoading = true;
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+  activeIndex = 0;
+
+  // Escucha el scroll para actualizar qué "dot" está activo
+  @HostListener('window:resize')
+  onResize() { this.updateActiveDot(); }
+
+  updateActiveDot() {
+    const scrollLeft = this.scrollContainer.nativeElement.scrollLeft;
+    const itemWidth = 320 + 32; // Ancho de la card + gap (2rem = 32px)
+    this.activeIndex = Math.round(scrollLeft / itemWidth);
+  }
+
+  // 1. Función para navegar al hacer clic en un punto
+  scrollToIndex(index: number) {
+    const container = this.scrollContainer.nativeElement;
+    // Buscamos todos los componentes hijos (las cards)
+    const elements = container.querySelectorAll('app-review-google-card');
+
+    if (elements[index]) {
+      // scrollIntoView hace que el navegador mueva el scroll hasta ese elemento
+      elements[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start'
+      });
+      this.activeIndex = index;
+    }
+  }
+
+
+  // Metodos del ciclo de vida del componente
+  ngOnInit(): void {
+    // reviews data de google 
+    this.loadReviewDataGoogle()
+
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+
+  loadReviewDataGoogle(): void {
+    this.reviewServices.getGoogleReviews()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.googleReviewData = response.data;
+          this.showingCount = response.data.reviews.length
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.isLoading = false;
+        }
+      });
+  }
+}

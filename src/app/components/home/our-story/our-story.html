@@ -1,0 +1,114 @@
+<section class="about-section">
+  <div class="container-custom">
+
+    <div class="section-header">
+      <span class="sub-title">Our Essence</span>
+      <h2 class="main-title">Who We Are</h2>
+      <p class="section-description">At ExpediNap, a passion for tourism merges
+        with technological innovation to offer exceptional travel experiences in
+        the Dominican Republic.
+      </p>
+    </div>
+
+    <div class="about-grid mb-24">
+      <div class="image-box">
+        <img src="/img/guerlmy-pick.webp"
+          alt="Nuñez, Founder of ExpediNap and Dominican Republic Tourism Expert"
+          class="rounded-about">
+        <div class="experience-badge">
+          <span class="number">{{ yearsOfExperience }} + </span>
+          <span class="text">years of <br> Experience</span>
+        </div>
+      </div>
+
+      <div class="text-content">
+        <h3 class="block-title">Our History and Origins</h3>
+        <p class="highlight-p">
+          The genesis of <span class="brand-text">ExpediNap</span> lies in a
+          vocation for service that has evolved over the years. Beginning their
+          professional careers in the vibrant tourist areas of Punta Cana and
+          Bávaro, they acquired valuable experience in diverse fields.
+        </p>
+        <br>
+        <p class="muted-p">
+          From civil aviation security at Punta Cana International Airport to
+          passenger service at renowned airlines such as Frontier Airlines and
+          reception roles at renowned hotels such as Meliá Caribe and Now Onyx.
+        </p>
+        <br>
+        <p class="muted-p">
+          The 2019 pandemic became a catalyst for transformation. It was a time
+          of introspection and growth, prompting the decision to acquire web
+          programming skills at the Technological Institute of the Americas
+          (ITLA). The goal: to create their own platform that would offer
+          quality services and foster a collaborative environment.
+        </p>
+
+                
+        <div class="image-caption">
+          <span class="founder-name">Guerlmy Alexander Nuñez</span>
+          <span class="founder-title">CEO & Founder</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="about-grid mb-24 items-start">
+      <div class="image-box">
+        <img src="/img/team-office.webp" alt="Equipo ExpediNap"
+          class="rounded-about">
+      </div>
+
+      <div class="mission-vision-stack">
+        <div class="glass-card">
+          <div class="card-header">
+            <div class="icon-circle primary">
+              <lucide-icon name="target" [size]="24"></lucide-icon>
+            </div>
+            <h4>Mission</h4>
+          </div>
+          <p>To position ExpediNap as the top choice for travelers seeking
+            authentic and exciting experiences in the Dominican Republic. To
+            offer a comprehensive platform for booking excursions, luxury yacht
+            charters, and transportation services, ensuring that every adventure
+            is memorable.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-header">
+            <div class="icon-circle accent">
+              <lucide-icon name="eye" [size]="24"></lucide-icon>
+            </div>
+            <h4>Vision</h4>
+          </div>
+          <p>To be recognized as the leading tourism services company in the
+            Dominican Republic, distinguished by excellence in customer service,
+            the breadth of its offerings, and its commitment to traveler
+            satisfaction in each of its destinations, whether by land, sea, or
+            even underwater.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-banner">
+      <div class="values-header-row">
+        <div class="icon-square secondary">
+          <lucide-icon name="heart" [size]="28"></lucide-icon>
+        </div>
+        <h3>Our Values</h3>
+      </div>
+
+      <div class="values-grid">
+        @for (valor of valores; track valor.label) {
+        <div class="value-item">
+          <div class="value-icon">
+            <lucide-icon [name]="valor.icon" [size]="20"></lucide-icon>
+          </div>
+          <span>{{ valor.label }}</span>
+        </div>
+        }
+      </div>
+    </div>
+
+  </div>
+</section>

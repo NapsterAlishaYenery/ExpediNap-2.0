@@ -1,0 +1,29 @@
+<div class="stat-card" [ngClass]="getVariantClass()">
+  <div class="card-header">
+    <div class="icon-box">
+      <lucide-icon [name]="icon" [size]="20"></lucide-icon>
+    </div>
+    <span class="card-title">{{ title }}</span>
+  </div>
+
+  <div class="card-body">
+    <h2 class="main-value">{{ mainValue }}</h2>
+    
+    @if (statsDetails.length > 0) {
+      <div class="details-grid">
+        @for (stat of statsDetails; track stat.label) {
+          <div class="detail-item">
+            <span class="detail-label">{{ stat.label }}</span>
+            <span class="detail-value">{{ stat.value }}</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (footerText) {
+    <div class="card-footer">
+      <p>{{ footerText }}</p>
+    </div>
+  }
+</div>

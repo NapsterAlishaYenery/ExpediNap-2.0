@@ -1,0 +1,88 @@
+<div class="breadcrumb-wrapper">
+  <div class="breadcrumb-container container-custom">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+</div>
+
+@if (!isLoading && blog) {
+<main class="detail-container container-custom">
+
+  <section class="gallery-section">
+    @if (formattedImages) {
+    <app-image-gallery [images]="formattedImages"
+      type="blogs"></app-image-gallery>
+    }
+  </section>
+
+  <header class="blog-header">
+    <div class="header-meta">
+      <span class="meta-tag">
+        <lucide-icon name="calendar" size="18"></lucide-icon>
+        {{ blog.createdAt | date:'longDate' }}
+      </span>
+      <span class="meta-tag">
+        <lucide-icon name="user" size="18"></lucide-icon>
+        {{ blog.author }}
+      </span>
+      <span class="meta-tag">
+        <lucide-icon name="bookmark" size="18"></lucide-icon>
+        {{ blog.type }}
+      </span>
+    </div>
+
+    <div class="categories-container">
+      @for (cat of blog.category; track cat) {
+      <app-badge variant="accent">{{ cat | titlecase }}</app-badge>
+      }
+    </div>
+
+    <h1 class="main-title">{{ blog.title }}</h1>
+  </header>
+
+  <div class="blog-content-layout">
+    <article class="blog-article">
+      <div class="blog-excerpt">
+        <p>{{ blog.excerpt }}</p>
+      </div>
+
+      <div class="blog-body" [innerHTML]="safeContent">
+
+      </div>
+
+      <hr class="my-10 border-slate-200">
+
+      <div class="footer-navigation">
+        <a routerLink="/blogs">
+          <app-button
+            variant="hero"
+            size="lg"
+            class="read-more-btn mt-8">
+            <lucide-icon name="arrow-left" class="arrow mr-2"></lucide-icon>
+            Go Back to Blog List
+          </app-button>
+        </a>
+
+      </div>
+    </article>
+
+    <aside class="blog-sidebar">
+      <div class="promo-card">
+        <h3>Ready for the adventure?</h3>
+        <p>Book your yacht or excursion today with Expedinap.</p>
+        <br>
+        <a routerLink="/excursions">
+          <app-button variant="hero" className="w-full">
+            VIEW EXCURSIONS
+          </app-button>
+        </a>
+
+      </div>
+    </aside>
+  </div>
+</main>
+} @else if (isLoading) {
+<div class="loading-state">
+  <div class="spinner"></div>
+  <p>Loading article...</p>
+</div>
+}

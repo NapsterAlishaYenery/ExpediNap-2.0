@@ -1,0 +1,70 @@
+.not-found-wrapper {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: hsl(var(--background));
+}
+
+.not-found-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.icon-box {
+  font-size: 4rem;
+  color: hsl(var(--primary)); /* Usando tu Rojo Vivo */
+  margin-bottom: 1rem;
+  filter: drop-shadow(var(--shadow-primary));
+  animation: ship-sway 4s ease-in-out infinite;
+}
+
+.display-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(5rem, 15vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  color: hsl(var(--foreground));
+  margin: 0;
+}
+
+.sub-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: hsl(var(--accent)); /* Tu Azul Eléctrico */
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-family: 'Inter', sans-serif;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Botón usando tu Gradiente Brand y Radio */
+.btn-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--gradient-brand);
+  color: hsl(var(--primary-foreground));
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  box-shadow: var(--shadow-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-brand:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow: 0 15px 35px -10px hsl(15 75% 45% / 0.6);
+}
+
+@keyframes ship-sway {
+  0%, 100% { transform: rotate(-5deg) translateY(0); }
+  50% { transform: rotate(5deg) translateY(-10px); }
+}

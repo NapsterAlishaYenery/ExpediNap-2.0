@@ -1,0 +1,141 @@
+/* Overlay */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* Más oscuro para resaltar el drawer */
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.menu-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Panel Drawer */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh; /* Usa dynamic viewport height para móviles */
+  width: 85%;
+  max-width: 350px;
+  background-color: hsl(var(--card)); /* Sigue el modo oscuro */
+  z-index: 2001;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+  
+  display: flex;
+  flex-direction: column; /* Organiza header, nav y footer en vertical */
+  padding: 1.5rem;
+  
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+.mobile-drawer.is-open {
+  transform: translateX(0);
+}
+
+/* Header */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0; /* Que no se encoja */
+  padding-bottom: 0.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Arreglo Logo: Mantenemos proporción igual que en el navbar */
+.logo-img { 
+  height: 40px; 
+  width: auto; /* IMPORTANTE: width auto para que no se "apechurre" */
+  object-fit: contain;
+}
+
+/* Close Button: Arreglo de la X centrada */
+.close-btn {
+  background: transparent;
+  border: none; /* Quitamos el borde de bola de billar */
+  color: hsl(var(--muted-foreground)); /* Un color más discreto */
+  width: 36px;
+  height: 36px;
+  display: inline-flex; /* Cambio a inline-flex */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0; /* Limpiar paddings que desubican la X */
+}
+
+/* Navegación central con Scroll si es necesario */
+.drawer-nav {
+  flex: 1; /* Esto hace que ocupe todo el espacio disponible */
+  overflow-y: auto; /* Si hay muchos links, solo esta parte hace scroll */
+  padding: 1rem 0;
+}
+
+.drawer-nav ul { list-style: none; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  color: hsl(var(--foreground)); /* Texto reactivo */
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+.nav-link:hover {
+  background: hsl(var(--accent) / 0.1);
+}
+
+.nav-link.active {
+  background: hsl(var(--accent) / 0.15);
+  color: hsl(var(--accent));
+}
+
+.nav-icon { 
+  width: 20px; 
+  height: 20px; 
+  color: hsl(var(--muted-foreground)); 
+}
+
+.nav-link.active .nav-icon {
+  color: hsl(var(--accent));
+}
+
+/* Footer Fijo abajo */
+.drawer-footer { 
+  flex-shrink: 0; /* Que siempre se vea abajo */
+  padding-top: 1rem;
+  display: inline;
+  justify-content: center;
+}
+
+/* Contenedor del botón para asegurar que no se corte */
+.btn-container {
+  width: 100%;
+}
+
+::ng-deep .btn-reserva {
+  width: 100% !important;
+  display: block !important;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid hsl(var(--border));
+  margin: 0.5rem 0;
+}

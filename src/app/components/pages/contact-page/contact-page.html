@@ -1,0 +1,133 @@
+<div class="contacto-container">
+  <section class="contacto-header">
+    <div class="container-custom">
+      <h1 class="contacto-titulo">Get in Touch</h1>
+      <p class="contacto-subtitulo">
+        We are here to help you plan your perfect Caribbean adventure.
+      </p>
+    </div>
+  </section>
+
+  <section class="contacto-grid container-custom">
+
+    <div class="info-list">
+      <div class="card info-item">
+        <div class="icono">
+          <lucide-icon name="map-pin"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="info-titulo">Our Office</h3>
+          <p class="info-texto">
+            Pablo Guerrero Street <br>
+            San Pedro Square <br>
+            Higüey, Dominican Republic
+          </p>
+        </div>
+      </div>
+
+      <div class="card info-item">
+        <div class="icono">
+          <lucide-icon name="phone"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="info-titulo">Phone & WhatsApp</h3>
+          <p class="info-texto">(809) 836-9303</p>
+          <p class="info-texto">(829) 836-9303</p>
+        </div>
+      </div>
+
+      <div class="card info-item">
+        <div class="icono">
+          <lucide-icon name="mail"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="info-titulo">Email Support</h3>
+          <p class="info-texto">info@expedinap.com</p>
+          <p class="info-texto">expedinap@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="card info-item">
+        <div class="icono">
+          <lucide-icon name="clock"></lucide-icon>
+        </div>
+        <div>
+          <h3 class="info-titulo">Working Hours</h3>
+          <p class="info-texto">Mon - Sun: 8:00 AM - 8:00 PM</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card formulario-card">
+      <h2 class="form-titulo">Send us a Message</h2>
+
+      <form [formGroup]="contactoForm" (ngSubmit)="enviarFormulario()"
+        class="formulario">
+        <div class="form-grupo">
+          <label for="fullName">Full Name</label>
+          <input id="fullName" type="text" formControlName="fullName"
+            placeholder="John Doe" autocomplete="name">
+          @if (contactoForm.get('fullName')?.invalid &&
+          contactoForm.get('fullName')?.touched) {
+          <small class="error-text">Name is required (min 3 chars).</small>
+          }
+        </div>
+
+        <div class="form-grupo">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" formControlName="email"
+            placeholder="john@example.com" autocomplete="email">
+          @if (contactoForm.get('email')?.invalid &&
+          contactoForm.get('email')?.touched) {
+          <small class="error-text">Please enter a valid email.</small>
+          }
+        </div>
+
+        <div class="form-grupo">
+          <label for="phone">Phone / WhatsApp</label>
+          <input id="phone" type="tel" formControlName="phone"
+            placeholder="+1 (829) 000-0000" autocomplete="tel-national">
+        </div>
+
+        <div class="form-grupo">
+          <label for="message">Message</label>
+          <textarea id="message" formControlName="message" rows="5"
+            placeholder="Tell us about the excursion or yacht you are interested in or have any suggestions ..."></textarea>
+          @if (contactoForm.get('message')?.invalid &&
+          contactoForm.get('message')?.touched) {
+          <small class="error-text">Message must be at least 10
+            characters.</small>
+          }
+        </div>
+
+        <app-button
+          variant="default"
+          size="lg"
+          class="w-full"
+          [disabled]="isProcessing">
+          {{ isProcessing ? 'SENDING...' : 'SEND MESSAGE' }}
+        </app-button>
+      </form>
+    </div>
+
+  </section>
+
+  <section class="mapa-section container-custom">
+    <div class="mapa-header">
+      <h2 class="mapa-titulo">Visit Us</h2>
+      <p class="mapa-subtitulo">Located in the heart of Higüey, close to all
+        major resorts.</p>
+    </div>
+    <div class="mapa-placeholder">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7561.934381004237!2d-68.74213739343105!3d18.620545430330427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ea8b702cea79b6b%3A0xf7ad75bd87ba04b!2sExpediNap!5e0!3m2!1ses-419!2sdo!4v1753723218565!5m2!1ses-419!2sdo3"
+        width="100%"
+        height="450"
+        style="border:0;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+</div>

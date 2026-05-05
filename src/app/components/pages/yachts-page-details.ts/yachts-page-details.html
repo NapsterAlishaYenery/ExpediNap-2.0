@@ -1,0 +1,170 @@
+<div class="breadcrumb-wrapper">
+  <div class="breadcrumb-container">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+</div>
+
+@if (!isLoading && yacht) {
+<main class="detail-container container-custom">
+  <header class="detail-header">
+    <h1 class="text-3xl font-bold">{{ yacht.name | uppercase }}</h1>
+    <div class="header-meta">
+      <span class="location-tag">
+        <lucide-icon name="users" size="18"></lucide-icon>
+        Capacity: {{ yacht.maxPax }} people
+      </span>
+      <span class="duration-tag">
+        <lucide-icon name="anchor" size="18"></lucide-icon>
+        Luxury Vessel
+      </span>
+    </div>
+  </header>
+
+  <div class="content-grid">
+    <!-- COLUMNA IZQUIERDA: Galería e Información -->
+    <div class="main-column">
+      <section class="gallery-section">
+        <app-image-gallery [images]="yacht.images"></app-image-gallery>
+      </section>
+
+      <div class="info-column">
+        <div class="description-card">
+          <h3>Onboard Experience</h3>
+          <p>{{ yacht.description }}</p>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-block">
+            <h3>What does it include?</h3>
+            <ul class="check-list">
+              @for (item of yacht.includes; track item) {
+              <li>
+                <i class="bi bi-check-circle text-green"></i>
+                {{ item | titlecase }}
+              </li>
+              }
+            </ul>
+          </div>
+
+          <div class="detail-block">
+            <h3>Departure Times</h3>
+            <div class="time-info">
+              <p><strong>Full Day:</strong> {{ yacht.timeAvailable.fullDay }}</p>
+              @if (yacht.timeAvailable.halfDay.length > 0) {
+              <p><strong>Half Day:</strong> {{ yacht.timeAvailable.halfDay.join(' / ') }}</p>
+              }
+              @if (yacht.riverSunset.price) {
+              <p class="mt-2 text-accent"><strong>River Sunset:</strong> Available</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: Formulario Sticky -->
+    <aside class="booking-column">
+      <div class="booking-card-sticky">
+        <div class="price-header">
+          <div class="price-row">
+            <span class="current-price">${{ selectedPrice | number }}</span>
+          </div>
+          <span class="price-label">ESTIMATED PRICE (USD)</span>
+        </div>
+
+        <form [formGroup]="bookingForm" (ngSubmit)="onReserveAndWhatsApp()" class="booking-form">
+          <div class="form-group">
+            <label for="destination">Destination</label>
+            <select formControlName="destination">
+              <option value="Saona Island">Saona Island</option>
+              <option value="Catalina Island">Catalina Island</option>
+              @if (yacht.riverSunset.price) {
+              <option value="River Sunset">River Sunset</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Duration</label>
+            <select formControlName="duration">
+              @if (bookingForm.get('destination')?.value === 'River Sunset') {
+              <option value="Half Day">Sunset Trip ({{yacht.riverSunset.timeTrip}})</option>
+              } @else {
+              <option value="Full Day">Full Day</option>
+              @if (shouldShowHalfDay()) {
+              <option value="Half Day">Half Day</option>
+              }
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="travelDate">Travel Date</label>
+            <input id="travelDate" type="date" formControlName="travelDate" [min]="minDate">
+            <small class="hint">Bookings must be made at least 24 hours in advance.</small>
+            @if (bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched) {
+            <small class="text-red-500 text-xs">Please select a date.</small>
+            }
+          </div>
+
+          <hr class="my-2 border-slate-100">
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" formControlName="fullName" placeholder="e.g. John Doe" autocomplete="name">
+            @if (bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched) {
+            <small class="text-red-500 text-xs">Full name is required.</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="email-field">Email</label>
+            <input id="email-field" type="email" formControlName="email" name="email" autocomplete="email" placeholder="example@mail.com">
+            @if (bookingForm.get('email')?.touched && bookingForm.get('email')?.errors?.['required']) {
+            <small class="text-red-500 text-xs">Email is required.</small>
+            } @else if (bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched) {
+            <small class="text-red-500 text-xs">Please enter a valid email address.</small>
+            }
+          </div>
+
+          <div class="form-row">
+            <div class="form-group prefix">
+              <label for="phonePrefix">Prefix</label>
+              <select id="phonePrefix" formControlName="phonePrefix" autocomplete="tel-country-code">
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+1">🇩🇴 +1</option>
+                <option value="+34">🇪🇸 +34</option>
+                <option value="+52">🇲🇽 +52</option>
+                <option value="+57">🇨🇴 +57</option>
+                <option value="+44">🇬🇧 +44</option>
+              </select>
+            </div>
+
+            <div class="form-group phone">
+              <label for="phone">Phone</label>
+              <input id="phone" type="tel" formControlName="phone" placeholder="1234567890" autocomplete="tel-national">
+              @if (bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched) {
+              <small class="text-red-500 text-xs">Phone is required.</small>
+              }
+            </div>
+          </div>
+
+          <div class="button-row mt-4">
+            <app-button variant="whatsapp" size="lg" className="w-full col-span-2" [disabled]="isProcessing">
+              {{ isProcessing ? 'SENDING...' : 'BOOK NOW' }}
+            </app-button>
+          </div>
+          <p class="text-center text-xs text-slate-400 mt-3">
+            The reservation is registered and we will automatically redirect you to WhatsApp to confirm availability.
+          </p>
+        </form>
+      </div>
+    </aside>
+  </div>
+</main>
+} @else if (isLoading) {
+<div class="loading-state">
+  <div class="spinner"></div>
+  <p>Preparing the boats...</p>
+</div>
+}

@@ -1,0 +1,41 @@
+<div class="gallery-container">
+  <!-- Imagen Principal -->
+  <div class="main-view">
+    <div class="aspect-ratio-box">
+      <img 
+        [src]="selectedImage.url | imageUrl" 
+        [alt]="selectedImage.alt"
+        class="featured-img"
+      >
+    </div>
+  </div>
+
+  <!-- Carrusel de Miniaturas -->
+  <div class="carousel-wrapper">
+    <button class="nav-btn prev" (click)="scrollGallery(-1)" aria-label="Previous">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <div class="thumbnails-carousel" #carousel>
+      <button 
+        class="thumb-btn" 
+        [class.is-active]="selectedImage.url === images.main.url"
+        (click)="selectImage(images.main)">
+        <img [src]="images.main.url | imageUrl" [alt]="images.main.alt">
+      </button>
+
+      @for (img of images.gallery; track img.url) {
+        <button 
+          class="thumb-btn" 
+          [class.is-active]="selectedImage.url === img.url"
+          (click)="selectImage(img)">
+          <img [src]="img.url | imageUrl" [alt]="img.alt">
+        </button>
+      }
+    </div>
+
+    <button class="nav-btn next" (click)="scrollGallery(1)" aria-label="Next">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+</div>

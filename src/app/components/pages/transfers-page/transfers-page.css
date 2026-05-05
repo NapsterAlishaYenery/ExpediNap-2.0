@@ -1,0 +1,332 @@
+/* ==========================================================================
+   TRANSFERS PAGE — HERO LIMPIO CON OVERLAY SIMPLE
+   ========================================================================== */
+
+.transfers-page-wrapper {
+  width: 100%;
+}
+
+h3, h3{
+  font-weight: bolder;
+}
+
+lucide-icon{
+  color: hsl(var(--accent));;
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero-header {
+  height: 75vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: hsl(var(--background));
+}
+
+/* Imagen */
+.hero-image-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-image-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* OVERLAY SIMPLE — CLAVE DE TODO */
+.hero-image-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+/* ☀️ MODO CLARO → Overlay claro */
+:host-context(:not(.dark)) .hero-image-bg::after {
+  background: hsl(var(--background) / 0.65);
+}
+
+/* 🌙 MODO OSCURO → Overlay oscuro */
+:host-context(.dark) .hero-image-bg::after {
+  background: hsl(var(--background) / 0.55);
+}
+
+/* CONTENIDO */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 0 1.5rem;
+  color: hsl(var(--foreground));
+}
+
+/* Texto */
+.hero-sub-title {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* ❌ Eliminamos el degradado SOLO en transfers */
+.bottom-gradient-mask {
+  display: none;
+}
+
+/* ==========================================================================
+   MAIN CONTENT
+   ========================================================================== */
+
+.main-content {
+  background-color: hsl(var(--muted) / 0.3);
+  padding: 80px 0;
+}
+
+:host-context(.dark) .main-content {
+  background-color: hsl(var(--background));
+}
+
+.container-custom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.content-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+}
+
+/* ==========================================================================
+   FORMULARIO
+   ========================================================================== */
+
+.form-container {
+  background: hsl(var(--card));
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid hsl(var(--border));
+}
+
+.form-main-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: hsl(var(--muted-foreground));
+}
+
+.form-control {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  color: hsl(var(--foreground));
+}
+
+.form-control::placeholder {
+  color: hsl(var(--muted-foreground));
+  opacity: 0.7; /* Para que se vea un poco más suave que el texto real */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: hsl(var(--accent));
+  box-shadow: 0 0 0 2px hsl(var(--accent) / 0.1);
+}
+
+select.form-control option {
+  background-color: hsl(var(--card));
+  color: hsl(var(--foreground));
+}
+
+/* ==========================================================================
+   ERRORES
+   ========================================================================== */
+
+.error-msg {
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+.form-control.is-invalid {
+  border-color: #ef4444;
+}
+
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+
+.info-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-card {
+  background: hsl(var(--card));
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid hsl(var(--border));
+}
+
+.info-card h3 {
+  margin-bottom: 1.5rem;
+}
+
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.text-green {
+  color: #00802f;
+}
+
+.vehicle-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.vehicle-item:last-child {
+  border-bottom: none;
+}
+
+.vehicle-price {
+  font-weight: 700;
+  color: hsl(var(--primary));
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+
+.btn-center-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn-center-wrapper app-button {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .content-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-header {
+    height: 60vh;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   SOLUCIÓN PARA DISPOSITIVOS MINI (320px o menos)
+   ========================================================================== */
+
+@media (max-width: 325px) {
+  .container-custom {
+    padding: 0 0.5rem; /* Reducimos el margen lateral del contenedor principal */
+  }
+
+  .form-container {
+    padding: 1rem 0.75rem; /* Padding interno mínimo */
+    border-radius: 10px;
+  }
+
+  .form-main-title {
+    font-size: 1.25rem; /* Título más pequeño para que no rompa */
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.75rem; /* Texto de etiquetas más compacto */
+    gap: 0.25rem;
+  }
+
+  .form-control {
+    padding: 0.6rem 0.5rem; /* Inputs menos altos */
+    font-size: 0.85rem; /* Texto de input más pequeño */
+  }
+
+  /* Forzamos que los iconos de Lucide no empujen el layout */
+  lucide-icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .payment-info-box {
+    padding: 0.75rem;
+    font-size: 0.75rem; /* Texto informativo más pequeño */
+  }
+
+  .btn-center-wrapper app-button {
+    scale: 0.9; /* Reducimos un poco el botón si es muy grande */
+  }
+}

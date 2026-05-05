@@ -1,0 +1,38 @@
+<section class="yachts-section">
+  <div class="container mx-auto px-4">
+
+    <div class="section-header">
+      <span class="sub-title">Premium Experience</span>
+      <h2 class="main-title">Luxury Yachts</h2>
+      <p class="section-description">
+        Sail through the crystal-clear waters of the Caribbean on our exclusive
+        yachts.
+        <br>
+        Personalized service and unforgettable experiences.
+      </p>
+    </div>
+
+    @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando flota exclusiva...</p>
+    </div>
+    } @else {
+    <div class="yachts-grid">
+      @for (item of yachtsList; track item._id) {
+      <app-yacht-card [yacht]="item"></app-yacht-card>
+      }
+    </div>
+
+    <div class="cta-wrapper">
+      <a routerLink="/yachts">
+        <app-button variant="secondary" size="xl">
+          EXPLORE THE ENTIRE FLEET
+        </app-button>
+      </a>
+
+    </div>
+    }
+
+  </div>
+</section>
