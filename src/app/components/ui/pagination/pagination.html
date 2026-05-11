@@ -1,19 +1,19 @@
-<div class="pagination-wrapper">
-      <button 
-        class="page-btn" 
-        [disabled]="!hasNextPage && !hasPrevPage || !hasPrevPage"
-        (click)="onPageChange(currentPage - 1)">
-        <i class="bi bi-chevron-left"></i>
-      </button>
+<div class="flex items-center justify-center gap-6 mt-16">
+  <button 
+    class="w-11 h-11 rounded-full border border-border bg-card text-foreground flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:bg-accent hover:enabled:text-white hover:enabled:border-accent"
+    [disabled]="!hasNextPage && !hasPrevPage || !hasPrevPage"
+    (click)="onPageChange(currentPage - 1)">
+    <i class="bi bi-chevron-left"></i>
+  </button>
 
-      <div class="page-numbers">
-        <span>Página {{ currentPage }} de {{ totalPages }}</span>
-      </div>
+  <div class="page-numbers font-medium text-muted-foreground">
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+  </div>
 
-      <button 
-        class="page-btn" 
-        [disabled]="!hasNextPage"
-        (click)="onPageChange(currentPage + 1)">
-        <i class="bi bi-chevron-right"></i>
-      </button>
-    </div>
+  <button 
+    class="w-11 h-11 rounded-full border border-border bg-card text-foreground flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:bg-accent hover:enabled:text-white hover:enabled:border-accent"
+    [disabled]="!hasNextPage"
+    (click)="onPageChange(currentPage + 1)">
+    <i class="bi bi-chevron-right"></i>
+  </button>
+</div>

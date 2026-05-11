@@ -1,45 +1,45 @@
-<div class="breadcrumb-wrapper">
-  <div class="breadcrumb-container">
+<div class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
+  <div class="breadcrumb-container max-w-350 mx-auto px-6">
     <app-breadcrumb></app-breadcrumb>
   </div>
 </div>
 
 @if (!isLoading && yacht) {
-<main class="detail-container container-custom">
-  <header class="detail-header">
-    <h1 class="text-3xl font-bold">{{ yacht.name | uppercase }}</h1>
-    <div class="header-meta">
-      <span class="location-tag">
-        <lucide-icon name="users" size="18"></lucide-icon>
+<main class="detail-container container-custom max-w-350 mx-auto px-6 pt-8 pb-20">
+  <header class="detail-header mb-8">
+    <h1 class="text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2">{{ yacht.name | uppercase }}</h1>
+    <div class="header-meta flex flex-wrap gap-6 mt-3 text-muted-foreground font-medium">
+      <span class="location-tag flex items-center gap-2 text-sm">
+        <lucide-icon name="users" size="18" class="text-accent"></lucide-icon>
         Capacity: {{ yacht.maxPax }} people
       </span>
-      <span class="duration-tag">
-        <lucide-icon name="anchor" size="18"></lucide-icon>
+      <span class="duration-tag flex items-center gap-2 text-sm">
+        <lucide-icon name="anchor" size="18" class="text-accent"></lucide-icon>
         Luxury Vessel
       </span>
     </div>
   </header>
 
-  <div class="content-grid">
+  <div class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 lg:gap-16 items-start">
     <!-- COLUMNA IZQUIERDA: Galería e Información -->
-    <div class="main-column">
-      <section class="gallery-section">
+    <div class="main-column min-w-0">
+      <section class="gallery-section mb-14">
         <app-image-gallery [images]="yacht.images"></app-image-gallery>
       </section>
 
       <div class="info-column">
-        <div class="description-card">
-          <h3>Onboard Experience</h3>
+        <div class="description-card mb-12 leading-relaxed text-lg text-muted-foreground">
+          <h3 class="text-2xl font-bold mb-5 text-foreground">Onboard Experience</h3>
           <p>{{ yacht.description }}</p>
         </div>
 
-        <div class="details-grid">
+        <div class="details-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 p-10 bg-muted/20 rounded-3xl border border-border/50">
           <div class="detail-block">
-            <h3>What does it include?</h3>
-            <ul class="check-list">
+            <h3 class="text-2xl font-bold mb-5 text-foreground">What does it include?</h3>
+            <ul class="check-list flex flex-col gap-3.5 list-none p-0">
               @for (item of yacht.includes; track item) {
-              <li>
-                <i class="bi bi-check-circle text-green"></i>
+              <li class="flex items-start gap-3 text-sm text-foreground leading-tight">
+                <i class="bi bi-check-circle text-green text-[#22c55e]"></i>
                 {{ item | titlecase }}
               </li>
               }
@@ -47,11 +47,11 @@
           </div>
 
           <div class="detail-block">
-            <h3>Departure Times</h3>
-            <div class="time-info">
-              <p><strong>Full Day:</strong> {{ yacht.timeAvailable.fullDay }}</p>
+            <h3 class="text-2xl font-bold mb-5 text-foreground">Departure Times</h3>
+            <div class="time-info text-muted-foreground">
+              <p class="mb-2"><strong>Full Day:</strong> {{ yacht.timeAvailable.fullDay }}</p>
               @if (yacht.timeAvailable.halfDay.length > 0) {
-              <p><strong>Half Day:</strong> {{ yacht.timeAvailable.halfDay.join(' / ') }}</p>
+              <p class="mb-2"><strong>Half Day:</strong> {{ yacht.timeAvailable.halfDay.join(' / ') }}</p>
               }
               @if (yacht.riverSunset.price) {
               <p class="mt-2 text-accent"><strong>River Sunset:</strong> Available</p>
@@ -63,19 +63,19 @@
     </div>
 
     <!-- COLUMNA DERECHA: Formulario Sticky -->
-    <aside class="booking-column">
-      <div class="booking-card-sticky">
-        <div class="price-header">
+    <aside class="booking-column sticky top-8 z-10 self-start lg:block">
+      <div class="booking-card-sticky bg-card border border-border rounded-3xl p-9 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
+        <div class="price-header mb-8 pb-6 border-b border-border text-center">
           <div class="price-row">
-            <span class="current-price">${{ selectedPrice | number }}</span>
+            <span class="current-price text-5xl font-extrabold text-foreground leading-none">${{ selectedPrice | number }}</span>
           </div>
-          <span class="price-label">ESTIMATED PRICE (USD)</span>
+          <span class="price-label block mt-2 text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">ESTIMATED PRICE (USD)</span>
         </div>
 
-        <form [formGroup]="bookingForm" (ngSubmit)="onReserveAndWhatsApp()" class="booking-form">
-          <div class="form-group">
-            <label for="destination">Destination</label>
-            <select formControlName="destination">
+        <form [formGroup]="bookingForm" (ngSubmit)="onReserveAndWhatsApp()" class="booking-form flex flex-col gap-5">
+          <div class="form-group flex flex-col gap-2">
+            <label for="destination" class="text-sm font-medium">Destination</label>
+            <select id="destination" formControlName="destination" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
               <option value="Saona Island">Saona Island</option>
               <option value="Catalina Island">Catalina Island</option>
               @if (yacht.riverSunset.price) {
@@ -84,9 +84,9 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="duration">Duration</label>
-            <select formControlName="duration">
+          <div class="form-group flex flex-col gap-2">
+            <label for="duration" class="text-sm font-medium">Duration</label>
+            <select id="duration" formControlName="duration" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
               @if (bookingForm.get('destination')?.value === 'River Sunset') {
               <option value="Half Day">Sunset Trip ({{yacht.riverSunset.timeTrip}})</option>
               } @else {
@@ -98,28 +98,28 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="travelDate">Travel Date</label>
-            <input id="travelDate" type="date" formControlName="travelDate" [min]="minDate">
-            <small class="hint">Bookings must be made at least 24 hours in advance.</small>
+          <div class="form-group flex flex-col gap-2">
+            <label for="travelDate" class="text-sm font-medium">Travel Date</label>
+            <input id="travelDate" type="date" formControlName="travelDate" [min]="minDate" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
+            <small class="hint text-xs text-muted-foreground">Bookings must be made at least 24 hours in advance.</small>
             @if (bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched) {
             <small class="text-red-500 text-xs">Please select a date.</small>
             }
           </div>
 
-          <hr class="my-2 border-slate-100">
+          <hr class="my-2 border-slate-100 dark:border-slate-800">
 
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input id="fullName" type="text" formControlName="fullName" placeholder="e.g. John Doe" autocomplete="name">
+          <div class="form-group flex flex-col gap-2">
+            <label for="fullName" class="text-sm font-medium">Full Name</label>
+            <input id="fullName" type="text" formControlName="fullName" placeholder="e.g. John Doe" autocomplete="name" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
             @if (bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched) {
             <small class="text-red-500 text-xs">Full name is required.</small>
             }
           </div>
 
-          <div class="form-group">
-            <label for="email-field">Email</label>
-            <input id="email-field" type="email" formControlName="email" name="email" autocomplete="email" placeholder="example@mail.com">
+          <div class="form-group flex flex-col gap-2">
+            <label for="email-field" class="text-sm font-medium">Email</label>
+            <input id="email-field" type="email" formControlName="email" name="email" autocomplete="email" placeholder="example@mail.com" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
             @if (bookingForm.get('email')?.touched && bookingForm.get('email')?.errors?.['required']) {
             <small class="text-red-500 text-xs">Email is required.</small>
             } @else if (bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched) {
@@ -127,10 +127,10 @@
             }
           </div>
 
-          <div class="form-row">
-            <div class="form-group prefix">
-              <label for="phonePrefix">Prefix</label>
-              <select id="phonePrefix" formControlName="phonePrefix" autocomplete="tel-country-code">
+          <div class="form-row grid grid-cols-[100px_1fr] gap-4">
+            <div class="form-group flex flex-col gap-2">
+              <label for="phonePrefix" class="text-sm font-medium">Prefix</label>
+              <select id="phonePrefix" formControlName="phonePrefix" autocomplete="tel-country-code" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
                 <option value="+1">🇺🇸 +1</option>
                 <option value="+1">🇩🇴 +1</option>
                 <option value="+34">🇪🇸 +34</option>
@@ -140,9 +140,9 @@
               </select>
             </div>
 
-            <div class="form-group phone">
-              <label for="phone">Phone</label>
-              <input id="phone" type="tel" formControlName="phone" placeholder="1234567890" autocomplete="tel-national">
+            <div class="form-group flex flex-col gap-2">
+              <label for="phone" class="text-sm font-medium">Phone</label>
+              <input id="phone" type="tel" formControlName="phone" placeholder="1234567890" autocomplete="tel-national" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
               @if (bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched) {
               <small class="text-red-500 text-xs">Phone is required.</small>
               }
@@ -154,7 +154,7 @@
               {{ isProcessing ? 'SENDING...' : 'BOOK NOW' }}
             </app-button>
           </div>
-          <p class="text-center text-xs text-slate-400 mt-3">
+          <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-3">
             The reservation is registered and we will automatically redirect you to WhatsApp to confirm availability.
           </p>
         </form>
@@ -163,8 +163,8 @@
   </div>
 </main>
 } @else if (isLoading) {
-<div class="loading-state">
-  <div class="spinner"></div>
-  <p>Preparing the boats...</p>
+<div class="loading-state flex flex-col items-center justify-center py-20">
+  <div class="spinner w-12 h-12 border-4 border-muted border-t-accent rounded-full animate-spin mb-4"></div>
+  <p class="text-muted-foreground">Preparing the boats...</p>
 </div>
 }

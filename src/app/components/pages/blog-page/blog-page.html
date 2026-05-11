@@ -1,54 +1,58 @@
-<div class="blog-page-wrapper">
+<div class="blog-page-wrapper bg-background">
 
-  <section class="hero-header">
-    <div class="hero-image-bg">
-      <img src="/img/blog-hero.webp" alt="Computer Travel Blog">
+  <!-- HERO -->
+  <section class="hero-header relative h-[65vh] flex items-center justify-center overflow-hidden bg-linear-to-b from-foreground/90 to-background">
+    <div class="hero-image-bg absolute inset-0 z-1">
+      <img src="/img/blog-hero.webp" alt="Computer Travel Blog" class="w-full h-full object-cover opacity-65">
     </div>
-    <div class="hero-content">
-      <h1 class="hero-title">Travel Blog</h1>
-      <p class="hero-description">
+
+    <div class="hero-content relative z-2 text-center text-foreground max-w-225 px-4">
+      <h1 class="hero-title text-[clamp(3rem,6vw,4.2rem)] leading-tight mb-4 font-extrabold">Travel Blog</h1>
+      <p class="hero-description text-[clamp(1.1rem,1.5vw,1.6rem)] opacity-90">
         Guides, tips and everything you need for your Caribbean adventure.
       </p>
     </div>
-    <div class="bottom-gradient-mask"></div>
+
+    <div class="bottom-gradient-mask absolute bottom-0 w-full h-55 bg-linear-to-b from-transparent to-background z-1"></div>
   </section>
 
-  <nav class="sticky-filter-bar">
-    <div class="container-custom">
-      <div class="filter-wrapper">
-        <label class="filter-label">
+  <!-- STICKY FILTER BAR -->
+  <nav class="sticky-filter-bar sticky top-25 z-100 bg-background/90 backdrop-blur-md py-5 border-b border-border/20">
+    <div class="container-custom max-w-350 mx-auto px-6">
+      <div class="filter-wrapper flex items-center justify-center gap-4 max-sm:flex-col max-sm:items-stretch">
+        <label class="filter-label flex items-center gap-2 font-semibold text-muted-foreground text-sm uppercase tracking-[1px]">
           <lucide-icon name="list-filter" [size]="18"></lucide-icon>
           Filter by:
         </label>
 
-        <div class="select-container">
+        <div class="select-container relative min-w-55 max-sm:w-full">
           <select
             id="category-select"
             name="category"
-            class="custom-select"
+            class="custom-select w-full appearance-none bg-card border border-border px-4 py-3 pr-10 rounded-xl text-foreground text-base font-medium cursor-pointer transition-all duration-200 hover:border-accent focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/20"
             (change)="onCategoryChange($event)">
             @for (cat of categories; track cat.id) {
             <option [value]="cat.id">{{ cat.label }}</option>
             }
           </select>
-          <lucide-icon name="chevron-down" class="select-icon"
-            [size]="16"></lucide-icon>
+          <lucide-icon name="chevron-down" class="select-icon absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground" [size]="16"></lucide-icon>
         </div>
       </div>
     </div>
   </nav>
 
-  <section class="featured-section">
-    <div class="container-custom">
+  <!-- FEATURED SECTION -->
+  <section class="featured-section py-20 min-h-[80vh]">
+    <div class="container-custom max-w-350 mx-auto px-6">
 
       @if (isLoading) {
-      <div class="loading-state">
-        <div class="spinner"></div>
+      <div class="loading-state min-h-[45vh] flex flex-col items-center justify-center gap-4 text-muted-foreground text-center">
+        <div class="spinner w-11 h-11 rounded-full border-4 border-border border-t-accent animate-spin"></div>
         <p>Loading articles...</p>
       </div>
       } @else {
 
-      <div class="featured-grid">
+      <div class="featured-grid grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         @for (blog of blogs; track blog._id) {
         <app-blog-card [blog]="blog"></app-blog-card>
         }

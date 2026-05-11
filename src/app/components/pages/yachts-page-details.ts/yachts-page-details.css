@@ -1,253 +1,31 @@
-/* ==========================================================================
-   LAYOUT Y CONTENEDORES (YATES) - REFACTORIZADO
-   ========================================================================== */
-
-.breadcrumb-wrapper {
-  background-color: hsl(var(--muted) / 0.3);
-  padding: 0.75rem 0;
-  border-bottom: 1px solid hsl(var(--border));
-  margin-bottom: 1rem;
+/* Para loading state - el spinner necesita keyframes específicos */
+.loading-state .spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid hsl(var(--muted));
+  border-top-color: hsl(var(--accent));
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-.breadcrumb-container {
-  max-width: 1400px;
-  margin: 0 auto;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.container-custom {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.detail-container {
-  padding-top: 2rem;
-  padding-bottom: 5rem;
-}
-
-/* El grid principal que separa la info del form */
-.content-grid {
-  display: grid;
-  grid-template-columns: 1fr 400px; /* Columna info y columna fija de 400px */
-  gap: 3rem;
-  align-items: start;
-}
-
-/* Columna que envuelve Galería + Detalles */
-.main-column {
-  min-width: 0; /* Evita que el contenido desborde el grid */
+/* El texto verde para el check - Tailwind no tiene esta clase específica */
+.text-green {
+  color: #22c55e;
 }
 
 /* ==========================================================================
-   CABECERA (HEADER)
+   ESTILOS RESPONSIVE QUE TAILWIND NO PUEDE MANEJAR (opcional)
+   NOTA: El responsive ya está en Tailwind con lg:, md:, etc.
+   Solo mantenemos lo que es estrictamente necesario.
    ========================================================================== */
-.detail-header {
-  margin-bottom: 2rem;
-}
 
-.detail-header h1 {
-  font-size: 3rem;
-  font-weight: 850;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.5rem;
-}
-
-.header-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-top: 0.75rem;
-  color: hsl(var(--muted-foreground));
-  font-weight: 500;
-}
-
-.location-tag,
-.duration-tag {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-}
-
-.location-tag lucide-icon,
-.duration-tag lucide-icon {
-  color: hsl(var(--accent));
-}
-
-/* ==========================================================================
-   SECCIÓN DE GALERÍA E INFO
-   ========================================================================== */
-.gallery-section {
-  margin-bottom: 3.5rem;
-}
-
-.info-column h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1.25rem;
-  color: hsl(var(--foreground));
-}
-
-.description-card {
-  margin-bottom: 3rem;
-  line-height: 1.8;
-  font-size: 1.1rem;
-  color: hsl(var(--muted-foreground));
-}
-
-.details-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  padding: 2.5rem;
-  background: hsl(var(--muted) / 0.2);
-  border-radius: 24px;
-  border: 1px solid hsl(var(--border) / 0.5);
-}
-
-.check-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-
-.check-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-  font-size: 0.95rem;
-  color: hsl(var(--foreground));
-  line-height: 1.4;
-}
-
-.text-green { color: #22c55e; }
-.text-accent { color: hsl(var(--accent)); }
-
-.time-info p {
-  margin-bottom: 0.5rem;
-  color: hsl(var(--muted-foreground));
-}
-
-/* ==========================================================================
-   COLUMNA DE RESERVA (DERECHA - STICKY CORREGIDO)
-   ========================================================================== */
-.booking-column {
-  position: sticky;
-  top: 2rem; /* Permite que el form suba con la galería y luego se clave */
-  z-index: 10;
-  align-self: start;
-}
-
-.booking-card-sticky {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  border-radius: 28px;
-  padding: 2.25rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-}
-
-.price-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid hsl(var(--border));
-  text-align: center;
-}
-
-.current-price {
-  font-size: 2.75rem;
-  font-weight: 800;
-  color: hsl(var(--foreground));
-  line-height: 1;
-}
-
-.price-label {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: hsl(var(--muted-foreground));
-  font-weight: 600;
-}
-
-/* Formulario */
-.booking-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 1rem;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 0.85rem 1rem;
-  border-radius: 14px;
-  border: 1px solid hsl(var(--border));
-  background: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-size: 1rem;
-  transition: all 0.2s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: hsl(var(--accent));
-  box-shadow: 0 0 0 3px hsl(var(--accent) / 0.1);
-}
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-@media (max-width: 1100px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
+/* En móvil el formulario ya no es sticky (Tailwind no puede condicionar esto fácilmente) */
+@media (max-width: 1024px) {
   .booking-column {
-    position: static; /* Deja de ser sticky en tablets/móvil */
-    order: -1; /* El formulario sale arriba */
-    width: 100%;
+    position: static;
   }
-
-  .booking-card-sticky {
-    max-width: 550px;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .details-grid {
-    grid-template-columns: 1fr;
-    padding: 1.5rem;
-  }
-
-  .detail-header h1 {
-    font-size: 2.2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .detail-container { padding: 1rem; }
-  .booking-card-sticky { padding: 1.5rem; }
 }

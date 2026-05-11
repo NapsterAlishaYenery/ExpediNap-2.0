@@ -1,81 +1,5 @@
-.yachts-section {
-  padding: 80px 0;
-  background-color: hsl(var(--background));
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-/* Color Púrpura para el subtítulo */
-.sub-title {
-  color: hsl(var(--secondary));
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-weight: 700;
-  font-size: 0.8rem;
-}
-
-.main-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  color: hsl(var(--foreground));
-  margin: 0.5rem 0 1.5rem;
-}
-
-.section-description {
-  color: hsl(var(--muted-foreground));
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-  /* AGREGA ESTAS DOS LÍNEAS */
-  padding: 0 1.5rem; 
-  box-sizing: border-box;
-}
-/* CAMBIO: De Stack (Flex) a Grid de 2 columnas */
-.yachts-grid {
-  display: grid;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1400px; /* Ancho amplio para que las cards horizontales quepan bien */
-  margin: 0 auto;
-  grid-template-columns: 1fr; /* 1 columna en móvil */
-  /* AGREGA ESTO: */
-  padding: 1rem; /* Esto evita que las cards peguen de los bordes en móvil */
-  box-sizing: border-box;
-}
-/* Contenedor del botón inferior */
-.cta-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 5rem;
-  padding: 0 1.5rem;
-}
-
-/* Fix para el botón: Morado y responsivo */
-.cta-wrapper ::ng-deep .btn {
-  width: 100%;
-  max-width: 400px;
-  background-color: hsl(var(--secondary)) !important;
-  color: white !important;
-}
-
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 5rem;
-  color: hsl(var(--muted-foreground));
-}
-
+/* Spinner animation - Tailwind no puede crear keyframes */
 .spinner {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid hsl(var(--border));
-  border-top-color: hsl(var(--secondary)); /* Usamos color púrpura aquí */
   animation: spin 1s linear infinite;
 }
 
@@ -83,24 +7,18 @@
   to { transform: rotate(360deg); }
 }
 
-/* En pantallas grandes (PC), ponemos 2 columnas */
-@media (min-width: 1200px) {
-  .yachts-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Estilos del botón con ::ng-deep - Tailwind no puede penetrar componentes hijos */
+.cta-wrapper ::ng-deep .btn {
+  width: 100%;
+  max-width: 400px;
+  background-color: hsl(var(--secondary)) !important;
+  color: white !important;
 }
 
+/* En desktop el botón vuelve a tamaño auto */
 @media (min-width: 768px) {
   .cta-wrapper ::ng-deep .btn {
     width: auto;
     padding: 0 3.5rem;
   }
 }
-
-
-.loading-state {
-  text-align: center;
-  padding: 4rem;
-  color: hsl(var(--muted-foreground));
-}
-

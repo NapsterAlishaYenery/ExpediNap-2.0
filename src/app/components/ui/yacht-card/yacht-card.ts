@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Badge } from '../badge/badge';
 import { Button } from '../button/button';
 import { IconsModule } from '../../../core/icons.module';

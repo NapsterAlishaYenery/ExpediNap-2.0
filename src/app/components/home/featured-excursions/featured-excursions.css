@@ -1,68 +1,5 @@
-/* Contenedor Principal de la Sección */
-.featured-section {
-  padding: 80px 0;
-  background-color: hsl(var(--background));
-}
-
-/* Encabezado (Títulos) */
-.section-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  padding: 0 1rem;
-}
-
-.sub-title {
-  color: hsl(var(--accent));
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  font-weight: 700;
-  font-size: 0.8rem;
-}
-
-.main-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  color: hsl(var(--foreground));
-  margin: 0.5rem 0 1.5rem;
-  line-height: 1.1;
-}
-
-.section-description {
-  color: hsl(var(--muted-foreground));
-  max-width: 650px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-}
-
-/* EL GRID (Copiado de tu AppComponent para consistencia total) */
-.featured-grid {
-  display: grid;
-  gap: 2rem;       /* Tu separación estándar */
-  padding: 1rem;   /* Tu padding estándar */
-  grid-template-columns: 1fr; /* Móvil: 1 */
-}
-/* Reemplaza .footer-action por esto */
-.cta-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 5rem;
-  padding: 0 1.5rem; /* Margen de seguridad para celulares */
-}
-
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 5rem;
-}
-
+/* Spinner animation - Tailwind no puede crear keyframes */
 .spinner {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid hsl(var(--border));
-  border-top-color: hsl(var(--accent)); /* Usamos color naranja aquí */
   animation: spin 1s linear infinite;
 }
 
@@ -70,49 +7,22 @@
   to { transform: rotate(360deg); }
 }
 
+/* Estilos del botón con ::ng-deep - Tailwind no puede penetrar componentes hijos */
+.cta-button-container ::ng-deep .btn {
+  width: 100% !important;
+  background-color: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+  box-shadow: var(--shadow-glow) !important;
+}
+
+/* En desktop el botón vuelve a tamaño auto */
 @media (min-width: 768px) {
-  .featured-grid { 
-    grid-template-columns: repeat(2, 1fr); /* Tablet: 2 */
-  }
-   .cta-button-container {
-    width: auto; /* En PC vuelve a su tamaño natural */
+  .cta-button-container {
+    width: auto;
   }
   
   .cta-button-container ::ng-deep .btn {
     width: auto !important;
-    padding: 0 3.5rem; /* Botón XL elegante en PC */
+    padding: 0 3.5rem !important;
   }
-}
-
-@media (min-width: 1280px) {
-  .featured-grid { 
-    grid-template-columns: repeat(3, 1fr); /* PC: 3 */
-  }
-}
-
-/* Acción inferior (Botón) */
-.footer-action {
-  display: flex;
-  justify-content: center;
-  margin-top: 4rem;
-}
-
-.loading-state {
-  text-align: center;
-  padding: 5rem;
-  color: hsl(var(--muted-foreground));
-  font-family: 'Playfair Display', serif;
-}.cta-button-container {
-  width: 100%;
-  max-width: 420px; /* Tamaño ideal para que en móvil no sea gigante */
-  display: flex;
-  justify-content: center;
-}
-
-/* Forzamos el comportamiento del botón interno */
-.cta-button-container ::ng-deep .btn {
-  width: 100% !important; /* Que ocupe el ancho del container (420px max) */
-  background-color: hsl(var(--accent)) !important;
-  color: hsl(var(--accent-foreground)) !important;
-  box-shadow: var(--shadow-glow) !important;
 }

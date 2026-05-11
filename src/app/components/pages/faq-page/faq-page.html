@@ -1,20 +1,25 @@
-<main class="faq-page container-custom">
-  <header class="faq-header">
-    <h1>Frequently Asked Questions</h1>
-    <p>Everything you need to know about our experiences at ExpediNap.</p>
+<main class="faq-page max-w-225 mx-auto py-16 px-4">
+  
+  <!-- HEADER -->
+  <header class="faq-header pt-8 text-center mb-16">
+    <h1 class="text-5xl font-[850] mb-4 max-sm:text-3xl">Frequently Asked Questions</h1>
+    <p class="text-lg text-muted-foreground max-sm:text-base">Everything you need to know about our experiences at ExpediNap.</p>
   </header>
 
+  <!-- CONTENIDO -->
   <section class="faq-content">
     <app-accordeon [items]="faqs" [allowMultiple]="false"></app-accordeon>
   </section>
 
-  <footer class="faq-footer">
-    <div class="support-card">
-      <h3>Do you still have doubts?</h3>
-      <p>Our team is available 24/7 to help you via WhatsApp.</p>
+  <!-- FOOTER -->
+  <footer class="faq-footer mt-20 flex justify-center">
+    <div class="support-card bg-muted/20 p-12 rounded-4xl text-center border border-dashed border-border w-full max-sm:p-6">
+      <h3 class="text-xl font-bold mb-3">Do you still have doubts?</h3>
+      <p class="text-muted-foreground mb-6">Our team is available 24/7 to help you via WhatsApp.</p>
       <app-button variant="accent" (click)="openWhatsApp()">
         SPEAK TO SUPPORT
       </app-button>
     </div>
   </footer>
+
 </main>

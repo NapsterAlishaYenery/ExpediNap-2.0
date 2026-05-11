@@ -1,18 +1,18 @@
-<div class="review-card google-variant">
-  <div class="card-header">
+<div class="review-card w-80 h-80 bg-card border border-border rounded-3xl p-6 flex flex-col shadow-md box-border max-sm:w-62.5 max-sm:h-62.5 max-sm:p-4.5 max-sm:rounded-2xl google-variant">
+  <div class="card-header flex items-center gap-4 mb-4">
     <app-avatar [src]="review.photo" [fallbackText]="getInitials(review.author)"></app-avatar>
     
-    <div class="user-info">
-      <h4 class="user-name">{{ review.author }}</h4>
-      <p class="user-meta">Google Maps • {{ review.relativeTime }}</p>
+    <div class="user-info overflow-hidden flex-1">
+      <h4 class="user-name font-extrabold text-base text-foreground m-0 whitespace-nowrap text-ellipsis overflow-hidden">{{ review.author }}</h4>
+      <p class="user-meta text-sm text-muted-foreground m-0">Google Maps • {{ review.relativeTime }}</p>
     </div>
     
-    <div class="google-badge">
-      <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google" class="google-icon">
+    <div class="google-badge ml-auto">
+      <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google" class="google-icon w-5 h-5">
     </div>
   </div>
 
-  <div class="stars-row">
+  <div class="stars-row flex gap-0.5 mb-4 text-yellow-500">
     @for (star of [1,2,3,4,5]; track star) {
       <lucide-icon 
         name="star" 
@@ -23,16 +23,16 @@
     }
   </div>
 
-  <p class="review-text">
+  <p class="review-text text-sm leading-relaxed text-foreground italic mb-auto line-clamp-3">
     "{{ review.text }}"
   </p>
 
-  <div class="divider"></div>
+  <div class="divider h-px bg-border my-4"></div>
 
-  <div class="card-footer">
-    <div class="google-verification">
+  <div class="card-footer flex flex-col gap-2">
+    <div class="google-verification flex items-center gap-2 text-blue-600">
       <lucide-icon name="CircleCheck" [size]="14" class="check-icon"></lucide-icon>
-      <span class="label-verified">Verified Customer Review</span>
+      <span class="label-verified text-xs font-bold uppercase">Verified Customer Review</span>
     </div>
   </div>
 </div>

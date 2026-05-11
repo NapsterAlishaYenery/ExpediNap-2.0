@@ -1,26 +1,27 @@
-<div class="top-bar" [class.hide-topbar]="isScrollingDown">
-  <div class="top-bar-container">
-    <div class="weather-info hide-mobile">
+<div class="top-bar h-10 w-full bg-linear-to-r from-sky-100 via-purple-100 to-sky-100 border-b border-black/5 flex items-center fixed top-0 left-0 z-1001 transition-transform duration-400 dark:from-slate-900 dark:via-purple-950 dark:to-slate-900 dark:border-border" [class.hide-topbar]="isScrollingDown" [class.-translate-y-full]="isScrollingDown">
+  <div class="top-bar-container w-full max-w-350 mx-auto px-8 flex justify-between items-center text-sm font-medium text-foreground/80 h-full max-md:px-4">
+    
+    <div class="weather-info hide-mobile flex items-center gap-1.5 leading-none max-md:hidden">
       <img
         [src]="'https://openweathermap.org/img/wn/' + weatherDetails?.icon + '@2x.png'"
         [alt]="weatherDetails?.description"
-        class="weather-dynamic-icon" />
+        class="weather-dynamic-icon w-6 h-6 inline-flex align-middle -mr-0.5 drop-shadow-md" />
 
       <span class="city">{{weatherDetails?.name}}</span>
       <span class="temp">Temp: {{weatherDetails?.temp}}°C</span>
-      <lucide-icon name="droplets" class="icon-sm humidity-icon"></lucide-icon>
-      <span class="humidity">humidity: {{weatherDetails?.humidity}}%</span>
+      <lucide-icon name="droplets" class="icon-sm humidity-icon w-3.5 h-3.5 stroke-[2.5px] inline-flex items-center justify-center text-blue-500"></lucide-icon>
+      <span class="humidity text-sm opacity-90">humidity: {{weatherDetails?.humidity}}%</span>
     </div>
 
-    <div class="schedule-info">
-      <lucide-icon name="clock" class="icon-sm"></lucide-icon>
+    <div class="schedule-info flex items-center gap-1.5 leading-none">
+      <lucide-icon name="clock" class="icon-sm w-3.5 h-3.5 stroke-[2.5px] inline-flex items-center justify-center"></lucide-icon>
       <span>Lun - Sáb: 8:00 AM - 6:00 PM</span>
     </div>
 
-    <div class="contact-action">
-      <app-button variant="whatsapp" size="sm" (onClick)="onWhatsApp()">
-        <i class="bi bi-whatsapp icon-sm"></i>
-        <span class="btn-text">WhatsApp</span>
+    <div class="contact-action flex items-center">
+      <app-button variant="whatsapp" size="sm" (onClick)="onWhatsApp()" class="[&_.btn.size-sm]:h-7 [&_.btn.size-sm]:px-3 [&_.btn.size-sm]:text-xs [&_.btn.size-sm]:gap-1.5 max-md:[&_.btn.size-sm]:px-2">
+        <i class="bi bi-whatsapp icon-sm text-sm"></i>
+        <span class="btn-text max-md:hidden">WhatsApp</span>
       </app-button>
     </div>
   </div>

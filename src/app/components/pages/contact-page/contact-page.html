@@ -1,23 +1,28 @@
-<div class="contacto-container">
-  <section class="contacto-header">
-    <div class="container-custom">
-      <h1 class="contacto-titulo">Get in Touch</h1>
-      <p class="contacto-subtitulo">
+<div class="contacto-container pt-10 pb-20 bg-background">
+
+  <!-- HEADER -->
+  <section class="contacto-header pt-16 pb-12 bg-linear-to-b from-muted/40 to-transparent mb-12 max-sm:pt-28 max-md:pt-24">
+    <div class="container-custom max-w-350 mx-auto px-6">
+      <h1 class="contacto-titulo text-[3.5rem] font-[850] tracking-tighter leading-tight text-foreground mb-4 max-lg:text-[2.75rem] max-sm:text-[1.85rem]">Get in Touch</h1>
+      <p class="contacto-subtitulo text-xl leading-relaxed text-foreground/70 font-medium max-w-162.5 border-l-[5px] border-l-accent pl-6 max-sm:text-sm max-sm:pl-4">
         We are here to help you plan your perfect Caribbean adventure.
       </p>
     </div>
   </section>
 
-  <section class="contacto-grid container-custom">
+  <!-- GRID PRINCIPAL -->
+  <section class="contacto-grid container-custom max-w-350 mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-20 max-lg:gap-12 items-start">
 
-    <div class="info-list">
-      <div class="card info-item">
-        <div class="icono">
-          <lucide-icon name="map-pin"></lucide-icon>
+    <!-- INFORMACIÓN DE CONTACTO (IZQUIERDA) -->
+    <div class="info-list flex flex-col gap-6">
+      
+      <div class="card info-item flex gap-6 items-start transition-all duration-300 hover:border-accent hover:translate-x-2 bg-card border border-border rounded-3xl p-10 shadow-[0_10px_30px_rgba(0,0,0,0.04)] max-md:p-6 max-sm:flex-col max-sm:gap-3 max-sm:items-start">
+        <div class="icono w-13 h-13 rounded-xl bg-accent/10 flex justify-center items-center shrink-0 text-accent">
+          <lucide-icon name="map-pin" class="w-6 h-6"></lucide-icon>
         </div>
         <div>
-          <h3 class="info-titulo">Our Office</h3>
-          <p class="info-texto">
+          <h3 class="info-titulo text-lg font-extrabold mb-2 text-foreground">Our Office</h3>
+          <p class="info-texto text-muted-foreground text-base leading-relaxed">
             Pablo Guerrero Street <br>
             San Pedro Square <br>
             Higüey, Dominican Republic
@@ -25,86 +30,74 @@
         </div>
       </div>
 
-      <div class="card info-item">
-        <div class="icono">
-          <lucide-icon name="phone"></lucide-icon>
+      <div class="card info-item flex gap-6 items-start transition-all duration-300 hover:border-accent hover:translate-x-2 bg-card border border-border rounded-3xl p-10 shadow-[0_10px_30px_rgba(0,0,0,0.04)] max-md:p-6 max-sm:flex-col max-sm:gap-3 max-sm:items-start">
+        <div class="icono w-13 h-13 rounded-xl bg-accent/10 flex justify-center items-center shrink-0 text-accent">
+          <lucide-icon name="phone" class="w-6 h-6"></lucide-icon>
         </div>
         <div>
-          <h3 class="info-titulo">Phone & WhatsApp</h3>
-          <p class="info-texto">(809) 836-9303</p>
-          <p class="info-texto">(829) 836-9303</p>
+          <h3 class="info-titulo text-lg font-extrabold mb-2 text-foreground">Phone & WhatsApp</h3>
+          <p class="info-texto text-muted-foreground text-base leading-relaxed">(809) 836-9303</p>
+          <p class="info-texto text-muted-foreground text-base leading-relaxed">(829) 836-9303</p>
         </div>
       </div>
 
-      <div class="card info-item">
-        <div class="icono">
-          <lucide-icon name="mail"></lucide-icon>
+      <div class="card info-item flex gap-6 items-start transition-all duration-300 hover:border-accent hover:translate-x-2 bg-card border border-border rounded-3xl p-10 shadow-[0_10px_30px_rgba(0,0,0,0.04)] max-md:p-6 max-sm:flex-col max-sm:gap-3 max-sm:items-start">
+        <div class="icono w-13 h-13 rounded-xl bg-accent/10 flex justify-center items-center shrink-0 text-accent">
+          <lucide-icon name="mail" class="w-6 h-6"></lucide-icon>
         </div>
         <div>
-          <h3 class="info-titulo">Email Support</h3>
-          <p class="info-texto">info@expedinap.com</p>
-          <p class="info-texto">expedinap@gmail.com</p>
+          <h3 class="info-titulo text-lg font-extrabold mb-2 text-foreground">Email Support</h3>
+          <p class="info-texto text-muted-foreground text-base leading-relaxed">info@expedinap.com</p>
+          <p class="info-texto text-muted-foreground text-base leading-relaxed">expedinap@gmail.com</p>
         </div>
       </div>
 
-      <div class="card info-item">
-        <div class="icono">
-          <lucide-icon name="clock"></lucide-icon>
+      <div class="card info-item flex gap-6 items-start transition-all duration-300 hover:border-accent hover:translate-x-2 bg-card border border-border rounded-3xl p-10 shadow-[0_10px_30px_rgba(0,0,0,0.04)] max-md:p-6 max-sm:flex-col max-sm:gap-3 max-sm:items-start">
+        <div class="icono w-13 h-13 rounded-xl bg-accent/10 flex justify-center items-center shrink-0 text-accent">
+          <lucide-icon name="clock" class="w-6 h-6"></lucide-icon>
         </div>
         <div>
-          <h3 class="info-titulo">Working Hours</h3>
-          <p class="info-texto">Mon - Sun: 8:00 AM - 8:00 PM</p>
+          <h3 class="info-titulo text-lg font-extrabold mb-2 text-foreground">Working Hours</h3>
+          <p class="info-texto text-muted-foreground text-base leading-relaxed">Mon - Sun: 8:00 AM - 8:00 PM</p>
         </div>
       </div>
     </div>
 
-    <div class="card formulario-card">
-      <h2 class="form-titulo">Send us a Message</h2>
+    <!-- FORMULARIO (DERECHA) -->
+    <div class="card formulario-card bg-card border border-border rounded-3xl p-10 shadow-[0_10px_30px_rgba(0,0,0,0.04)] max-md:p-6 max-sm:p-5">
+      <h2 class="form-titulo text-3xl font-extrabold mb-8 tracking-tighter max-sm:text-2xl max-sm:mb-6">Send us a Message</h2>
 
-      <form [formGroup]="contactoForm" (ngSubmit)="enviarFormulario()"
-        class="formulario">
-        <div class="form-grupo">
-          <label for="fullName">Full Name</label>
-          <input id="fullName" type="text" formControlName="fullName"
-            placeholder="John Doe" autocomplete="name">
-          @if (contactoForm.get('fullName')?.invalid &&
-          contactoForm.get('fullName')?.touched) {
-          <small class="error-text">Name is required (min 3 chars).</small>
+      <form [formGroup]="contactoForm" (ngSubmit)="enviarFormulario()" class="formulario flex flex-col gap-6">
+        <div class="form-grupo flex flex-col gap-2">
+          <label for="fullName" class="font-semibold text-sm text-foreground ml-1">Full Name</label>
+          <input id="fullName" type="text" formControlName="fullName" placeholder="John Doe" autocomplete="name" class="px-5 py-4 rounded-2xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 max-sm:py-3 max-sm:px-4 max-sm:text-sm">
+          @if (contactoForm.get('fullName')?.invalid && contactoForm.get('fullName')?.touched) {
+          <small class="error-text text-red-500 text-xs font-medium ml-1">Name is required (min 3 chars).</small>
           }
         </div>
 
-        <div class="form-grupo">
-          <label for="email">Email Address</label>
-          <input id="email" type="email" formControlName="email"
-            placeholder="john@example.com" autocomplete="email">
-          @if (contactoForm.get('email')?.invalid &&
-          contactoForm.get('email')?.touched) {
-          <small class="error-text">Please enter a valid email.</small>
+        <div class="form-grupo flex flex-col gap-2">
+          <label for="email" class="font-semibold text-sm text-foreground ml-1">Email Address</label>
+          <input id="email" type="email" formControlName="email" placeholder="john@example.com" autocomplete="email" class="px-5 py-4 rounded-2xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 max-sm:py-3 max-sm:px-4 max-sm:text-sm">
+          @if (contactoForm.get('email')?.invalid && contactoForm.get('email')?.touched) {
+          <small class="error-text text-red-500 text-xs font-medium ml-1">Please enter a valid email.</small>
           }
         </div>
 
-        <div class="form-grupo">
-          <label for="phone">Phone / WhatsApp</label>
-          <input id="phone" type="tel" formControlName="phone"
-            placeholder="+1 (829) 000-0000" autocomplete="tel-national">
+        <div class="form-grupo flex flex-col gap-2">
+          <label for="phone" class="font-semibold text-sm text-foreground ml-1">Phone / WhatsApp</label>
+          <input id="phone" type="tel" formControlName="phone" placeholder="+1 (829) 000-0000" autocomplete="tel-national" class="px-5 py-4 rounded-2xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 max-sm:py-3 max-sm:px-4 max-sm:text-sm">
         </div>
 
-        <div class="form-grupo">
-          <label for="message">Message</label>
-          <textarea id="message" formControlName="message" rows="5"
-            placeholder="Tell us about the excursion or yacht you are interested in or have any suggestions ..."></textarea>
-          @if (contactoForm.get('message')?.invalid &&
-          contactoForm.get('message')?.touched) {
-          <small class="error-text">Message must be at least 10
-            characters.</small>
+        <div class="form-grupo flex flex-col gap-2">
+          <label for="message" class="font-semibold text-sm text-foreground ml-1">Message</label>
+          <textarea id="message" formControlName="message" rows="5" placeholder="Tell us about the excursion or yacht you are interested in or have any suggestions ..." class="px-5 py-4 rounded-2xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-4 focus:ring-accent/10 resize-y max-sm:py-3 max-sm:px-4 max-sm:text-sm"></textarea>
+          @if (contactoForm.get('message')?.invalid && contactoForm.get('message')?.touched) {
+          <small class="error-text text-red-500 text-xs font-medium ml-1">Message must be at least 10 characters.</small>
           }
         </div>
 
-        <app-button
-          variant="default"
-          size="lg"
-          class="w-full"
-          [disabled]="isProcessing">
+        <app-button variant="default" size="lg" class="w-full" [disabled]="isProcessing">
           {{ isProcessing ? 'SENDING...' : 'SEND MESSAGE' }}
         </app-button>
       </form>
@@ -112,13 +105,13 @@
 
   </section>
 
-  <section class="mapa-section container-custom">
-    <div class="mapa-header">
-      <h2 class="mapa-titulo">Visit Us</h2>
-      <p class="mapa-subtitulo">Located in the heart of Higüey, close to all
-        major resorts.</p>
+  <!-- SECCIÓN MAPA -->
+  <section class="mapa-section container-custom max-w-350 mx-auto px-6 mt-24">
+    <div class="mapa-header mb-10">
+      <h2 class="mapa-titulo text-4xl font-[850] mb-2 max-sm:text-2xl">Visit Us</h2>
+      <p class="mapa-subtitulo text-lg text-muted-foreground max-sm:text-base">Located in the heart of Higüey, close to all major resorts.</p>
     </div>
-    <div class="mapa-placeholder">
+    <div class="mapa-placeholder rounded-3xl overflow-hidden border border-border shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7561.934381004237!2d-68.74213739343105!3d18.620545430330427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ea8b702cea79b6b%3A0xf7ad75bd87ba04b!2sExpediNap!5e0!3m2!1ses-419!2sdo!4v1753723218565!5m2!1ses-419!2sdo3"
         width="100%"
@@ -126,7 +119,8 @@
         style="border:0;"
         allowfullscreen
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
+        referrerpolicy="no-referrer-when-downgrade"
+        class="w-full h-112.5 max-sm:h-75">
       </iframe>
     </div>
   </section>

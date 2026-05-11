@@ -1,114 +1,114 @@
-<div class="breadcrumb-wrapper">
-  <div class="breadcrumb-container">
+<div class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
+  <div class="breadcrumb-container max-w-350 mx-auto px-6">
     <app-breadcrumb></app-breadcrumb>
   </div>
 </div>
 
 @if (!isLoading && excursion) {
-<main class="detail-container container-custom">
-  <header class="detail-header">
-    <h1 class="text-3xl font-bold">{{ excursion.name | titlecase }}</h1>
-    <div class="header-meta">
-      <span class="location-tag">
-        <lucide-icon name="map-pin" size="18"></lucide-icon> {{ excursion.location | titlecase }}, RD
+<main class="detail-container container-custom max-w-350 mx-auto px-6 pt-8 pb-20">
+  <header class="detail-header mb-8">
+    <h1 class="text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2 max-md:text-4xl max-sm:text-3xl">{{ excursion.name | titlecase }}</h1>
+    <div class="header-meta flex flex-wrap gap-6 mt-3 text-muted-foreground font-medium">
+      <span class="location-tag flex items-center gap-2 text-sm">
+        <lucide-icon name="map-pin" size="18" class="text-accent"></lucide-icon> {{ excursion.location | titlecase }}, RD
       </span>
-      <span class="duration-tag">
-        <lucide-icon name="clock" size="18"></lucide-icon> {{ excursion.duration.time }} {{ excursion.duration.unit }}(s)
+      <span class="duration-tag flex items-center gap-2 text-sm">
+        <lucide-icon name="clock" size="18" class="text-accent"></lucide-icon> {{ excursion.duration.time }} {{ excursion.duration.unit }}(s)
       </span>
-      <span class="age-tag">
-        <lucide-icon name="baby" size="18"></lucide-icon> Min. {{ excursion.minimumAge }} years
+      <span class="age-tag flex items-center gap-2 text-sm">
+        <lucide-icon name="baby" size="18" class="text-accent"></lucide-icon> Min. {{ excursion.minimumAge }} years
       </span>
     </div>
   </header>
 
-  <div class="content-grid">
-    <!-- COLUMNA IZQUIERDA (66%) -->
-    <div class="main-column">
-      <section class="gallery-section">
+  <div class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_33%] gap-12 items-start">
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="main-column min-w-0">
+      <section class="gallery-section mb-14">
         <app-image-gallery [images]="excursion.images"></app-image-gallery>
       </section>
 
       <div class="info-column">
-        <div class="description-card">
-          <h3>About this experience</h3>
+        <div class="description-card mb-12 leading-relaxed text-lg text-muted-foreground">
+          <h3 class="text-2xl font-bold mb-5 text-foreground">About this experience</h3>
           <p>{{ excursion.description }}</p>
         </div>
 
-        <div class="details-grid">
+        <div class="details-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 p-10 bg-muted/20 rounded-3xl border border-border/50 max-md:p-6">
           <div class="detail-block">
-            <h3>What does it include?</h3>
-            <ul class="check-list">
+            <h3 class="text-2xl font-bold mb-5 text-foreground">What does it include?</h3>
+            <ul class="check-list flex flex-col gap-3.5 list-none p-0">
               @for (item of excursion.includes; track item) {
-              <li><i class="bi bi-check-circle text-green"></i> {{ item }}</li>
+              <li class="flex items-start gap-3 text-sm text-foreground leading-tight"><i class="bi bi-check-circle text-[#22c55e]"></i> {{ item }}</li>
               }
             </ul>
           </div>
           <div class="detail-block">
-            <h3>Recommendations</h3>
-            <ul class="check-list">
+            <h3 class="text-2xl font-bold mb-5 text-foreground">Recommendations</h3>
+            <ul class="check-list flex flex-col gap-3.5 list-none p-0">
               @for (rec of excursion.recommendations; track rec) {
-              <li><lucide-icon name="info" class="text-accent"></lucide-icon> {{ rec }}</li>
+              <li class="flex items-start gap-3 text-sm text-foreground leading-tight"><lucide-icon name="info" class="text-accent w-4 h-4 shrink-0"></lucide-icon> {{ rec }}</li>
               }
             </ul>
           </div>
         </div>
 
-        <div class="itinerary-section">
-          <h3>Itinerary</h3>
-          <p class="itinerary-text">{{ excursion.itinerary }}</p>
-          <div class="meeting-point">
-            <lucide-icon name="flag"></lucide-icon>
+        <div class="itinerary-section p-10 border-l-5 border-l-accent bg-card rounded-r-3xl mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.03)] max-md:p-6">
+          <h3 class="text-2xl font-bold mb-5 text-foreground">Itinerary</h3>
+          <p class="itinerary-text italic text-muted-foreground mb-8 text-base leading-relaxed">{{ excursion.itinerary }}</p>
+          <div class="meeting-point flex items-center gap-4 p-5 bg-muted/30 rounded-xl text-sm text-foreground">
+            <lucide-icon name="flag" class="text-accent shrink-0"></lucide-icon>
             <span><strong>Meeting point:</strong> {{ excursion.startingPoint }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- COLUMNA DERECHA (33% STICKY) -->
-    <aside class="booking-column">
-      <div class="booking-card-sticky">
-        <div class="price-header">
-          <div class="price-row">
-            <div class="price-box">
+    <!-- COLUMNA DERECHA (STICKY) -->
+    <aside class="booking-column sticky top-8 z-10 self-start max-lg:relative max-lg:top-0 max-lg:order-first max-lg:max-w-125 max-lg:mx-auto">
+      <div class="booking-card-sticky bg-card border border-border rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
+        <div class="price-header mb-8 pb-6 border-b border-border">
+          <div class="price-row flex justify-between items-end w-full">
+            <div class="price-box flex flex-col items-center gap-1">
               @if (excursion.regularPriceUsd > excursion.offerPriceUsd) {
-                <span class="old-price">${{ excursion.regularPriceUsd }}</span>
+                <span class="old-price line-through text-muted-foreground text-lg font-medium">${{ excursion.regularPriceUsd }}</span>
               }
-              <span class="price-label">Regular</span>
+              <span class="price-label block text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Regular</span>
             </div>
-            <div class="price-box">
-              <span class="current-price">${{ excursion.offerPriceUsd }}</span>
-              <span class="price-label">Offer per person</span>
+            <div class="price-box flex flex-col items-center gap-1">
+              <span class="current-price text-5xl font-extrabold text-[#ef4444] leading-none">${{ excursion.offerPriceUsd }}</span>
+              <span class="price-label block text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Offer per person</span>
             </div>
           </div>
         </div>
 
-        <form [formGroup]="bookingForm" class="booking-form">
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" formControlName="fullName" placeholder="Ej. Juan Pérez">
+        <form [formGroup]="bookingForm" class="booking-form flex flex-col gap-5">
+          <div class="form-group flex flex-col gap-2">
+            <label for="fullName" class="text-sm font-semibold text-muted-foreground ml-1">Full Name</label>
+            <input type="text" id="fullName" formControlName="fullName" placeholder="Ej. Juan Pérez" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Prefix</label>
-              <select formControlName="phonePrefix">
+          <div class="form-row grid grid-cols-[110px_1fr] gap-4">
+            <div class="form-group flex flex-col gap-2">
+              <label class="text-sm font-semibold text-muted-foreground ml-1">Prefix</label>
+              <select formControlName="phonePrefix" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
                 <option value="+1">🇩🇴 +1</option>
                 <option value="+34">🇪🇸 +34</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>Phone</label>
-              <input type="tel" formControlName="phone" placeholder="809-000-0000">
+            <div class="form-group flex flex-col gap-2">
+              <label class="text-sm font-semibold text-muted-foreground ml-1">Phone</label>
+              <input type="tel" formControlName="phone" placeholder="809-000-0000" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="travelDate">Travel Date</label>
-            <input type="date" id="travelDate" formControlName="travelDate" [min]="minDate">
+          <div class="form-group flex flex-col gap-2">
+            <label for="travelDate" class="text-sm font-semibold text-muted-foreground ml-1">Travel Date</label>
+            <input type="date" id="travelDate" formControlName="travelDate" [min]="minDate" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
           </div>
 
-          <div class="button-row">
-            <app-button variant="whatsapp" size="lg" (onClick)="onWhatsApp()">
+          <div class="button-row grid grid-cols-2 gap-3 mt-6">
+            <app-button variant="whatsapp" size="lg" (onClick)="onWhatsApp()" class="col-span-2">
               WHATSAPP
             </app-button>
           </div>

@@ -1,23 +1,23 @@
-<footer class="main-footer">
-  <div class="container-custom py-16">
-    <div class="footer-grid">
+<footer class="main-footer bg-foreground text-background border-t border-border/10 w-full min-h-[80vh] h-auto flex flex-col">
+  <div class="container-custom max-w-350 mx-auto px-6 w-full box-border py-16 flex-1 flex flex-col justify-center">
+    <div class="footer-grid grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 
       <div class="footer-col branding">
-        <div class="footer-logo">
-          <img src="company-logo.png" alt="ExpediNap Logo" class="logo-img">
+        <div class="footer-logo flex items-center gap-4 mb-6">
+          <img src="company-logo.png" alt="ExpediNap Logo" class="logo-img h-15 w-auto">
           <div class="logo-text">
-            <h3>ExpediNap</h3>
-            <p>Trips you dream of, Adventures you live.</p>
+            <h3 class="text-2xl m-0 text-background">ExpediNap</h3>
+            <p class="text-sm opacity-70 italic m-0">Trips you dream of, Adventures you live.</p>
           </div>
         </div>
-        <p class="brand-desc">
+        <p class="brand-desc text-sm leading-relaxed opacity-70 mb-8">
           Experiencias turísticas exclusivas en la República Dominicana,
           conectando viajeros con la esencia del Caribe. Tu aventura comienza
           aquí.
         </p>
-        <div class="social-links">
+        <div class="social-links flex gap-4">
           @for (social of socials; track social.icon) {
-          <a [href]="social.route" target="_blank" class="social-icon">
+          <a [href]="social.route" target="_blank" class="social-icon w-10 h-10 rounded-full bg-background/10 flex items-center justify-center text-background no-underline transition-all duration-300 text-lg hover:bg-accent hover:-translate-y-1">
             <i [class]="'bi ' + social.icon"></i>
           </a>
           }
@@ -25,50 +25,50 @@
       </div>
 
       <div class="footer-col">
-        <h4>Explora</h4>
-        <ul class="footer-links">
+        <h4 class="text-2xl font-bold mb-8 text-background">Explora</h4>
+        <ul class="footer-links flex flex-col gap-4">
           @for (link of exploraLinks; track link.name) {
-          <li><a [routerLink]="link.route">{{ link.name }}</a></li>
+          <li><a [routerLink]="link.route" class="text-background/70 no-underline transition-colors text-sm hover:text-accent">{{ link.name }}</a></li>
           }
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Legal</h4>
-        <ul class="footer-links">
+        <h4 class="text-2xl font-bold mb-8 text-background">Legal</h4>
+        <ul class="footer-links flex flex-col gap-4">
           @for (link of legalLinks; track link.label) {
-          <li><a [routerLink]="link.route">{{ link.label }}</a></li>
+          <li><a [routerLink]="link.route" class="text-background/70 no-underline transition-colors text-sm hover:text-accent">{{ link.label }}</a></li>
           }
         </ul>
       </div>
 
       <div class="footer-col contact-info">
-        <h4>Contacto</h4>
-        <ul>
-          <li>
-            <lucide-icon name="map-pin" class="icon-accent"></lucide-icon>
+        <h4 class="text-2xl font-bold mb-8 text-background">Contacto</h4>
+        <ul class="flex flex-col gap-5">
+          <li class="flex gap-4 text-sm text-background">
+            <lucide-icon name="map-pin" class="icon-accent text-accent shrink-0"></lucide-icon>
             <span>Av. Pablo Gerrero #27, San Pedro, Higuey, Rep. Dom.</span>
           </li>
-          <li>
-            <lucide-icon name="phone" class="icon-accent"></lucide-icon>
-            <a href="https://wa.me/18298369303" target="_blank">+1 (809) 836-9303 (WhatsApp)</a>
+          <li class="flex gap-4 text-sm text-background">
+            <lucide-icon name="phone" class="icon-accent text-accent shrink-0"></lucide-icon>
+            <a href="https://wa.me/18298369303" target="_blank" class="text-inherit no-underline hover:text-accent">+1 (809) 836-9303 (WhatsApp)</a>
           </li>
-          <li>
-            <lucide-icon name="mail" class="icon-accent"></lucide-icon>
-            <a href="mailto:info@expedinap.com" target="_blank">info@expedinap.com</a>
+          <li class="flex gap-4 text-sm text-background">
+            <lucide-icon name="mail" class="icon-accent text-accent shrink-0"></lucide-icon>
+            <a href="mailto:info@expedinap.com" target="_blank" class="text-inherit no-underline hover:text-accent">info@expedinap.com</a>
           </li>
-          <li>
-            <lucide-icon name="mail" class="icon-accent"></lucide-icon>
-            <a href="mailto:expedinap@gmail.com" target="_blank">expedinap@gmail.com</a>
+          <li class="flex gap-4 text-sm text-background">
+            <lucide-icon name="mail" class="icon-accent text-accent shrink-0"></lucide-icon>
+            <a href="mailto:expedinap@gmail.com" target="_blank" class="text-inherit no-underline hover:text-accent">expedinap@gmail.com</a>
           </li>
         </ul>
       </div>
     </div>
   </div>
 
-  <div class="footer-bottom">
-    <div class="container-custom">
-      <div class="bottom-flex">
+  <div class="footer-bottom border-t border-white/10 py-8">
+    <div class="container-custom max-w-350 mx-auto px-6 w-full box-border">
+      <div class="bottom-flex flex flex-col items-center gap-4 text-center text-sm opacity-50 text-background/50 md:flex-row md:justify-between md:text-left">
         <p>© {{ currentYear }} ExpediNap. Todos los derechos reservados.</p>
         <p>Hecho con ❤️ en República Dominicana</p>
       </div>

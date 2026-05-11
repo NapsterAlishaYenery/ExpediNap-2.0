@@ -1,9 +1,13 @@
-<div class="legal-container">
-  <header class="legal-header">
-    <div class="container-custom">
-      <h1 class="main-title">{{ content.title }}</h1>
-      <div class="header-meta">
-        <span class="meta-tag">
+<div class="legal-container pb-20">
+  
+  <!-- HEADER -->
+  <header class="legal-header pt-20 pb-14 bg-linear-to-b from-muted/40 to-transparent mb-14">
+    <div class="container-custom max-w-350 mx-auto px-6">
+      <h1 class="main-title text-[3.5rem] font-[850] tracking-tighter leading-tight text-foreground mb-4 max-lg:text-[2.75rem] max-sm:text-3xl max-[425px]:text-2xl max-[425px]:leading-tight max-[325px]:text-[1.65rem]">
+        {{ content.title }}
+      </h1>
+      <div class="header-meta flex text-muted-foreground font-medium gap-6">
+        <span class="meta-tag flex items-center gap-2">
           <lucide-icon name="calendar" size="18"></lucide-icon>
           Last updated: {{ content.lastUpdated }}
         </span>
@@ -11,22 +15,26 @@
     </div>
   </header>
 
-  <main class="container-custom">
-    <div class="legal-content-layout">
+  <!-- MAIN CONTENT -->
+  <main class="container-custom max-w-350 mx-auto px-6">
+    <div class="legal-content-layout grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-20 lg:gap-20 items-start">
       
-      <article class="legal-body">
+      <!-- CONTENIDO LEGAL -->
+      <article class="legal-body text-lg leading-relaxed text-foreground/85 max-sm:text-base">
         @for (section of content.sections; track $index) {
-          <section class="legal-section">
+          <section class="legal-section mb-14">
             @if (section.title) {
-              <h2 class="section-title">{{ section.title }}</h2>
+              <h2 class="section-title text-[1.85rem] font-extrabold text-foreground mb-6 border-l-5 border-l-accent pl-6 leading-tight max-sm:text-[1.4rem] max-sm:pl-4 max-[325px]:text-[1.2rem]">
+                {{ section.title }}
+              </h2>
             }
             
-            <p class="section-text">{{ section.content }}</p>
+            <p class="section-text mb-4">{{ section.content }}</p>
             
             @if (section.items && section.items.length > 0) {
-              <ul class="legal-list">
+              <ul class="legal-list mt-6 mb-6 pl-7 list-disc">
                 @for (item of section.items; track item) {
-                  <li>{{ item }}</li>
+                  <li class="mb-4 pl-2">{{ item }}</li>
                 }
               </ul>
             }
@@ -34,12 +42,13 @@
         }
       </article>
 
-      <aside class="legal-sidebar">
-        <div class="support-card">
-          <lucide-icon name="shield-check" class="shield-icon" size="40"></lucide-icon>
-          <h3>Legal Support</h3>
-          <p>Questions about our policies? We're here to clarify.</p>
-          <a href="mailto:info@expedinap.com" class="support-link">
+      <!-- SIDEBAR STICKY -->
+      <aside class="legal-sidebar sticky top-25 max-lg:hidden">
+        <div class="support-card bg-card border border-border p-10 rounded-3xl text-center shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+          <lucide-icon name="shield-check" class="shield-icon text-accent mb-4" size="40"></lucide-icon>
+          <h3 class="font-extrabold mb-3 text-xl">Legal Support</h3>
+          <p class="text-muted-foreground text-sm mb-6">Questions about our policies? We're here to clarify.</p>
+          <a href="mailto:info@expedinap.com" class="support-link text-accent font-bold underline break-all">
             info@expedinap.com
           </a>
         </div>

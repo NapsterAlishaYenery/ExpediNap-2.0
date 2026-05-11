@@ -1,53 +1,62 @@
-<div class="excursion-card">
-  <div class="image-wrapper">
-    <img [src]="excursion.images.main.url | imageUrl" [alt]="excursion.name">
+<div class="group relative flex flex-col h-130 max-md:h-auto max-md:min-h-120 bg-card border border-border rounded-(--radius) overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-3 hover:shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1)]">
+  
+  <!-- IMAGEN -->
+  <div class="relative w-full h-62.5 max-md:h-50 overflow-hidden">
+    <img [src]="excursion.images.main.url | imageUrl" 
+         [alt]="excursion.name"
+         class="w-full h-full object-cover transition-transform duration-600 ease-in-out group-hover:scale-110">
 
-    <div class="badge-overlay left">
+    <!-- BADGES OVERLAY -->
+    <div class="absolute top-3 left-3 z-10">
       <app-badge variant="accent">{{ mainCategory }}</app-badge>
     </div>
 
     @if (excursion.offerPriceUsd) {
-    <div class="badge-overlay right">
+    <div class="absolute top-3 right-3 z-10">
       <app-badge variant="default">OFFER</app-badge>
     </div>
     }
   </div>
 
-  <div class="card-body">
-    <h3 class="title">{{ excursion.name }}</h3>
+  <!-- CUERPO DE LA CARD -->
+  <div class="p-6 flex flex-col grow">
+    <h3 class="font-serif text-[1.4rem] font-bold capitalize mb-3 text-foreground transition-colors duration-300 cursor-pointer group-hover:text-accent">
+      {{ excursion.name }}
+    </h3>
 
-    <p class="description">
+    <p class="text-[0.9rem] text-muted-foreground line-clamp-2 mb-5 leading-relaxed min-h-12">
       {{ excursion.description }}
     </p>
 
-    <div class="details-row">
-      <div class="detail-item">
-        <lucide-icon name="map-pin"></lucide-icon>
-        <span>{{ excursion.location }}</span>
+    <!-- FILA DE DETALLES -->
+    <div class="flex items-center flex-wrap gap-5 mb-5">
+      <div class="flex items-center gap-2 text-muted-foreground leading-none">
+        <lucide-icon name="map-pin" class="w-[0.9rem] h-[0.9rem] stroke-[2.5px] flex shrink-0 items-center"></lucide-icon>
+        <span class="text-[0.9rem]">{{ excursion.location }}</span>
       </div>
-      <div class="detail-item">
-        <lucide-icon name="clock"></lucide-icon>
-        <span>{{ excursion.duration.time }} {{ excursion.duration.unit }}</span>
+      <div class="flex items-center gap-2 text-muted-foreground leading-none">
+        <lucide-icon name="clock" class="w-[0.9rem] h-[0.9rem] stroke-[2.5px] flex shrink-0 items-center"></lucide-icon>
+        <span class="text-[0.9rem]">{{ excursion.duration.time }} {{ excursion.duration.unit }}</span>
       </div>
-      <div class="detail-item">
-        <lucide-icon name="users"></lucide-icon>
-        <span> + {{ excursion.minimumAge }} años</span>
+      <div class="flex items-center gap-2 text-muted-foreground leading-none">
+        <lucide-icon name="users" class="w-[0.9rem] h-[0.9rem] stroke-[2.5px] flex shrink-0 items-center"></lucide-icon>
+        <span class="text-[0.9rem]"> + {{ excursion.minimumAge }} años</span>
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="h-px bg-border mb-5"></div>
 
-    <div class="card-footer">
-      <div class="price-container">
+    <!-- FOOTER -->
+    <div class="flex justify-between items-center mt-auto">
+      <div class="flex items-center gap-2">
         @if (excursion.regularPriceUsd) {
-        <span class="regular-price">${{ excursion.regularPriceUsd }}</span>
+        <span class="text-[0.9rem] line-through text-muted-foreground">${{ excursion.regularPriceUsd }}</span>
         }
-        <span class="offer-price">${{ excursion.offerPriceUsd }}</span>
+        <span class="text-[1.4rem] font-extrabold text-primary">${{ excursion.offerPriceUsd }}</span>
       </div>
+      
       <a [routerLink]="['/excursions', excursion.slug]">
-        <app-button
-          variant="accent"
-          size="default">
+        <app-button variant="accent" size="default">
           BOOKING
         </app-button>
       </a>

@@ -12,12 +12,11 @@ import { Breadcrumb } from '../../ui/breadcrumb/breadcrumb';
   styleUrl: './admin-layout.css',
 })
 export class AdminLayout {
-  private themeService = inject(ThemeService);
+  public themeService = inject(ThemeService);
   private auth = inject(Auth);
   private router = inject(Router);
 
   isSidebarCollapsed = signal(false);
-  isDarkMode = signal(this.themeService.isDarkMode());
 
   // LEEMOS EL USUARIO REAL DE TU SERVICIO AUTH
   currentUser = signal(this.auth.getCurrentUser());
@@ -60,9 +59,6 @@ export class AdminLayout {
     this.isSidebarCollapsed.update(v => !v);
   }
 
-  toggleTheme() {
-    this.isDarkMode.set(this.themeService.toggleTheme());
-  }
 
   onLogout() {
     this.auth.removeToken();

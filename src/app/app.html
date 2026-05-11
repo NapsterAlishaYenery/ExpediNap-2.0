@@ -4,7 +4,6 @@
 
 <router-outlet />
 
-
 <!-- LAS ALERTAS GLOBALES -->
 @if (alertService.visible$ | async) {
   @if (alertService.alert$ | async; as data) {
@@ -15,3 +14,6 @@
     </app-alert>
   }
 }
+
+<!-- Modal de confirmacion Global -->
+<app-alert-dialog></app-alert-dialog>

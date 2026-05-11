@@ -1,56 +1,58 @@
-<div class="excursions-page-wrapper">
+<div class="excursions-page-wrapper bg-background">
 
-  <section class="hero-header">
-    <div class="hero-image-bg">
-      <img src="/img/playa-tropical.webp" alt="Playa Dominicana">
+  <!-- HERO -->
+  <section class="hero-header relative h-[75vh] flex items-center justify-center overflow-hidden bg-foreground">
+    <div class="hero-image-bg absolute inset-0 z-1">
+      <img src="/img/playa-tropical.webp" alt="Playa Dominicana" class="w-full h-full object-cover opacity-70">
     </div>
 
-    <div class="hero-content">
-      <h1 class="hero-title">Our Excursions</h1>
-      <p class="hero-description">
+    <div class="hero-content relative z-3 text-center text-foreground px-6">
+      <h1 class="hero-title text-[clamp(3rem,6vw,4rem)] leading-none mb-4 font-extrabold">Our Excursions</h1>
+      <p class="hero-description text-[clamp(1rem,1vw,2rem)] opacity-90 max-w-175 mx-auto">
         Discover the most exciting adventures in the Dominican Caribbean. <br>
         Unique experiences for all tastes.
       </p>
     </div>
 
-    <div class="bottom-gradient-mask"></div>
+    <div class="bottom-gradient-mask absolute bottom-0 w-full h-75 bg-linear-to-b from-transparent to-background z-2"></div>
   </section>
 
-  <nav class="sticky-filter-bar">
-    <div class="container-custom">
-      <div class="filter-wrapper">
-        <label for="category-select" class="filter-label">
+  <!-- STICKY FILTER BAR -->
+  <nav class="sticky-filter-bar sticky top-25 z-100 bg-background/90 backdrop-blur-md py-6 border-b border-border/20">
+    <div class="container-custom max-w-350 mx-auto px-6">
+      <div class="filter-wrapper flex items-center justify-center gap-4 max-sm:flex-col max-sm:items-stretch">
+        <label for="category-select" class="filter-label flex items-center gap-2 font-semibold text-muted-foreground text-sm uppercase tracking-[1px]">
           <lucide-icon name="list-filter" [size]="18"></lucide-icon>
           Filter by:
         </label>
 
-        <div class="select-container">
+        <div class="select-container relative min-w-50 max-sm:w-full">
           <select
             id="category-select"
             (change)="onCategoryChange($event)"
             name="category"
-            class="custom-select">
+            class="custom-select w-full appearance-none bg-card border border-border px-4 py-3 pr-10 rounded-xl text-foreground text-base font-medium cursor-pointer transition-all duration-300 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20">
             @for (cat of categories; track cat.id) {
             <option [value]="cat.id">{{ cat.label | titlecase }}</option>
             }
           </select>
-          <lucide-icon name="chevron-down" class="select-icon"
-            [size]="16"></lucide-icon>
+          <lucide-icon name="chevron-down" class="select-icon absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground" [size]="16"></lucide-icon>
         </div>
       </div>
     </div>
   </nav>
 
-  <section class="featured-section">
-    <div class="container-custom">
+  <!-- FEATURED SECTION -->
+  <section class="featured-section py-20 min-h-[80vh]">
+    <div class="container-custom max-w-350 mx-auto px-6">
 
       @if (isLoading) {
-      <div class="loading-state">
-        <div class="spinner"></div>
+      <div class="loading-state min-h-[50vh] flex flex-col items-center justify-center gap-4 text-muted-foreground">
+        <div class="spinner w-12 h-12 rounded-full border-4 border-border border-t-accent animate-spin"></div>
         <p>Loading adventures...</p>
       </div>
-      }@else {
-      <div class="featured-grid">
+      } @else {
+      <div class="featured-grid grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         @for (item of excursions; track item._id) {
         <app-excursion-card [excursion]="item"></app-excursion-card>
         }

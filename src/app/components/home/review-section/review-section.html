@@ -1,52 +1,50 @@
-<section class="review-section">
-  <div class="container-custom">
+<section class="review-section py-20 bg-background overflow-hidden">
+  <div class="container-custom max-w-350 mx-auto px-6 box-border">
 
-    <div class="reviews-header">
+    <div class="reviews-header flex flex-col gap-8 mb-16 lg:flex-row lg:justify-between lg:items-end">
       <div class="header-left">
-        <span class="sub-title">What our travelers say</span>
-        <h2 class="main-title">Customer Reviews</h2>
+        <span class="sub-title text-accent uppercase tracking-[2px] font-bold text-sm mb-2 block">What our travelers say</span>
+        <h2 class="main-title text-4xl font-extrabold m-0 max-sm:text-3xl">Customer Reviews</h2>
       </div>
 
-      <div class="header-right">
+      <div class="header-right flex items-center gap-10 max-sm:flex-col max-sm:items-start max-sm:gap-6">
         <div class="rating-box">
-          <div class="rating-number">
+          <div class="rating-number flex items-center gap-2 text-[2.8rem] font-extrabold leading-none">
             <span>{{googleReviewData.rating}}</span>
-            <lucide-icon name="star" [size]="28"
-              class="star-icon"></lucide-icon>
+            <lucide-icon name="star" [size]="28" class="star-icon text-yellow-500 fill-yellow-500"></lucide-icon>
           </div>
-          <span class="total-reviews">{{googleReviewData.totalReviews}}
-            reviews</span>
+          <span class="total-reviews block text-muted-foreground text-sm mt-1">{{googleReviewData.totalReviews}} reviews</span>
         </div>
 
         <a href="https://g.page/r/CUuge9hb13oPEAI/review" target="_blank">
-          <app-button
-            variant="default"
-            size="xl"
-            className="gap-2 shadow-primary">
+          <app-button variant="default" size="xl" className="gap-2 shadow-primary">
             Leave review
           </app-button>
         </a>
-
       </div>
     </div>
 
-    <div class="reviews-grid" (scroll)="updateActiveDot()" #scrollContainer>
+    <div class="reviews-grid flex gap-8 w-full overflow-x-auto py-4 pb-12 [scroll-snap-type:x_mandatory] scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none]" 
+         (scroll)="updateActiveDot()" #scrollContainer>
       @for (item of googleReviewData.reviews; track $index) {
-      <app-review-google-card [review]="item"></app-review-google-card>
+      <app-review-google-card [review]="item" class="flex-[0_0_320px] snap-center max-sm:flex-[0_0_280px]"></app-review-google-card>
       }
     </div>
 
-    <div class="dots-navigation">
+    <div class="dots-navigation flex justify-center gap-3 my-4 mb-8">
       @for (item of googleReviewData.reviews; track $index) {
-      <div
-        class="dot" [class.active]="$index === activeIndex"
-        (click)="scrollToIndex($index)"></div>
+      <div class="dot w-2.5 h-2.5 rounded-full bg-muted transition-all duration-300 cursor-pointer"
+           [class.active]="$index === activeIndex"
+           [class.bg-accent]="$index === activeIndex"
+           [class.w-6]="$index === activeIndex"
+           [class.rounded-[10px]]="$index === activeIndex"
+           (click)="scrollToIndex($index)">
+      </div>
       }
     </div>
 
-    <p class="reviews-footer-text">
-      Showing the {{showingCount}} most recent reviews out of
-      {{googleReviewData.totalReviews}} total
+    <p class="reviews-footer-text text-center text-muted-foreground text-sm">
+      Showing the {{showingCount}} most recent reviews out of {{googleReviewData.totalReviews}} total
     </p>
 
   </div>

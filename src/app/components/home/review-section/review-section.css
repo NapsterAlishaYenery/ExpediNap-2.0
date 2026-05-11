@@ -1,156 +1,28 @@
-/* Contenedor Base */
-.container-custom {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    box-sizing: border-box;
+/* Ocultar scrollbar del reviews-grid */
+.reviews-grid::-webkit-scrollbar {
+  display: none;
 }
 
-.review-section {
-    padding: 80px 0;
-    background-color: hsl(var(--background));
-    overflow: hidden;
+/* Truco para centrar las cards sin romper el scroll */
+.reviews-grid app-review-google-card:first-child {
+  margin-left: auto;
 }
 
-/* Header */
-.reviews-header {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-bottom: 4rem;
+.reviews-grid app-review-google-card:last-child {
+  margin-right: auto;
 }
 
-.sub-title {
-    color: hsl(var(--accent));
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.main-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin: 0;
-}
-
-/* Rating Box */
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-}
-
-.rating-number {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 2.8rem;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.star-icon {
-    color: #eab308;
-    fill: #eab308;
-}
-
-.total-reviews {
-    display: block;
-    color: hsl(var(--muted-foreground));
-    font-size: 0.95rem;
-    margin-top: 0.2rem;
-}
-
-/* --- EL GRID CORREGIDO --- */
-.reviews-grid {
-    display: flex;
-    gap: 2rem;
-    width: 100%;
-    overflow-x: auto;
-    padding: 1rem 0 3rem;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.reviews-grid::-webkit-scrollbar { display: none; }
-
-/* Selector del componente hijo */
-app-review-google-card {
-    flex: 0 0 320px;
-    scroll-snap-align: center; /* Cambiado a center para mejor UX móvil */
-}
-
-/* TRUCO PARA CENTRAR SIN ROMPER EL SCROLL */
-app-review-google-card:first-child { margin-left: auto; }
-app-review-google-card:last-child { margin-right: auto; }
-
-/* Navegación */
-.dots-navigation {
-    display: flex;
-    justify-content: center;
-    gap: 0.8rem;
-    margin: 1rem 0 2rem;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: hsl(var(--muted));
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.dot.active {
-    background-color: hsl(var(--accent));
-    width: 25px;
-    border-radius: 10px;
-}
-
-.reviews-footer-text {
-    text-align: center;
-    color: hsl(var(--muted-foreground));
-    font-size: 0.9rem;
-}
-
-/* --- RESPONSIVO --- */
-
-@media (min-width: 1024px) {
-    .reviews-header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
-}
-
+/* Ajuste móvil - quitar margen auto y añadir padding al final */
 @media (max-width: 768px) {
-    .header-right {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
-    }
-    .main-title { font-size: 2rem; }
-    
-    /* Quitamos el margin auto en móvil para que el scroll sea normal */
-    app-review-google-card:first-child { margin-left: 0; }
-    app-review-google-card:last-child { margin-right: 0; }
-    
-    /* Añadimos un padding ficticio al final para que la última card no pegue del borde */
-    .reviews-grid::after {
-        content: '';
-        padding-right: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    app-review-google-card {
-        flex: 0 0 280px;
-    }
-    .dot { width: 8px; height: 8px; }
-    .dot.active { width: 18px; }
+  .reviews-grid app-review-google-card:first-child {
+    margin-left: 0;
+  }
+  .reviews-grid app-review-google-card:last-child {
+    margin-right: 0;
+  }
+  
+  .reviews-grid::after {
+    content: '';
+    padding-right: 1.5rem;
+  }
 }

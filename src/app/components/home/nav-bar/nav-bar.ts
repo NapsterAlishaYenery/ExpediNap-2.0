@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
 import { Button } from '../../ui/button/button';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -11,22 +11,15 @@ import { ThemeService } from '../../../core/services/theme-service/theme.service
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.css',
 })
-export class NavBar implements OnInit{
-  
-  // injectamos el resrvixio para cambiar de tema
-  private themeService = inject(ThemeService);
-  
-  // Inyectamos el servicio
+export class NavBar {
+
+  // Inyecciones
+  public themeService = inject(ThemeService); // Público para usarlo en el HTML
   private menuService = inject(MobileMenuService);
 
-  isScrollingDown = false;
-  lastScrollTop = 0;
-  isDarkMode = false;
-
-  ngOnInit() {
-    // Sincronizamos el estado inicial del botón con el servicio
-    this.isDarkMode = this.themeService.isDarkMode();
-  }
+  // Estados con Signals
+  isScrollingDown = signal(false);
+  private lastScrollTop = 0;
 
   menuItems = [
     { name: 'Home', icon: 'house', route: '/' },
@@ -40,17 +33,17 @@ export class NavBar implements OnInit{
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const st = window.pageYOffset || document.documentElement.scrollTop;
-    this.isScrollingDown = st > this.lastScrollTop && st > 50;
+    // Actualizamos el signal
+    this.isScrollingDown.set(st > this.lastScrollTop && st > 50);
     this.lastScrollTop = st <= 0 ? 0 : st;
   }
 
   toggleTheme() {
-    // El servicio se encarga de la lógica y el LocalStorage
-    this.isDarkMode = this.themeService.toggleTheme();
+    // Solo llamamos a la acción, el signal darkMode() del servicio cambiará solo
+    this.themeService.toggleTheme();
   }
 
   openMobileMenu() {
-    // Aquí disparas tu modal que ya tienes listo
     this.menuService.open();
   }
 }

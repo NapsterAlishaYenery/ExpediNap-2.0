@@ -1,20 +1,47 @@
-<div class="accordion-container">
+<div class="w-full max-w-212.5 mx-auto flex flex-col gap-3 px-4 md:px-0">
+  
   @for (item of items; track $index) {
-    <div class="accordion-item" [class.is-open]="item.isOpen">
-      <button class="accordion-trigger" (click)="toggleItem($index)">
-        <span class="question-text">{{ item.question }}</span>
+    <div 
+      class="group transition-all duration-500 rounded-(--radius) border overflow-hidden backdrop-blur-md"
+      [ngClass]="item.isOpen 
+        ? 'bg-card/80 border-accent/50 shadow-[0_10px_25px_-5px_hsl(var(--accent)/0.1)] scale-[1.01]' 
+        : 'bg-white/5 border-border/50 hover:bg-white/10'">
+      
+      <!-- Trigger (Botón) -->
+      <button 
+        class="w-full flex items-center justify-between p-5 text-left cursor-pointer transition-colors"
+        (click)="toggleItem($index)">
+        
+        <span class="font-sans font-semibold text-lg md:text-xl text-foreground pr-4">
+          {{ item.question }}
+        </span>
+
         <lucide-icon 
           name="chevron-down" 
-          class="chevron-icon"
-          [class.rotate]="item.isOpen">
+          class="w-5 h-5 text-muted-foreground transition-all duration-500"
+          [class.rotate-180]="item.isOpen"
+          [class.text-accent]="item.isOpen">
         </lucide-icon>
       </button>
 
-      <div class="accordion-content" [style.max-height]="item.isOpen ? '500px' : '0'">
-        <div class="content-inner">
-          {{ item.answer }}
+      <!-- Contenido Animado con Grid -->
+      <div 
+        class="grid transition-all duration-500 ease-[cubic-bezier(0.3,0,0.2,1)]"
+        [style.grid-template-rows]="item.isOpen ? '1fr' : '0fr'"
+        [style.opacity]="item.isOpen ? '1' : '0'">
+        
+        <div class="overflow-hidden">
+          <div 
+            class="p-6 pt-0 font-sans text-base text-foreground/70 leading-relaxed transition-transform duration-500"
+            [class.translate-y-0]="item.isOpen"
+            [class.-translate-y-2]="!item.isOpen">
+            {{ item.answer }}
+            <ng-content></ng-content>
+          </div>
         </div>
       </div>
+
     </div>
   }
+
 </div>

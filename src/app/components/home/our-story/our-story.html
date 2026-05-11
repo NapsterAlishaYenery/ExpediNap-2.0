@@ -1,42 +1,54 @@
-<section class="about-section">
-  <div class="container-custom">
+<section class="about-section py-20 bg-background">
+  <div class="container-custom max-w-350 mx-auto px-6 box-border">
 
-    <div class="section-header">
-      <span class="sub-title">Our Essence</span>
-      <h2 class="main-title">Who We Are</h2>
-      <p class="section-description">At ExpediNap, a passion for tourism merges
-        with technological innovation to offer exceptional travel experiences in
-        the Dominican Republic.
+    <div class="section-header text-center mb-20">
+      <span
+        class="sub-title text-accent uppercase tracking-[3px] font-bold text-sm">Our
+        Essence</span>
+      <h2
+        class="main-title text-[clamp(2.5rem,5vw,3.5rem)] text-foreground my-2 mb-6 font-extrabold">Who
+        We Are</h2>
+      <p
+        class="section-description text-muted-foreground max-w-200 mx-auto text-lg">
+        At ExpediNap, a passion for tourism merges with technological innovation
+        to offer exceptional travel experiences in the Dominican Republic.
       </p>
     </div>
 
-    <div class="about-grid mb-24">
-      <div class="image-box">
+    <div
+      class="about-grid grid grid-cols-1 gap-12 items-center lg:grid-cols-2 lg:gap-20 mb-24">
+      <div class="image-box relative w-full">
         <img src="/img/guerlmy-pick.webp"
           alt="Nuñez, Founder of ExpediNap and Dominican Republic Tourism Expert"
-          class="rounded-about">
-        <div class="experience-badge">
-          <span class="number">{{ yearsOfExperience }} + </span>
-          <span class="text">years of <br> Experience</span>
+          class="rounded-about w-full aspect-square object-cover object-center-top rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
+        <div
+          class="experience-badge absolute -bottom-2.5 right-2.5 bg-accent text-white p-4 rounded-xl text-center max-md:bottom-15">
+          <span class="number font-bold text-xl">{{ yearsOfExperience }} +
+          </span>
+          <span class="text text-sm">years of <br> Experience</span>
         </div>
       </div>
 
       <div class="text-content">
-        <h3 class="block-title">Our History and Origins</h3>
-        <p class="highlight-p">
-          The genesis of <span class="brand-text">ExpediNap</span> lies in a
+        <h3
+          class="block-title text-[2.2rem] font-extrabold text-foreground mb-6 max-lg:text-[1.6rem]">Our
+          History and Origins</h3>
+        <p class="highlight-p text-base leading-relaxed text-muted-foreground">
+          The genesis of <span
+            class="brand-text text-rose-700 font-bold">ExpediNap</span> lies in
+          a
           vocation for service that has evolved over the years. Beginning their
           professional careers in the vibrant tourist areas of Punta Cana and
           Bávaro, they acquired valuable experience in diverse fields.
         </p>
         <br>
-        <p class="muted-p">
+        <p class="muted-p text-base leading-relaxed text-muted-foreground">
           From civil aviation security at Punta Cana International Airport to
           passenger service at renowned airlines such as Frontier Airlines and
           reception roles at renowned hotels such as Meliá Caribe and Now Onyx.
         </p>
         <br>
-        <p class="muted-p">
+        <p class="muted-p text-base leading-relaxed text-muted-foreground">
           The 2019 pandemic became a catalyst for transformation. It was a time
           of introspection and growth, prompting the decision to acquire web
           programming skills at the Technological Institute of the Americas
@@ -44,67 +56,89 @@
           quality services and foster a collaborative environment.
         </p>
 
-                
-        <div class="image-caption">
-          <span class="founder-name">Guerlmy Alexander Nuñez</span>
-          <span class="founder-title">CEO & Founder</span>
+        <div class="image-caption mt-6 text-center flex flex-col gap-1">
+          <span
+            class="founder-name block text-[1.4rem] font-extrabold text-foreground tracking-tighter">Guerlmy
+            Alexander Nuñez</span>
+          <span
+            class="founder-title block text-sm font-semibold text-accent uppercase tracking-[2px]">CEO
+            & Founder</span>
         </div>
-
       </div>
     </div>
 
-    <div class="about-grid mb-24 items-start">
-      <div class="image-box">
+    <div
+      class="about-grid grid grid-cols-1 gap-12 items-start lg:grid-cols-2 lg:gap-20 mb-24">
+      <div class="image-box relative w-full">
         <img src="/img/team-office.webp" alt="Equipo ExpediNap"
-          class="rounded-about">
+          class="rounded-about w-full aspect-square object-cover rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
       </div>
 
-      <div class="mission-vision-stack">
-        <div class="glass-card">
-          <div class="card-header">
-            <div class="icon-circle primary">
+      <div class="mission-vision-stack flex flex-col gap-8">
+        <div
+          class="glass-card bg-muted/40 border border-border rounded-3xl p-6 dark:bg-card/80 lg:p-10">
+          <div class="card-header flex items-center gap-5 mb-4">
+            <div
+              class="icon-circle primary w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
               <lucide-icon name="target" [size]="24"></lucide-icon>
             </div>
-            <h4>Mission</h4>
+            <h4
+              class="text-2xl font-extrabold m-0 text-foreground max-lg:text-[1.3rem]">Mission</h4>
           </div>
-          <p>To position ExpediNap as the top choice for travelers seeking
+          <p class="text-base leading-relaxed text-muted-foreground">
+            To position ExpediNap as the top choice for travelers seeking
             authentic and exciting experiences in the Dominican Republic. To
             offer a comprehensive platform for booking excursions, luxury yacht
             charters, and transportation services, ensuring that every adventure
-            is memorable.</p>
+            is memorable.
+          </p>
         </div>
 
-        <div class="glass-card">
-          <div class="card-header">
-            <div class="icon-circle accent">
+        <div
+          class="glass-card bg-muted/40 border border-border rounded-3xl p-6 dark:bg-card/80 lg:p-10">
+          <div class="card-header flex items-center gap-5 mb-4">
+            <div
+              class="icon-circle accent w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
               <lucide-icon name="eye" [size]="24"></lucide-icon>
             </div>
-            <h4>Vision</h4>
+            <h4
+              class="text-2xl font-extrabold m-0 text-foreground max-lg:text-[1.3rem]">Vision</h4>
           </div>
-          <p>To be recognized as the leading tourism services company in the
+          <p class="text-base leading-relaxed text-muted-foreground">
+            To be recognized as the leading tourism services company in the
             Dominican Republic, distinguished by excellence in customer service,
             the breadth of its offerings, and its commitment to traveler
             satisfaction in each of its destinations, whether by land, sea, or
-            even underwater.</p>
+            even underwater.
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="values-banner">
-      <div class="values-header-row">
-        <div class="icon-square secondary">
+    <div
+      class="values-banner bg-muted/40 border border-border rounded-3xl p-6 dark:bg-card/80 lg:p-10">
+      <div
+        class="values-header-row flex items-center justify-center gap-4 mb-12">
+        <div
+          class="icon-square secondary w-12.5 h-12.5 bg-secondary/15 text-secondary rounded-xl flex items-center justify-center max-lg:w-10 max-lg:h-10">
           <lucide-icon name="heart" [size]="28"></lucide-icon>
         </div>
-        <h3>Our Values</h3>
+        <h3
+          class="text-3xl font-extrabold m-0 text-foreground max-lg:text-2xl">Our
+          Values</h3>
       </div>
 
-      <div class="values-grid">
+      <div
+        class="values-grid grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
         @for (valor of valores; track valor.label) {
-        <div class="value-item">
-          <div class="value-icon">
+        <div
+          class="value-item flex flex-col items-center justify-center text-center rounded-2xl transition-all duration-300 h-37.5 hover:bg-background hover:shadow-[0_8px_20px_rgba(0,0,0,0.05)] dark:hover:bg-accent/50">
+          <div
+            class="value-icon w-12.5 h-12.5 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-3">
             <lucide-icon [name]="valor.icon" [size]="20"></lucide-icon>
           </div>
-          <span>{{ valor.label }}</span>
+          <span class="text-sm font-medium text-foreground">{{ valor.label
+            }}</span>
         </div>
         }
       </div>

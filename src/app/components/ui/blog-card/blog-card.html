@@ -1,40 +1,61 @@
-<div class="blog-card">
-  <div class="image-wrapper">
-    <img [src]="blog.image | imageUrl" [alt]="blog.alt">
+<div class="group flex flex-col h-130 max-md:h-auto bg-card border border-border rounded-(--radius) overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-3 hover:shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1)]">
+  
+  <!-- IMAGEN -->
+  <div class="relative w-full h-55 overflow-hidden">
+    <img [src]="blog.image | imageUrl" 
+         [alt]="blog.alt"
+         class="w-full h-full object-cover transition-transform duration-600 ease-in-out group-hover:scale-110">
   </div>
 
-  <div class="card-body">
-    <div class="category-row">
+  <!-- CUERPO -->
+  <div class="p-6 max-md:p-5 flex flex-col grow">
+    
+    <!-- CATEGORIAS -->
+    <div class="flex gap-2 mb-3">
       @for (cat of blog.category; track cat) {
-      <app-badge variant="outline" class="square-badge">{{ cat }}</app-badge>
+        <!-- Usamos clases arbitrarias para sobreescribir el estilo del badge sin CSS externo -->
+        <app-badge variant="outline" 
+          class="rounded-sm! text-[0.65rem]! uppercase! border-primary/50! text-primary/80! bg-transparent!">
+          {{ cat }}
+        </app-badge>
       }
     </div>
 
-    <h3 class="title">{{ blog.title }}</h3>
+    <h3 class="font-serif text-[1.35rem] max-md:text-[1.2rem] font-bold leading-tight mb-3 text-foreground cursor-pointer transition-colors duration-300 group-hover:text-primary">
+      {{ blog.title }}
+    </h3>
 
-    <p class="description">
+    <p class="text-[0.875rem] text-muted-foreground line-clamp-3 leading-relaxed mb-6 min-h-12">
       {{ blog.excerpt }}
     </p>
 
-    <div class="blog-footer">
-      <div class="meta-info">
-        <div class="meta-item">
-          <lucide-icon name="calendar"></lucide-icon>
-          <span>{{blog.createdAt | date}}</span>
+    <!-- FOOTER -->
+    <div class="flex justify-between items-center mt-auto pt-4 
+                max-[375px]:flex-col max-[375px]:items-start max-[375px]:gap-5
+                min-[641px]:max-[900px]:flex-col min-[641px]:max-[900px]:items-start min-[641px]:max-[900px]:gap-4">
+      
+      <div class="flex gap-3 flex-wrap 
+                  max-[375px]:w-full max-[375px]:justify-between
+                  min-[641px]:max-[900px]:flex-col min-[641px]:max-[900px]:gap-2">
+        
+        <div class="flex items-center gap-1.5 text-[0.75rem] min-[641px]:max-[900px]:text-[0.7rem] text-muted-foreground whitespace-nowrap">
+          <lucide-icon name="calendar" class="w-3.5 h-3.5"></lucide-icon>
+          <span>{{ blog.createdAt | date }}</span>
         </div>
-        <div class="meta-item">
-          <lucide-icon name="user"></lucide-icon>
-          <span>{{blog.author}}</span>
+        
+        <div class="flex items-center gap-1.5 text-[0.75rem] min-[641px]:max-[900px]:text-[0.7rem] text-muted-foreground whitespace-nowrap">
+          <lucide-icon name="user" class="w-3.5 h-3.5"></lucide-icon>
+          <span>{{ blog.author }}</span>
         </div>
       </div>
 
-      <a [routerLink]="['/blogs', blog.slug]">
+      <a [routerLink]="['/blogs', blog.slug]" class="max-[375px]:w-full">
         <app-button
-          variant="hero"
+          variant="ghost"
           size="sm"
-          class="read-more-btn">
+          class="text-primary! p-0! h-auto! inline-flex! items-center gap-1.5 group/btn">
           Read more
-          <lucide-icon name="arrow-right" class="arrow"></lucide-icon>
+          <lucide-icon name="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1.5"></lucide-icon>
         </app-button>
       </a>
 

@@ -1,11 +1,11 @@
 import { Component, DOCUMENT, inject, Inject, Renderer2 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Alert } from './components/ui/alert/alert';
 import { CommonModule } from '@angular/common';
 import { AlertService } from './core/services/alert/alert';
-import { ThemeService } from './core/services/theme-service/theme.service';
 import { WhatsappChat } from './components/home/whatsapp-chat/whatsapp-chat';
 import { filter } from 'rxjs';
+import { AlertDialog } from './components/ui/alert-dialog/alert-dialog';
 
 
 @Component({
@@ -14,7 +14,8 @@ import { filter } from 'rxjs';
     CommonModule,
     RouterOutlet,
     Alert,
-    WhatsappChat
+    WhatsappChat,
+    AlertDialog,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -25,34 +26,28 @@ export class App {
   // Inyección de servicios globales
   public alertService = inject(AlertService);
   private renderer = inject(Renderer2);
-
   @Inject(DOCUMENT) private document = inject(DOCUMENT);
-
-  private themeService = inject(ThemeService); // Inyectamos el servicio de tema
   private router = inject(Router); // Inyectamos el Router
-  private activatedRoute = inject(ActivatedRoute)
-  // Variables de estado global
+
+
   isDark = false;
+
 
   showWhatsapp = false; // Variable para el IF
 
 
   constructor() {
-    // Escuchamos los cambios de ruta
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.updateWhatsappVisibility(event.urlAfterRedirects);
     });
 
-    // ¡ESTA ES LA CLAVE! 
-    // Chequeamos inmediatamente al cargar por si la navegación ya pasó
     this.updateWhatsappVisibility(this.router.url);
   }
 
-  /**
-   * Manejo de Modo Oscuro
-   */
+
+    // Manejo de Modo Oscuro
   toggleDarkMode() {
     this.isDark = !this.isDark;
     if (this.isDark) {
@@ -73,4 +68,5 @@ export class App {
 
     this.showWhatsapp = !isForbidden;
   }
+
 }

@@ -1,13 +1,13 @@
-<div class="not-found-wrapper">
-  <div class="not-found-content">
-    <div class="icon-box">
+<div class="not-found-wrapper min-h-[80vh] flex items-center justify-center p-8 bg-background">
+  <div class="not-found-content text-center max-w-125">
+    <div class="icon-box text-6xl text-primary mb-4 drop-shadow-(--shadow-primary) animate-[ship-sway_4s_ease-in-out_infinite]">
       <i class="bi bi-anchor-fill"></i>
     </div>
-    <h1 class="display-title">404</h1>
-    <h2 class="sub-title">Lost at sea?</h2>
-    <p class="description">The page you are looking for has sailed away or never existed in our port.</p>
+    <h1 class="display-title font-serif text-[clamp(5rem,15vw,8rem)] font-bold leading-none text-foreground m-0">404</h1>
+    <h2 class="sub-title font-serif text-[1.8rem] text-accent mb-4">Lost at sea?</h2>
+    <p class="description font-sans text-muted-foreground mb-10 leading-relaxed">The page you are looking for has sailed away or never existed in our port.</p>
     
-    <a routerLink="/" class="btn-brand">
+    <a routerLink="/" class="btn-brand inline-flex items-center gap-2 px-8 py-4 bg-gradient-brand text-primary-foreground rounded-(--radius) font-semibold font-sans shadow-(--shadow-primary) transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_15px_35px_-10px_hsl(15_75%_45%/_0.6)]">
       <i class="bi bi-arrow-left"></i> Return to Port
     </a>
   </div>

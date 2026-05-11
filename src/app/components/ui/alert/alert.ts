@@ -11,20 +11,37 @@ export type AlertVariant = 'default' | 'destructive' | 'success' | 'info' | 'war
   styleUrl: './alert.css',
 })
 export class Alert {
-
   @Input() variant: AlertVariant = 'default';
   @Input() title: string = '';
   @Input() description: string = '';
   @Input() icon?: string;
+  @Input() duration: number = 5000; // Recibimos la duración en ms
 
-  get alertClasses(): string {
-    return `alert alert-${this.variant}`;
+  get variantClasses(): string {
+    const variants: Record<AlertVariant, string> = {
+      default: 'border-border bg-card/95 text-foreground',
+      destructive: 'border-destructive/30 bg-destructive/5 text-destructive',
+      success: 'border-emerald-500/30 bg-emerald-500/5 text-emerald-500',
+      info: 'border-accent/30 bg-accent/5 text-accent',
+      warning: 'border-amber-500/30 bg-amber-500/5 text-amber-500'
+    };
+    return variants[this.variant];
   }
 
-  // Mapa de iconos por defecto si no se pasa uno
- get iconClass(): string {
+  get progressBarClass(): string {
+    const colors: Record<AlertVariant, string> = {
+      default: 'bg-primary',
+      destructive: 'bg-red-500', // <-- Antes quizás faltaba este
+      success: 'bg-emerald-500',
+      info: 'bg-accent',
+      warning: 'bg-amber-500'
+    };
+    // Si por alguna razón la variante no existe, ponemos un color por defecto
+    return colors[this.variant] || colors['default'];
+  }
+  
+  get iconClass(): string {
     if (this.icon) return `bi bi-${this.icon}`;
-
     const icons: Record<AlertVariant, string> = {
       default: 'bi-stars',
       destructive: 'bi-exclamation-octagon',

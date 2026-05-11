@@ -1,15 +1,17 @@
-<div class="avatar-root" [class]="customClass">
+<div [class]="'relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full ' + customClass">
+  
   @if (src && src !== 'null' && src !== '' && !hasError) {
     <img 
       [src]="src" 
       [alt]="alt" 
-      class="avatar-image" 
+      class="aspect-square h-full w-full object-cover" 
       (error)="handleError()"
     />
   } @else {
-    <div class="avatar-fallback">
-    {{ fallbackText }}
+    <div class="flex h-full w-full items-center justify-center rounded-full bg-muted text-muted-foreground text-[0.875rem] font-medium uppercase">
+      {{ fallbackText }}
       <ng-content></ng-content>
     </div>
   }
+
 </div>

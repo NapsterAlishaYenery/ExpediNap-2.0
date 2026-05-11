@@ -9,7 +9,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 export class Avatar implements OnChanges{
   @Input() src: string = '';
   @Input() alt: string = '';
-  @Input() fallbackText: string = 'U'; // Por defecto una 'U' de Usuario
+  @Input() fallbackText: string = 'U';
   @Input() customClass: string = '';
 
   hasError = false;

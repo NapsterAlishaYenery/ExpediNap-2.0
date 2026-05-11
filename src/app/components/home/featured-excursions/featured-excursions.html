@@ -1,10 +1,10 @@
-<section class="featured-section">
+<section class="featured-section py-20 bg-background">
     <div class="container mx-auto px-4">
 
-        <div class="section-header">
-            <span class="sub-title">Unique Experiences</span>
-            <h2 class="main-title">Top Excursions</h2>
-            <p class="section-description">
+        <div class="section-header text-center mb-16 px-4">
+            <span class="sub-title text-accent uppercase tracking-[3px] font-bold text-sm">Unique Experiences</span>
+            <h2 class="main-title text-[clamp(2.5rem,5vw,3.5rem)] text-foreground my-2 mb-6 leading-tight">Top Excursions</h2>
+            <p class="section-description text-muted-foreground max-w-162.5 mx-auto text-lg">
                 Discover the most exciting adventures in the Dominican
                 Caribbean.
                 <br>
@@ -13,25 +13,24 @@
         </div>
 
         @if (isLoading) {
-        <div class="loading-state">
-            <div class="spinner"></div>
-            <p>Loading adventures...</p>
+        <div class="loading-state flex flex-col items-center justify-center gap-6 py-20">
+            <div class="spinner w-10 h-10 rounded-full border-3 border-border border-t-accent animate-spin"></div>
+            <p class="text-muted-foreground">Loading adventures...</p>
         </div>
         } @else {
-        <div class="featured-grid">
+        <div class="featured-grid grid gap-8 p-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             @for (item of featuredList; track item._id) {
             <app-excursion-card [excursion]="item"></app-excursion-card>
             }
         </div>
 
-        <div class="cta-wrapper">
-            <div class="cta-button-container">
-                <a routerLink="/excursions">
-                    <app-button variant="accent" size="xl">
+        <div class="cta-wrapper flex justify-center mt-20 px-6">
+            <div class="cta-button-container w-full max-w-105 flex justify-center">
+                <a routerLink="/excursions" class="w-full">
+                    <app-button variant="accent" size="xl" class="w-full md:w-auto md:px-14">
                         VIEW ALL EXCURSIONS
                     </app-button>
                 </a>
-
             </div>
         </div>
         }

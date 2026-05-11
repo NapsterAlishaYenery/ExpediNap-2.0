@@ -1,16 +1,21 @@
-<nav class="breadcrumb-wrapper">
-      <div class="breadcrumb-container">
-        <ol class="breadcrumb-list">
-          @for (crumb of (breadcrumbService.breadcrumbs$ | async); track crumb.url; let last = $last) {
-            <li class="breadcrumb-item">
-              @if (!last) {
-                <a [routerLink]="crumb.url" class="breadcrumb-link">{{ crumb.label }}</a>
-                <i class="bi bi-chevron-right separator"></i>
-              } @else {
-                <span class="breadcrumb-current">{{ crumb.label }}</span>
-              }
-            </li>
+<nav class="mt-30 max-md:mt-26.25 py-3 max-md:py-2 bg-muted/50 border-b border-border/50 dark:bg-card/80 dark:border-border/20">
+  <div class="max-w-350 mx-auto px-8 max-md:px-4">
+    <ol class="flex items-center gap-2 flex-wrap list-none">
+      @for (crumb of (breadcrumbService.breadcrumbs$ | async); track crumb.url; let last = $last) {
+        <li class="flex items-center">
+          @if (!last) {
+            <a [routerLink]="crumb.url" 
+               class="text-[0.85rem] font-medium text-muted-foreground no-underline transition-all duration-200 hover:text-accent">
+              {{ crumb.label }}
+            </a>
+            <i class="bi bi-chevron-right ml-2 text-[0.7rem] text-muted-foreground/50"></i>
+          } @else {
+            <span class="text-[0.85rem] font-semibold text-foreground dark:text-accent">
+              {{ crumb.label }}
+            </span>
           }
-        </ol>
-      </div>
-    </nav>
+        </li>
+      }
+    </ol>
+  </div>
+</nav>

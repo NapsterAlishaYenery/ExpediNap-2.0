@@ -1,28 +1,32 @@
-@if (open) {
-<div class="alert-dialog-overlay" (click)="cancel()"></div>
-
-<div class="alert-dialog-wrapper">
-  <div class="alert-dialog-content">
-    <div class="alert-dialog-header">
-      <h2 class="alert-dialog-title">{{ title }}</h2>
-      <p class="alert-dialog-description">{{ description }}</p>
+@if (service.isOpen()) {
+  @let opt = service.options();
+  
+  <!-- Contenedor fijo que ocupa toda la pantalla -->
+  <div class="fixed inset-0 z-1000 flex items-center justify-center p-4">
+    
+    <!-- Backdrop (Oscurece el fondo) -->
+    <div 
+      class="absolute inset-0 bg-[#050914]/70 backdrop-blur-md animate-in fade-in duration-200" 
+      (click)="service.handleCancel()">
     </div>
 
-    <div class="alert-dialog-footer">
-      <app-button 
-        variant="outline" 
-        size="default" 
-        (click)="cancel()">
-        {{ cancelText }}
-      </app-button>
+    <!-- Card del Diálogo: Sin traslaciones, posición directa -->
+    <div class="relative z-1001 w-full max-w-125 bg-card border border-border/50 rounded-2xl p-8 shadow-2xl animate-in zoom-in-95 fade-in duration-300">
       
-      <app-button 
-        [variant]="confirmVariant" 
-        size="default" 
-        (click)="confirm()">
-        {{ confirmText }}
-      </app-button>
+      <div class="mb-8">
+        <h2 class="font-serif text-2xl font-bold text-foreground mb-3 leading-tight">{{ opt?.title }}</h2>
+        <p class="text-muted-foreground leading-relaxed">{{ opt?.description }}</p>
+      </div>
+
+      <div class="flex justify-end gap-4 max-sm:flex-col-reverse">
+        <app-button variant="outline" (click)="service.handleCancel()">
+          {{ opt?.cancelText || 'Cancelar' }}
+        </app-button>
+        <app-button [variant]="opt?.variant || 'default'" (click)="service.handleConfirm()">
+          {{ opt?.confirmText || 'Confirmar' }}
+        </app-button>
+      </div>
+
     </div>
   </div>
-</div>
 }

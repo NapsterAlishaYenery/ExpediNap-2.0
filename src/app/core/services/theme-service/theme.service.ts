@@ -1,47 +1,52 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
   private readonly THEME_KEY = 'expedinap-theme';
-  private isBrowser: boolean;
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
 
-  constructor(@Inject(PLATFORM_ID) platformId: object) {
-    this.isBrowser = isPlatformBrowser(platformId);
-    this.applyStoredTheme();
+  // 1. Estado reactivo global del tema
+  darkMode = signal<boolean>(false);
+
+  constructor() {
+    this.initializeTheme();
   }
 
-  // Cambia el tema y guarda en LocalStorage
-  toggleTheme(): boolean {
-    if (!this.isBrowser) return false;
+  // Cambia el tema y actualiza el signal y localStorage
+  toggleTheme(): void {
+    if (!this.isBrowser) return;
 
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem(this.THEME_KEY, isDark ? 'dark' : 'light');
-    return isDark;
+    const newMode = !this.darkMode();
+    this.darkMode.set(newMode);
+    
+    this.updateRender(newMode);
+    localStorage.setItem(this.THEME_KEY, newMode ? 'dark' : 'light');
   }
 
-  // Aplica el tema guardado al iniciar la app
-  private applyStoredTheme() {
+  // Inicialización lógica
+  private initializeTheme() {
     if (!this.isBrowser) return;
 
     const savedTheme = localStorage.getItem(this.THEME_KEY);
-    
-    // Si hay algo guardado, lo aplica. Si no, revisa la preferencia del sistema
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    
+    this.darkMode.set(isDark);
+    this.updateRender(isDark);
+  }
+
+  // Manipulación del DOM centralizada
+  private updateRender(isDark: boolean) {
+    if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }
-
-  // Para saber el estado actual
-  isDarkMode(): boolean {
-    if (!this.isBrowser) return false;
-    return document.documentElement.classList.contains('dark');
   }
 
 }

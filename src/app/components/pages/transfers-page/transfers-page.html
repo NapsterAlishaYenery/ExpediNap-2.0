@@ -1,229 +1,191 @@
-<div class="transfers-page-wrapper">
-  <section class="hero-header">
-    <div class="hero-image-bg">
-      <img src="/img/airport-transfer.webp" alt="Servicio de Traslados">
+<div class="transfers-page-wrapper bg-background">
+
+  <!-- HERO -->
+  <section class="hero-header relative h-[75vh] flex items-center justify-center overflow-hidden bg-foreground max-md:h-[60vh]">
+    <div class="hero-image-bg absolute inset-0 z-1">
+      <img src="/img/airport-transfer.webp" alt="Servicio de Traslados" class="w-full h-full object-cover opacity-70">
     </div>
-    <div class="hero-content">
-      <span class="hero-sub-title">Door to Door Service</span>
-      <h1 class="hero-title">Private Transfers</h1>
-      <p class="hero-description">
-        Travel comfortably and safely from the airport to your hotel and back.
-      </p>
+
+    <div class="container-custom relative z-3 max-w-350 mx-auto px-6 w-full">
+      <div class="hero-content text-center text-foreground">
+        <span class="hero-sub-title uppercase tracking-[3px] font-bold text-sm mb-2 block">Door to Door Service</span>
+        <h1 class="hero-title text-[clamp(3rem,6vw,4.5rem)] leading-none mb-4 font-extrabold">Private Transfers</h1>
+        <p class="hero-description text-[clamp(1rem,1.2vw,1.5rem)] opacity-90 max-w-175 mx-auto">
+          Travel comfortably and safely from the airport to your hotel and back.
+        </p>
+      </div>
     </div>
-    <div class="bottom-gradient-mask"></div>
+
+    <!-- Degradado inferior para suavizar transición -->
+    <div class="bottom-gradient-mask absolute bottom-0 w-full h-75 bg-linear-to-b from-transparent to-background z-2"></div>
   </section>
 
-  <section class="main-content">
-    <div class="container-custom content-layout">
+  <!-- MAIN CONTENT -->
+  <section class="main-content bg-muted/30 py-20 dark:bg-background">
+    <div class="container-custom max-w-350 mx-auto px-6">
+      <div class="content-layout grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-12">
 
-      <div class="form-container">
-        <h2 class="form-main-title">Request your transfer</h2>
+        <!-- FORMULARIO -->
+        <div class="form-container bg-card p-10 rounded-2xl border border-border max-sm:p-4 max-sm:rounded-xl">
+          <h2 class="form-main-title text-3xl mb-8 max-sm:text-xl max-sm:mb-6">Request your transfer</h2>
 
-        <form [formGroup]="transferForm" (ngSubmit)="onSubmit()"
-          class="transfer-form">
+          <form [formGroup]="transferForm" (ngSubmit)="onWhatsAppBooking()" class="transfer-form flex flex-col gap-4">
 
-          <div class="form-group full-width">
-            <label for="transferType">Transfer Type</label>
-            <select formControlName="transferType" class="form-control"
-              id="transferType"
-              [class.is-invalid]="isInvalid('transferType')">
-              <option value="airport-hotel">Airport - Hotel</option>
-              <option value="hotel-airport">Hotel - Airport</option>
-              <option value="round-trip">Round Trip</option>
-              <option value="hotel-hotel">Hotel - Hotel</option>
-              <option value="country">Interior of the country</option>
-            </select>
-            @if (isInvalid('transferType')) { <span class="error-msg">Select a
-              transfer
-              type</span> }
-          </div>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="pickUpLocation"><lucide-icon name="map-pin"
-                  [size]="16"></lucide-icon> Pickup Location</label>
-              <input id="pickUpLocation" formControlName="pickUpLocation"
-                type="text"
-                class="form-control"
-                [class.is-invalid]="isInvalid('pickUpLocation')"
-                placeholder="Example: Punta Cana Airport">
-              @if (isInvalid('pickUpLocation')) { <span
-                class="error-msg">Required
-                pickup Location</span> }
+            <div class="form-group full-width flex flex-col gap-2 mb-2">
+              <label for="transferType" class="text-sm font-semibold text-muted-foreground">Transfer Type</label>
+              <select formControlName="transferType" id="transferType"
+                class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                [class.is-invalid]="isInvalid('transferType')">
+                <option value="airport-hotel">Airport - Hotel</option>
+                <option value="hotel-airport">Hotel - Airport</option>
+                <option value="round-trip">Round Trip</option>
+                <option value="hotel-hotel">Hotel - Hotel</option>
+                <option value="country">Interior of the country</option>
+              </select>
+              @if (isInvalid('transferType')) { <span class="error-msg text-red-500 text-xs">Select a transfer type</span> }
             </div>
-            <div class="form-group">
-              <label for="destination"><lucide-icon name="hotel"
-                  [size]="16"></lucide-icon> Destination</label>
-              <input id="destination" formControlName="destination" type="text"
-                class="form-control"
-                [class.is-invalid]="isInvalid('destination')"
-                placeholder="Example: Hard Rock Hotel">
-              @if (isInvalid('destination')) { <span class="error-msg">Required
-                destination</span> }
-            </div>
-          </div>
 
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="flightNumber"><lucide-icon name="plane"
-                  [size]="16"></lucide-icon> Flight number</label>
-              <input id="flightNumber" formControlName="flightNumber"
-                type="text"
-                class="form-control"
-                [class.is-invalid]="isInvalid('flightNumber')"
-                placeholder="Example: DL221">
-              @if (isInvalid('flightNumber')) { <span class="error-msg">Flight
-                Number is Required</span> }
-            </div>
-            <div class="form-group">
-              <label for="numPassengers"><lucide-icon name="users"
-                  [size]="16"></lucide-icon> Passengers</label>
-              <input id="numPassengers" formControlName="numPassengers"
-                type="number"
-                class="form-control"
-                [class.is-invalid]="isInvalid('numPassengers')">
-              @if (isInvalid('numPassengers')) { <span class="error-msg">Minimum
-                1</span> }
-            </div>
-          </div>
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-group flex flex-col gap-2">
+                <label for="pickUpLocation" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="map-pin" [size]="16" class="text-accent"></lucide-icon> Pickup Location</label>
+                <input id="pickUpLocation" formControlName="pickUpLocation" type="text"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  [class.is-invalid]="isInvalid('pickUpLocation')" placeholder="Example: Punta Cana Airport">
+                @if (isInvalid('pickUpLocation')) { <span class="error-msg text-red-500 text-xs">Required pickup Location</span> }
+              </div>
 
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="pickUpDate"><lucide-icon name="calendar"
-                  [size]="16"></lucide-icon> Date</label>
-              <input id="pickUpDate"
-                formControlName="pickUpDate"
-                type="date"
-                class="form-control"
-                [min]="minDate"
-                [class.is-invalid]="isInvalid('pickUpDate')">
-              @if (isInvalid('pickUpDate')) { <span class="error-msg">Invalid
-                date</span> }
+              <div class="form-group flex flex-col gap-2">
+                <label for="destination" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="hotel" [size]="16" class="text-accent"></lucide-icon> Destination</label>
+                <input id="destination" formControlName="destination" type="text"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  [class.is-invalid]="isInvalid('destination')" placeholder="Example: Hard Rock Hotel">
+                @if (isInvalid('destination')) { <span class="error-msg text-red-500 text-xs">Required destination</span> }
+              </div>
             </div>
-            <div class="form-group">
-              <label for="arrivalTime"><lucide-icon name="clock"
-                  [size]="16"></lucide-icon> Arrival Time</label>
-              <input id="arrivalTime" formControlName="arrivalTime" type="time"
-                class="form-control"
-                [class.is-invalid]="isInvalid('arrivalTime')">
-              @if (isInvalid('arrivalTime')) { <span class="error-msg">Invalid
-                time</span> }
+
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-group flex flex-col gap-2">
+                <label for="flightNumber" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="plane" [size]="16" class="text-accent"></lucide-icon> Flight number</label>
+                <input id="flightNumber" formControlName="flightNumber" type="text"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  [class.is-invalid]="isInvalid('flightNumber')" placeholder="Example: DL221">
+                @if (isInvalid('flightNumber')) { <span class="error-msg text-red-500 text-xs">Flight Number is Required</span> }
+              </div>
+
+              <div class="form-group flex flex-col gap-2">
+                <label for="numPassengers" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="users" [size]="16" class="text-accent"></lucide-icon> Passengers</label>
+                <input id="numPassengers" formControlName="numPassengers" type="number"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  [class.is-invalid]="isInvalid('numPassengers')">
+                @if (isInvalid('numPassengers')) { <span class="error-msg text-red-500 text-xs">Minimum 1</span> }
+              </div>
             </div>
-          </div>
 
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="email"><lucide-icon name="mail"
-                  [size]="16"></lucide-icon> Email</label>
-              <input id="email" formControlName="email" type="email"
-                class="form-control" autocomplete="email"
-                [class.is-invalid]="isInvalid('email')"
-                placeholder="your@email.com">
-              @if (isInvalid('email')) { <span class="error-msg">Invalid
-                email</span> }
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-group flex flex-col gap-2">
+                <label for="pickUpDate" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="calendar" [size]="16" class="text-accent"></lucide-icon> Date</label>
+                <input id="pickUpDate" formControlName="pickUpDate" type="date"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  [min]="minDate" [class.is-invalid]="isInvalid('pickUpDate')">
+                @if (isInvalid('pickUpDate')) { <span class="error-msg text-red-500 text-xs">Invalid date</span> }
+              </div>
+
+              <div class="form-group flex flex-col gap-2">
+                <label for="arrivalTime" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="clock" [size]="16" class="text-accent"></lucide-icon> Arrival Time</label>
+                <input id="arrivalTime" formControlName="arrivalTime" type="time"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  [class.is-invalid]="isInvalid('arrivalTime')">
+                @if (isInvalid('arrivalTime')) { <span class="error-msg text-red-500 text-xs">Invalid time</span> }
+              </div>
             </div>
-            <div class="form-group">
-              <label for="phone"><lucide-icon name="phone"
-                  [size]="16"></lucide-icon> Phone / WhatsApp</label>
-              <input id="phone" formControlName="phone" type="tel"
-                class="form-control" autocomplete="tel-national"
-                [class.is-invalid]="isInvalid('phone')" placeholder="+1 829...">
-              @if (isInvalid('phone')) { <span class="error-msg">Telephone is
-                required</span> }
+
+            <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="form-group flex flex-col gap-2">
+                <label for="email" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="mail" [size]="16" class="text-accent"></lucide-icon> Email</label>
+                <input id="email" formControlName="email" type="email"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  autocomplete="email" [class.is-invalid]="isInvalid('email')" placeholder="your@email.com">
+                @if (isInvalid('email')) { <span class="error-msg text-red-500 text-xs">Invalid email</span> }
+              </div>
+
+              <div class="form-group flex flex-col gap-2">
+                <label for="phone" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="phone" [size]="16" class="text-accent"></lucide-icon> Phone / WhatsApp</label>
+                <input id="phone" formControlName="phone" type="tel"
+                  class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  autocomplete="tel-national" [class.is-invalid]="isInvalid('phone')" placeholder="+1 829...">
+                @if (isInvalid('phone')) { <span class="error-msg text-red-500 text-xs">Telephone is required</span> }
+              </div>
             </div>
-          </div>
 
-          <div class="form-group full-width">
-            <label for="fullName"><lucide-icon name="user"
-                [size]="16"></lucide-icon> Full Name</label>
-            <input id="fullName" formControlName="fullName" type="text"
-              class="form-control" autocomplete="name"
-              [class.is-invalid]="isInvalid('fullName')"
-              placeholder="Name and Surname">
-            @if (isInvalid('fullName')) { <span class="error-msg">Full name is
-              required</span> }
-          </div>
+            <div class="form-group full-width flex flex-col gap-2">
+              <label for="fullName" class="text-sm font-semibold text-muted-foreground flex items-center gap-1"><lucide-icon name="user" [size]="16" class="text-accent"></lucide-icon> Full Name</label>
+              <input id="fullName" formControlName="fullName" type="text"
+                class="form-control w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                autocomplete="name" [class.is-invalid]="isInvalid('fullName')" placeholder="Name and Surname">
+              @if (isInvalid('fullName')) { <span class="error-msg text-red-500 text-xs">Full name is required</span> }
+            </div>
 
-          <div class="payment-info-box">
-            <p><strong>Payment upon collection.</strong> Our driver will be
-              waiting for you with a sign with your name in the arrivals
-              area.</p>
-          </div>
+            <div class="payment-info-box bg-muted/30 p-4 rounded-xl text-sm text-center">
+              <p><strong>Payment upon collection.</strong> Our driver will be waiting for you with a sign with your name in the arrivals area.</p>
+            </div>
 
-          <div class="btn-center-wrapper">
-            <app-button
-              variant="default"
-              size="xl"
-              [disabled]="isProcessing">
-              {{ isProcessing ? 'PROCESSING...' : 'BOOK TRANSFER' }}
-            </app-button>
-          </div>
-        </form>
-      </div>
-
-      <div class="info-sidebar">
-        <div class="info-card">
-          <h3>Why choose our service?</h3>
-          <ul class="check-list">
-            <li><lucide-icon name="check" [size]="18"
-                class="text-green"></lucide-icon> Modern, air-conditioned
-              vehicles</li>
-            <li><lucide-icon name="check" [size]="18"
-                class="text-green"></lucide-icon> Bilingual professional
-              drivers</li>
-            <li><lucide-icon name="check" [size]="18"
-                class="text-green"></lucide-icon> Real-time flight tracking</li>
-            <li><lucide-icon name="check" [size]="18"
-                class="text-green"></lucide-icon> Child seats available</li>
-            <li><lucide-icon name="check" [size]="18"
-                class="text-green"></lucide-icon> Free WiFi on board</li>
-            <li><lucide-icon name="check" [size]="18"
-                class="text-green"></lucide-icon> Complimentary cold water</li>
-          </ul>
+            <div class="btn-center-wrapper flex justify-center mt-8">
+              <app-button variant="default" size="xl" class="w-full max-w-100" [disabled]="isProcessing">
+                {{ isProcessing ? 'PROCESSING...' : 'BOOK TRANSFER' }}
+              </app-button>
+            </div>
+          </form>
         </div>
 
-        <div class="info-card">
-          <h3>Types of Vehicles</h3>
-          <div class="vehicle-item">
-            <div class="vehicle-info"><strong>Private Sedan</strong><span>1-3
-                pasajeros</span></div>
-            <div class="vehicle-price">Desde $35</div>
-          </div>
-          <div class="vehicle-item">
-            <div class="vehicle-info"><strong>SUV Premium</strong><span>1-5
-                passengers</span></div>
-            <div class="vehicle-price">From $50</div>
-          </div>
-          <div class="vehicle-item">
-            <div class="vehicle-info"><strong>Van Executive</strong><span>1-10
-                passengers</span></div>
-            <div class="vehicle-price">From $65</div>
-          </div>
-          <div class="vehicle-item">
-            <div class="vehicle-info"><strong>Minibus</strong><span>11-20
-                passengers</span></div>
-            <div class="vehicle-price">From $120</div>
-          </div>
-          <div class="vehicle-item">
-            <div class="vehicle-info"><strong>Bus</strong><span>21-45
-                passengers</span></div>
-            <div class="vehicle-price">From $200</div>
-          </div>
-        </div>
+        <!-- SIDEBAR -->
+        <div class="info-sidebar flex flex-col gap-8">
 
-        <div class="info-card help-card">
-          <h3>Do you need help?</h3>
-          <p>Contact us via WhatsApp and we'll help you coordinate your
-            transfer.</p>
-          <div class="btn-center-wrapper">
-            <app-button
-              variant="whatsapp"
-              class="w-full"
-              (onClick)="onWhatsAppQuery()"
-              [disabled]="isProcessing">
-              Write on WhatsApp
-            </app-button>
+          <div class="info-card bg-card p-8 rounded-2xl border border-border">
+            <h3 class="text-xl font-bold mb-6">Why choose our service?</h3>
+            <ul class="check-list flex flex-col gap-4">
+              <li class="flex items-center gap-2"><lucide-icon name="check" [size]="18" class="text-[#00802f]"></lucide-icon> Modern, air-conditioned vehicles</li>
+              <li class="flex items-center gap-2"><lucide-icon name="check" [size]="18" class="text-[#00802f]"></lucide-icon> Bilingual professional drivers</li>
+              <li class="flex items-center gap-2"><lucide-icon name="check" [size]="18" class="text-[#00802f]"></lucide-icon> Real-time flight tracking</li>
+              <li class="flex items-center gap-2"><lucide-icon name="check" [size]="18" class="text-[#00802f]"></lucide-icon> Child seats available</li>
+              <li class="flex items-center gap-2"><lucide-icon name="check" [size]="18" class="text-[#00802f]"></lucide-icon> Free WiFi on board</li>
+              <li class="flex items-center gap-2"><lucide-icon name="check" [size]="18" class="text-[#00802f]"></lucide-icon> Complimentary cold water</li>
+            </ul>
           </div>
+
+          <div class="info-card bg-card p-8 rounded-2xl border border-border">
+            <h3 class="text-xl font-bold mb-6">Types of Vehicles</h3>
+            <div class="vehicle-item flex justify-between py-4 border-b border-border last:border-none">
+              <div class="vehicle-info"><strong>Private Sedan</strong><span class="text-xs text-muted-foreground ml-2">1-3 passengers</span></div>
+              <div class="vehicle-price font-bold text-primary">From $35</div>
+            </div>
+            <div class="vehicle-item flex justify-between py-4 border-b border-border last:border-none">
+              <div class="vehicle-info"><strong>SUV Premium</strong><span class="text-xs text-muted-foreground ml-2">1-5 passengers</span></div>
+              <div class="vehicle-price font-bold text-primary">From $50</div>
+            </div>
+            <div class="vehicle-item flex justify-between py-4 border-b border-border last:border-none">
+              <div class="vehicle-info"><strong>Van Executive</strong><span class="text-xs text-muted-foreground ml-2">1-10 passengers</span></div>
+              <div class="vehicle-price font-bold text-primary">From $65</div>
+            </div>
+            <div class="vehicle-item flex justify-between py-4 border-b border-border last:border-none">
+              <div class="vehicle-info"><strong>Minibus</strong><span class="text-xs text-muted-foreground ml-2">11-20 passengers</span></div>
+              <div class="vehicle-price font-bold text-primary">From $120</div>
+            </div>
+            <div class="vehicle-item flex justify-between py-4 border-b border-border last:border-none">
+              <div class="vehicle-info"><strong>Bus</strong><span class="text-xs text-muted-foreground ml-2">21-45 passengers</span></div>
+              <div class="vehicle-price font-bold text-primary">From $200</div>
+            </div>
+          </div>
+
+          <div class="info-card help-card bg-card p-8 rounded-2xl border border-border">
+            <h3 class="text-xl font-bold mb-4">Do you need help?</h3>
+            <p class="mb-4">Contact us via WhatsApp and we'll help you coordinate your transfer.</p>
+            <div class="btn-center-wrapper flex justify-center">
+              <app-button variant="whatsapp" class="w-full" (onClick)="onWhatsAppQuery()" [disabled]="isProcessing">
+                Write on WhatsApp
+              </app-button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

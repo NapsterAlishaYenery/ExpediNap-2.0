@@ -1,25 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* Fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @theme {
   /* 1. Mapeo de Colores (Usando tus variables HSL) */
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
-  
+
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
-  
+
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
 
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
-  
+
   --color-card: hsl(var(--card));
   --color-border: hsl(var(--border));
-  
+
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
 
@@ -30,9 +30,37 @@
   /* 3. Personalización de Radio y Sombras */
   --radius-xl: 1rem;
   --radius-3xl: 28px;
-  
+
   --shadow-primary: 0 10px 30px -10px hsl(15 75% 45% / 0.4);
   --shadow-glow: 0 0 30px hsl(217 91% 60% / 0.3);
+
+  /* Definimos los gradientes como backgrounds configurados */
+  --background-image-gradient-brand: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  --background-image-gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+
+  /* Variables para el Hero Outline (puedes ajustarlas en :root) */
+  --color-on-image: hsl(var(--foreground));
+  --color-on-image-border: hsl(var(--border));
+
+  @keyframes content-show {
+    from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  --animate-content-show: content-show 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Entrada desde la derecha con rebote suave */
+  @keyframes toast-in {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  /* La barra que se agota (de 100% a 0%) */
+  @keyframes progress-shrink {
+    from { width: 100%; }
+    to { width: 0%; }
+  }
+
+  /* animaciones y overlays  */
+  --animate-toast-in: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-progress: progress-shrink linear forwards;
 }
 
 /* ====================================================== */
@@ -52,8 +80,12 @@
   --border: 214 32% 91%;
   --muted: 210 40% 96%;
   --muted-foreground: 215 16% 47%;
-  
+
+  --gradient-brand: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
   --radius: 1rem;
+
+  /* overlays */
+  --hero-overlay: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
 }
 
 .dark {
@@ -65,6 +97,11 @@
   --accent: 217 91% 65%;
   --secondary: 280 65% 60%;
   --muted: 217 33% 15%;
+
+  --gradient-brand: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+
+  /* overlay */
+  --hero-overlay: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
 }
 
 /* ====================================================== */
@@ -76,7 +113,12 @@
     @apply bg-background text-foreground font-sans antialiased min-h-screen;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
 
@@ -92,8 +134,11 @@
 /* ====================================================== */
 
 @layer components {
+
   /* Estilo para imágenes rotas */
-  img.yacht-img, img.excursion-img, img.blog-img {
+  img.yacht-img,
+  img.excursion-img,
+  img.blog-img {
     @apply relative block w-full h-full object-cover text-transparent;
     text-indent: -10000px;
   }
@@ -104,8 +149,7 @@
 
   img::after {
     content: attr(alt);
-    @apply absolute inset-0 flex items-center justify-center p-6 z-20
-           text-muted-foreground text-sm font-medium text-center border border-dashed border-border;
+    @apply absolute inset-0 flex items-center justify-center p-6 z-20 text-muted-foreground text-sm font-medium text-center border border-dashed border-border;
     text-indent: 0;
   }
 

@@ -160,4 +160,88 @@ WHAT WOULD BE THE PRICE FOR THIS ROUTE?`;
     const url = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   }
+
+  // ✅ NUEVO MÉTODO: Reservar por WhatsApp (sin guardar en backend)
+  onWhatsAppBooking() {
+    // Validar que el formulario sea válido antes de enviar
+    if (this.transferForm.invalid) {
+      this.transferForm.markAllAsTouched();
+      this.alertService.showAlert(
+        'destructive',
+        'Incomplete Form',
+        'Please fill in all required fields before booking.'
+      );
+      return;
+    }
+
+    if (this.isProcessing) return;
+    
+    this.isProcessing = true;
+
+    const formValues = this.transferForm.value;
+    const myPhone = '18098369303';
+
+    // Formatear fecha más legible
+    const formattedDate = formValues.pickUpDate 
+      ? new Date(formValues.pickUpDate).toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      : 'PENDING';
+
+    // Tipos de transferencia en español para el mensaje
+    const transferTypes: { [key: string]: string } = {
+      'airport-hotel': '✈️ Airport → Hotel',
+      'hotel-airport': '🏨 Hotel → Airport',
+      'round-trip': '🔄 Round Trip (Ida y Vuelta)',
+      'hotel-hotel': '🏨 Hotel → Hotel',
+      'country': '🇩🇴 Interior del País'
+    };
+
+    const message = `*🆕 NEW TRANSFER BOOKING - EXPEDINAP*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+*👤 CLIENT INFORMATION:*
+• *Name:* ${formValues.fullName?.toUpperCase() || 'PENDING'}
+• *Email:* ${formValues.email || 'PENDING'}
+• *Phone:* ${formValues.phone || 'PENDING'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+*🚐 TRANSFER DETAILS:*
+• *Type:* ${transferTypes[formValues.transferType] || formValues.transferType}
+• *From:* ${formValues.pickUpLocation?.toUpperCase() || 'PENDING'}
+• *To:* ${formValues.destination?.toUpperCase() || 'PENDING'}
+• *Passengers:* ${formValues.numPassengers || '1'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+*✈️ FLIGHT INFORMATION:*
+• *Flight #:* ${formValues.flightNumber?.toUpperCase() || 'PENDING'}
+• *Date:* ${formattedDate}
+• *Arrival Time:* ${formValues.arrivalTime || 'PENDING'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+*💬 NOTES:*
+Payment upon collection. Driver will be waiting with a sign.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*Please confirm availability and total price.* 🙏`;
+
+    const url = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+    
+    // Opcional: Mostrar un mensaje de éxito
+    this.alertService.showAlert(
+      'success',
+      'Booking Request Sent!',
+      'You will be redirected to WhatsApp to confirm your transfer.'
+    );
+    
+    this.isProcessing = false;
+  }
+
+
 }

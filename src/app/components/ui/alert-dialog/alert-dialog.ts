@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Button, ButtonVariant } from '../button/button';
+import { AlertDialogService } from '../../../core/services/alert-dialog/alert-dialog.service';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -9,23 +10,5 @@ import { Button, ButtonVariant } from '../button/button';
   styleUrl: './alert-dialog.css',
 })
 export class AlertDialog {
-  @Input() open = false;
-  @Input() title = 'Are you sure?';
-  @Input() description = 'This action cannot be undone.';
-
-  // Botones personalizables
-  @Input() cancelText = 'Cancel';
-  @Input() confirmText = 'Confirm';
-  @Input() confirmVariant: ButtonVariant = 'default';
-
-  @Output() onCancel = new EventEmitter<void>();
-  @Output() onConfirm = new EventEmitter<void>();
-
-  confirm() {
-    this.onConfirm.emit();
-  }
-
-  cancel() {
-    this.onCancel.emit();
-  }
+  public service = inject(AlertDialogService);
 }
