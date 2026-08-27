@@ -56,15 +56,22 @@ export class BlogService {
   /**
    * Crear un nuevo artículo
    */
-  createBlog(data: CreateBlogRequest): Observable<ApiResponse<BlogResponse>> {
-    return this.api.post<ApiResponse<BlogResponse>>(`${this.prefix}/create`, data);
+  createBlog(formData: FormData): Observable<ApiResponse<BlogResponse>> {
+    return this.api.post<ApiResponse<BlogResponse>>(`${this.prefix}/create`, formData);
   }
 
   /**
-   * Actualizar artículo
+   * Actualizar artículo sus campos texto
    */
   updateBlog(id: string, data: UpdateBlogRequest): Observable<ApiResponse<BlogResponse>> {
     return this.api.patch<ApiResponse<BlogResponse>>(`${this.prefix}/update/${id}`, data);
+  }
+
+   /**
+   * Actualizar artículo su contenido en el HTML con imagenes
+   */
+  updateBlogHtmlContent(id: string, formData: FormData): Observable<ApiResponse<BlogResponse>> {
+    return this.api.patch<ApiResponse<BlogResponse>>(`${this.prefix}/update-content/${id}`, formData);
   }
 
   /**

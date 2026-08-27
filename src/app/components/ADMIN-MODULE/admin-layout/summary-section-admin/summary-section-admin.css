@@ -1,35 +1,9 @@
-.summary-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+/* Animación spin para el spinner de carga */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.summary-header {
-  border-left: 4px solid hsl(var(--primary));
-  padding-left: 1rem;
-}
-
-.summary-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: hsl(var(--foreground));
-}
-
-.summary-subtitle {
-  font-size: 0.9rem;
-  color: hsl(var(--muted-foreground));
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-.loading-state {
-  padding: 3rem;
-  text-align: center;
-  color: hsl(var(--muted-foreground));
-  border: 1px dashed hsl(var(--border));
-  border-radius: var(--radius);
+.spinner {
+  animation: spin 1s linear infinite;
 }

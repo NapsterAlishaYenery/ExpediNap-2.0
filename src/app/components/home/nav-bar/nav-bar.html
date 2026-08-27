@@ -1,11 +1,10 @@
 <nav 
-  class="fixed left-0 z-1000 flex items-center w-full transition-all duration-400 ease-in-out shadow-sm border-b border-border/50 bg-card"
+  class="fixed left-0 z-1000 flex items-center w-full transition-all duration-400 ease-in-out shadow-sm border-b border-border/50 bg-card "
   [class.h-20]="!isScrollingDown()"
   [class.h-[70px]]="isScrollingDown()"
   [class.top-10]="!isScrollingDown()"
   [class.top-0]="isScrollingDown()"
-  [class.-translate-y-full]="isScrollingDown()"
-  [class.dark:bg-[#0f172a]]="true"> <!-- El color específico que tenías para Dark Mode -->
+  [class.-translate-y-full]="isScrollingDown()">
 
   <div class="flex justify-between items-center w-full max-w-1400px mx-auto px-4 md:px-8">
     

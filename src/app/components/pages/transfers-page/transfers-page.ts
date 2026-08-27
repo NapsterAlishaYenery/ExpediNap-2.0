@@ -6,6 +6,8 @@ import { finalize, Subject, takeUntil } from 'rxjs';
 import { CreateOrderTransfer } from '../../../core/interfaces/orders/order-transfers/order-transfer.interface';
 import { OrderTransferService } from '../../../core/services/orders-services/order-transfer/order-transfer.service';
 import { AlertService } from '../../../core/services/alert/alert';
+import { PhoneUtils } from '../../../core/utils/phone-utils';
+
 
 @Component({
   selector: 'app-transfers-page',
@@ -25,6 +27,9 @@ export class TransfersPage {
   isLoading = false;
   isProcessing = false; // <<< Cambiado para ser igual a Excursions
   minDate: string; // <<< NUEVO: Restricción de fecha
+
+  // ✅ AGREGAR después de las otras propiedades
+  phoneUtils = PhoneUtils;
 
   constructor() {
     // Calculamos la fecha de mañana
@@ -47,7 +52,10 @@ export class TransfersPage {
       pickUpDate: ['', Validators.required],
       arrivalTime: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      phone: ['', [
+        Validators.required,
+        PhoneUtils.validatePhone // VALIDADOR DESDE EL UTIL
+      ]],
       fullName: ['', Validators.required]
     });
   }
@@ -63,8 +71,19 @@ export class TransfersPage {
       // Aquí iría la llamada al servicio para enviar el correo o guardar en DB
       const formValues = this.transferForm.value;
 
-      // Limpiamos el teléfono de caracteres extraños antes de enviar
-      const cleanPhone = formValues.phone.replace(/\D/g, '');
+      // ✅ AGREGAR esta línea:
+      const cleanPhone = PhoneUtils.sanitizePhone(formValues.phone);
+
+      // ✅ AGREGAR validación antes de enviar (opcional pero recomendado)
+      if (!PhoneUtils.isValidPhone(cleanPhone)) {
+        this.isProcessing = false;
+        this.alertService.showAlert(
+          'destructive',
+          'Invalid Phone',
+          'Phone number must have between 7 and 20 digits.'
+        );
+        return;
+      }
 
       const newOrderTransfer: CreateOrderTransfer = {
         fullName: formValues.fullName,
@@ -90,6 +109,7 @@ export class TransfersPage {
               'Thank you for your order! Our team will review and contact you as soon as posible.'
             );
             // REESTABLECER CAMPOS: Todo vacío menos pasajeros en 1
+            // ✅ Queda así:
             this.transferForm.reset({
               transferType: 'airport-hotel',
               numPassengers: 1,
@@ -99,7 +119,6 @@ export class TransfersPage {
               pickUpDate: '',
               arrivalTime: '',
               email: '',
-              phone: '',
               fullName: ''
             });
           },
@@ -115,7 +134,7 @@ export class TransfersPage {
 
           }
         });
-        
+
     } else {
       // Marcar campos como tocados para mostrar errores
       this.transferForm.markAllAsTouched();
@@ -175,19 +194,19 @@ WHAT WOULD BE THE PRICE FOR THIS ROUTE?`;
     }
 
     if (this.isProcessing) return;
-    
+
     this.isProcessing = true;
 
     const formValues = this.transferForm.value;
     const myPhone = '18098369303';
 
     // Formatear fecha más legible
-    const formattedDate = formValues.pickUpDate 
+    const formattedDate = formValues.pickUpDate
       ? new Date(formValues.pickUpDate).toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
       : 'PENDING';
 
     // Tipos de transferencia en español para el mensaje
@@ -232,16 +251,14 @@ Payment upon collection. Driver will be waiting with a sign.
 
     const url = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
-    
+
     // Opcional: Mostrar un mensaje de éxito
     this.alertService.showAlert(
       'success',
       'Booking Request Sent!',
       'You will be redirected to WhatsApp to confirm your transfer.'
     );
-    
+
     this.isProcessing = false;
   }
-
-
 }

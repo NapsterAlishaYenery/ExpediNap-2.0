@@ -1,66 +1,94 @@
-<div class="page-container">
-  <div class="brand-side">
-    <div class="brand-bg-image"></div>
-    <div class="brand-overlay"></div>
+<div class="page-container flex min-h-screen w-full bg-background">
+  
+  <!-- Lado Visual (Imagen Izquierda) - Se oculta en móvil -->
+  <div class="brand-side flex-1.2 relative flex items-center justify-center p-16 overflow-hidden bg-black max-lg:hidden">
+    <div class="brand-bg-image absolute top-0 left-0 w-full h-full bg-[url('/img/image-tecnology.webp')] bg-cover bg-center z-0"></div>
+    <div class="brand-overlay absolute top-0 left-0 w-full h-full bg-linear-to-br from-black/90 to-black/40 z-1"></div>
     
-    <div class="brand-content">
-      <div class="brand-logo">
+    <div class="brand-content relative z-2 text-center text-white">
+      <div class="brand-logo w-20 h-20 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-8 border border-white/30">
         <lucide-icon name="shield-check" size="64"></lucide-icon>
       </div>
-      <h2 class="brand-title">ExpediNap <span>Security</span></h2>
-      <p class="brand-tagline">Secure access for our administrators.</p>
+      <h2 class="brand-title text-[clamp(2rem,4vw,3.5rem)] font-extrabold mb-4">ExpediNap <span class="font-serif font-normal block opacity-80">Security</span></h2>
+      <p class="brand-tagline text-lg max-w-87.5 mx-auto opacity-70">Secure access for our administrators.</p>
     </div>
   </div>
 
-  <div class="form-side">
-    <div class="form-container">
+  <!-- Lado del Formulario (Derecha) -->
+  <div class="form-side flex-1 flex items-center justify-center p-12 bg-background max-sm:p-6 max-sm:items-start">
+    <div class="form-container w-full max-w-md">
       
       <header class="step-header">
-        <h1>Admin Access</h1>
-        <p>Enter your credentials to manage ExpediNap</p>
+        <h1 class="text-[2.2rem] font-[850] text-foreground mb-2 tracking-tighter">Admin Access</h1>
+        <p class="text-muted-foreground mb-10 text-sm">Enter your credentials to manage ExpediNap</p>
       </header>
 
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
-        
-        <div class="input-group">
-          <label for="username">Username</label>
-          <div class="input-wrapper">
-            <lucide-icon name="user" size="18" class="icon"></lucide-icon>
+
+        <div class="input-group mb-6 flex flex-col gap-2">
+          <label for="username" class="text-sm font-semibold text-foreground">Username</label>
+          <div class="input-wrapper relative flex items-center">
+            <lucide-icon name="user" size="18" class="icon absolute left-2 inset-y-0 my-auto text-muted-foreground z-10"></lucide-icon>
             <input 
               type="text" 
               id="username" 
+              name="username"
               formControlName="username" 
               placeholder="admin_expedinap"
-              [class.error]="isValidField('username')">
+              autocomplete="username"
+              class="w-full py-3 pl-12 pr-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+              [class.border-red-500]="isValidField('username')">
           </div>
           @if (isValidField('username')) {
-            <span class="error-text">Username is required</span>
+            <span class="error-text text-red-500 text-xs font-medium">Username is required</span>
           }
         </div>
 
-        <div class="input-group">
-          <div class="label-header">
-            <label for="password">Password</label>
-            <a routerLink="/password-recovery" class="forgot-link">Forgot password?</a>
+        <div class="input-group mb-6 flex flex-col gap-2">
+          <div class="label-header flex justify-between items-center">
+            <label for="password" class="text-sm font-semibold text-foreground">Password</label>
+            <a routerLink="/password-recovery" class="forgot-link text-xs font-semibold text-blue-500 no-underline hover:underline">Forgot password?</a>
           </div>
-          <div class="input-wrapper">
-            <lucide-icon name="lock" size="18" class="icon"></lucide-icon>
+          <div class="input-wrapper relative flex items-center">
+            <lucide-icon name="lock" size="18" class="icon absolute left-2 inset-y-0 my-auto text-muted-foreground z-10"></lucide-icon>
             <input 
-              type="password" 
+              [type]="showPassword ? 'text' : 'password'" 
               id="password" 
+              name="password"
               formControlName="password" 
               placeholder="••••••••"
-              [class.error]="isValidField('password')">
+              autocomplete="current-password"
+              class="w-full py-3 pl-12 pr-12 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+              [class.border-red-500]="isValidField('password')">
+            <button 
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-4 inset-y-0 my-auto text-muted-foreground hover:text-foreground transition-colors z-10">
+              <lucide-icon [name]="showPassword ? 'eye-off' : 'eye'" size="18"></lucide-icon>
+            </button>
           </div>
           @if (isValidField('password')) {
-            <span class="error-text">Password is required (min 6 chars)</span>
+            <span class="error-text text-red-500 text-xs font-medium">Password is required (min 6 chars)</span>
           }
         </div>
 
-        <div class="form-actions">
+        <!-- Remember Me Checkbox -->
+        <div class="checkbox-group flex items-center justify-between mb-6">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input 
+              type="checkbox" 
+              id="rememberMe"
+              name="rememberMe"
+              formControlName="rememberMe"
+              class="w-4 h-4 rounded border-border text-primary focus:ring-primary/20">
+            <span class="text-sm text-muted-foreground">Remember me</span>
+          </label>
+        </div>
+
+        <div class="form-actions mt-4">
           <app-button 
             variant="default" 
-            className="w-full btn-responsive" 
+            className="w-full py-4 font-bold uppercase" 
             [disabled]="isLoading">
             {{ isLoading ? 'AUTHENTICATING...' : 'SIGN IN' }}
           </app-button>
@@ -68,9 +96,9 @@
 
       </form>
 
-      <footer class="form-footer">
-        <p>© 2026 ExpediNap Tours & Rentals</p>
-        <a routerLink="/" class="back-link">
+      <footer class="form-footer mt-10 text-center border-t border-border/50 pt-6">
+        <p class="text-xs text-muted-foreground mb-2">© 2026 ExpediNap Tours & Rentals</p>
+        <a routerLink="/" class="back-link inline-flex items-center gap-2 text-red-500 font-bold no-underline text-sm hover:underline">
           <lucide-icon name="chevron-left" size="18"></lucide-icon>
           Return to website
         </a>

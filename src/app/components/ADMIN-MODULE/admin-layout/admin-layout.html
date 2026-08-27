@@ -1,92 +1,100 @@
-<div class="admin-wrapper" [class.is-collapsed]="isSidebarCollapsed()">
+<div class="admin-wrapper flex min-h-screen bg-background" [class.is-collapsed]="isSidebarCollapsed()">
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-container">
-                <img src="/new-logo.png" alt="ExpediNap Logo"
-                    class="admin-logo-img">
-                @if (!isSidebarCollapsed()) {
-                <span class="logo-text">Expedi<span>Nap</span></span>
+  <!-- SIDEBAR -->
+  <aside class="sidebar w-65 bg-card border-r border-border flex flex-col transition-all duration-300 ease-in-out(0.4,0,0.2,1)] sticky top-0 h-screen z-100" [class.w-20]="isSidebarCollapsed()">
+    <div class="sidebar-header h-17.5 px-6 flex items-center border-b border-border/50">
+      <div class="logo-container flex items-center gap-2.5">
+        <img src="/new-logo.png" alt="ExpediNap Logo" class="admin-logo-img w-10 h-10 object-contain rounded-lg">
+        @if (!isSidebarCollapsed()) {
+          <span class="logo-text font-extrabold text-lg whitespace-nowrap">Expedi<span class="text-primary">Nap</span></span>
+        }
+      </div>
+    </div>
+
+    <nav class="sidebar-nav flex-1 py-6 px-3 overflow-y-auto">
+      @for (group of menuGroups; track group.title) {
+        <div class="nav-group mb-8">
+          @if (!isSidebarCollapsed()) {
+            <p class="group-label text-[0.7rem] font-extrabold text-muted-foreground uppercase tracking-[1px] mb-2.5 pl-2.5">{{ group.title }}</p>
+          }
+
+          @for (item of group.items; track item.name) {
+            <a [routerLink]="item.route"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-item flex items-center gap-3 px-3 py-3 text-muted-foreground rounded-lg transition-all duration-200 no-underline mb-1 hover:bg-muted hover:text-primary relative"
+              [title]="item.name">
+              <lucide-icon [name]="item.icon" size="20"></lucide-icon>
+              
+              <!-- Texto del menú (solo visible cuando NO está colapsado) -->
+              @if (!isSidebarCollapsed()) {
+                <span class="nav-text">{{ item.name }}</span>
+                <!-- Badge numérico (solo si badge existe y es > 0) -->
+                @if (item.badge && item.badge() > 0) {
+                  <span class="nav-badge absolute right-3 top-1/2 -translate-y-1/2 bg-red-500 text-white text-[0.6rem] font-bold px-1.5 py-0.5 rounded-full min-w-5 text-center">
+                    {{ item.badge() }}
+                  </span>
                 }
-            </div>
+              } 
+              <!-- Badge como punto rojo (modo colapsado, solo si badge > 0) -->
+              @else if (item.badge && item.badge() > 0) {
+                <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+              }
+            </a>
+          }
         </div>
+      }
+    </nav>
 
-        <nav class="sidebar-nav">
-            @for (group of menuGroups; track group.title) {
-            <div class="nav-group">
-                @if (!isSidebarCollapsed()) {
-                <p class="group-label">{{ group.title }}</p>
-                }
+    <div class="sidebar-footer py-4 px-3 border-t border-border/50">
+      <button class="nav-item logout-btn flex items-center gap-3 px-3 py-3 text-red-500 w-full border-none bg-transparent cursor-pointer rounded-lg transition-all duration-200 hover:bg-red-500/10" (click)="onLogout()">
+        <lucide-icon name="log-out" size="20"></lucide-icon>
+        @if (!isSidebarCollapsed()) {
+          <span>LOGOUT</span>
+        }
+      </button>
+    </div>
+  </aside>
 
-                @for (item of group.items; track item.name) {
-                <a [routerLink]="item.route"
-                    routerLinkActive="active-link"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    class="nav-item"
-                    [title]="item.name">
-                    <lucide-icon [name]="item.icon" size="20"></lucide-icon>
-                    @if (!isSidebarCollapsed()) {
-                    <span class="nav-text">{{ item.name }}</span>
-                    @if (item.badge) {
-                    <span class="nav-badge">{{ item.badge }}</span>
-                    }
-                    }
-                </a>
-                }
-            </div>
-            }
-        </nav>
-
-        <div class="sidebar-footer">
-            <button class="nav-item logout-btn" (click)="onLogout()">
-                <lucide-icon name="log-out" size="20"></lucide-icon>
-                @if (!isSidebarCollapsed()) {
-                <span>LOGOUT</span>
-                }
-            </button>
+  <!-- MAIN CONTENT -->
+  <main class="main-content flex-1 flex flex-col min-w-0 overflow-hidden">
+    
+    <!-- TOP BAR con efecto de scroll -->
+    <header class="top-bar h-17.5 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-90 transition-transform duration-300"
+            [class.-translate-y-full]="isScrollingDown()"
+            [class.translate-y-0]="!isScrollingDown()">
+      <div class="top-bar-left flex items-center gap-4">
+        <button class="action-btn bg-transparent border-none text-muted-foreground cursor-pointer p-2 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-muted hover:text-primary" (click)="toggleSidebar()">
+          <lucide-icon [name]="isSidebarCollapsed() ? 'panel-left-open' : 'panel-left'" size="22"></lucide-icon>
+        </button>
+        <div class="admin-breadcrumb-wrapper flex items-center">
+          <app-breadcrumb></app-breadcrumb>
         </div>
-    </aside>
+      </div>
 
-    <main class="main-content">
-        <header class="top-bar">
-            <div class="top-bar-left">
-                <button class="action-btn" (click)="toggleSidebar()">
-                    <lucide-icon
-                        [name]="isSidebarCollapsed() ? 'panel-left-open' : 'panel-left'"
-                        size="22"></lucide-icon>
-                </button>
-                <div class="admin-breadcrumb-wrapper">
-                    <app-breadcrumb></app-breadcrumb>
-                </div>
-            </div>
+      <div class="top-bar-right flex items-center gap-4">
+        <a routerLink="/" target="_blank" class="action-btn bg-transparent border-none text-muted-foreground cursor-pointer p-2 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-muted hover:text-primary" title="View Public Site">
+          <lucide-icon name="external-link" size="20"></lucide-icon>
+        </a>
+        <button class="bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1 rounded-lg hover:bg-muted hover:text-primary transition-all" (click)='themeService.toggleTheme()'>
+          <lucide-icon [name]="themeService.darkMode() ? 'sun' : 'moon'"></lucide-icon>
+        </button>
 
-            <div class="top-bar-right">
+        <div class="user-profile-simple flex items-center gap-3 pl-4 border-l border-border">
+          <div class="user-text flex flex-col text-right">
+            <span class="u-name text-sm font-bold">{{ currentUser()?.name }}</span>
+            <span class="u-role text-xs text-primary uppercase font-semibold">{{ currentUser()?.role }}</span>
+          </div>
+          <div class="simple-avatar w-9.5 h-9.5 bg-gradient-brand text-white rounded-full flex items-center justify-center font-bold shadow-primary">
+            {{ currentUser()?.name[0] }}
+          </div>
+        </div>
+      </div>
+    </header>
 
-                <a routerLink="/" target="_blank" class="action-btn"
-                    title="View Public Site">
-                    <lucide-icon name="external-link" size="20"></lucide-icon>
-                </a>
-                <button
-                    class="bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1"
-                    (click)='themeService.toggleTheme()'>
-                    <lucide-icon
-                        [name]="themeService.darkMode() ? 'sun' : 'moon'"></lucide-icon>
-                </button>
-
-                <div class="user-profile-simple">
-                    <div class="user-text">
-                        <span class="u-name">{{ currentUser()?.name }}</span>
-                        <span class="u-role">{{ currentUser()?.role }}</span>
-                    </div>
-                    <div class="simple-avatar">
-                        {{ currentUser()?.name[0] }}
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <section class="page-container">
-            <router-outlet></router-outlet>
-        </section>
-    </main>
+    <!-- PAGE CONTAINER -->
+    <section class="page-container pt-16 pb-8 px-8 flex-1 bg-muted/30 overflow-y-auto overflow-x-hidden flex flex-col">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
 </div>

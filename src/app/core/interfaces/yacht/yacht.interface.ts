@@ -1,6 +1,7 @@
 // Reutilizamos o definimos las imágenes (puedes importarlas si prefieres)
 
-import { BaseMongoFields, ImageStructure } from "../shared/shared.interface";
+import { ImagesModel } from "../shared/image.interface";
+import { BaseMongoFields } from "../shared/shared.interface";
 
 
 // Sub-interfaces basadas en tus esquemas de Mongoose
@@ -32,7 +33,6 @@ export interface YachtRiverSunset {
  */
 export interface YachtBase {
   name: string;
-  slug: string;
   maxPax: number;
   description: string;
   saonaPrice?: YachtPrices;     // Opcional en el schema
@@ -41,20 +41,23 @@ export interface YachtBase {
   includes: string[];
   extras: YachtExtra[];
   riverSunset: YachtRiverSunset;
-  images: ImageStructure;
 }
 
 /**
  * RESPUESTA DEL SERVIDOR (GET /all, GET /detail, etc.)
  */
-export interface YachtResponse extends YachtBase, BaseMongoFields {}
+export interface YachtResponse extends YachtBase, BaseMongoFields {
+  slug: string;
+  cloudinaryFolder: string;
+  images:ImagesModel;
+}
 
 /**
  * REQUEST PARA CREAR (POST)
  */
-export type CreateYachtRequest = Omit<YachtBase, 'slug'>;
+export type CreateYachtRequest = YachtBase;
 
 /**
  * REQUEST PARA ACTUALIZAR (PATCH)
  */
-export type UpdateYachtRequest = Partial<Omit<YachtBase, 'slug'>>;
+export type UpdateYachtRequest = Partial<YachtBase>;

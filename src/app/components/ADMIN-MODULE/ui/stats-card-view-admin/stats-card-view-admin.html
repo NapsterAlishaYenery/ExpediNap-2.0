@@ -1,20 +1,20 @@
-<div class="stat-card" [ngClass]="getVariantClass()">
-  <div class="card-header">
-    <div class="icon-box">
+<div class="stat-card bg-card border border-border rounded-(--radius) p-6 flex flex-col gap-5 transition-all duration-300 h-full hover:border-primary/50 hover:shadow-(--shadow-primary) hover:-translate-y-0.5" [ngClass]="getVariantClass()">
+  <div class="card-header flex items-center gap-3">
+    <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center">
       <lucide-icon [name]="icon" [size]="20"></lucide-icon>
     </div>
-    <span class="card-title">{{ title }}</span>
+    <span class="card-title text-sm font-semibold text-muted-foreground uppercase tracking-wide">{{ title }}</span>
   </div>
 
   <div class="card-body">
-    <h2 class="main-value">{{ mainValue }}</h2>
+    <h2 class="main-value text-3xl font-bold text-foreground mb-2">{{ mainValue }}</h2>
     
     @if (statsDetails.length > 0) {
-      <div class="details-grid">
+      <div class="details-grid grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-border">
         @for (stat of statsDetails; track stat.label) {
-          <div class="detail-item">
-            <span class="detail-label">{{ stat.label }}</span>
-            <span class="detail-value">{{ stat.value }}</span>
+          <div class="detail-item flex flex-col">
+            <span class="detail-label text-xs text-muted-foreground">{{ stat.label }}</span>
+            <span class="detail-value text-sm font-semibold text-foreground">{{ stat.value }}</span>
           </div>
         }
       </div>
@@ -22,7 +22,7 @@
   </div>
 
   @if (footerText) {
-    <div class="card-footer">
+    <div class="card-footer mt-auto text-xs text-accent font-medium">
       <p>{{ footerText }}</p>
     </div>
   }

@@ -23,7 +23,8 @@ export class ExcursionService {
     limit: number = 12,
     name?: string,
     category?: string,
-    location?: string
+    location?: string,
+    isFeatured?: boolean
   ): Observable<ApiResponse<ExcursionResponse[]>> {
     let params = new HttpParams()
       .set('page', page.toString())
@@ -32,6 +33,7 @@ export class ExcursionService {
     if (name) params = params.set('name', name);
     if (category) params = params.set('category', category);
     if (location) params = params.set('location', location);
+    if (isFeatured !== undefined) params = params.set('isFeatured', isFeatured.toString());
 
     return this.api.get<ApiResponse<ExcursionResponse[]>>(`${this.prefix}/all`, params);
   }
@@ -54,8 +56,12 @@ export class ExcursionService {
   /**
    * Crear una nueva excursión
    */
-  createExcursion(data: CreateExcursionRequest): Observable<ApiResponse<ExcursionResponse>> {
-    return this.api.post<ApiResponse<ExcursionResponse>>(`${this.prefix}/create`, data);
+  createExcursion(formData: FormData): Observable<ApiResponse<ExcursionResponse>> {
+    return this.api.post<ApiResponse<ExcursionResponse>>(`${this.prefix}/create`, formData);
+  }
+
+  addGalleryImages(formData: FormData, id: string,): Observable<ApiResponse<ExcursionResponse>> {
+    return this.api.post<ApiResponse<ExcursionResponse>>(`${this.prefix}/${id}/gallery`, formData);
   }
 
   /**
@@ -65,6 +71,10 @@ export class ExcursionService {
     return this.api.patch<ApiResponse<ExcursionResponse>>(`${this.prefix}/update/${id}`, data);
   }
 
+  swapImageWithMain(id: string, index: number): Observable<ApiResponse<ExcursionResponse>> {
+    return this.api.patch<ApiResponse<ExcursionResponse>>(`${this.prefix}/${id}/swap-main`, { index: index });
+  }
+
   /**
    * Eliminar una excursión
    */
@@ -72,9 +82,19 @@ export class ExcursionService {
     return this.api.delete<ApiResponse<ExcursionResponse>>(`${this.prefix}/delete/${id}`);
   }
 
-    /**
-   * Get all for select solo nombre, id
+
+
+  /**
+   * Eliminar una excursión
    */
+  deleteImageFromGallery(id: string, index: number): Observable<ApiResponse<ExcursionResponse>> {
+    return this.api.delete<ApiResponse<ExcursionResponse>>(`${this.prefix}/${id}/gallery/${index}`);
+  }
+
+
+  /**
+ * Get all for select solo nombre, id
+ */
   getExcursionsForSelect(): Observable<ApiResponse<SimpleListResponse[]>> {
     return this.api.get<ApiResponse<SimpleListResponse[]>>(`${this.prefix}/all-for-select`);
   }

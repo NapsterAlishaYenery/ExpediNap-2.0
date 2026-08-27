@@ -4,11 +4,25 @@
     <meta charset="utf-8">
     <title>ExpediNap | Excursion Detail</title>
     <base href="/">
-
-    <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- SEO -->
+    <!-- 1. Preconnect (Prioridad de conexión) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- 2. CSS Crítico (Fuentes e Iconos) -->
+    <!-- Cargamos fuentes e iconos de forma estándar para evitar el flash de contenido sin estilo -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- 3. CSS de la Aplicación -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- SEO y Meta Tags -->
     <meta name="description"
       content="Book excursions in Punta Cana with ExpediNap. Discover tours, adventures, and unforgettable experiences in the Dominican Republic.">
     <meta name="keywords"
@@ -30,32 +44,26 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
-    <!-- Icons -->
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <!-- Google Search Console site verification (GSC) -->
+    <!-- Google Search Console -->
     <meta name="google-site-verification"
       content="CgnYBFyCdkRRJq8MGMTRv2GUeM2WT96JfbG5zgON_x8" />
-    <!-- Google Analytics (GA)-->
+
+    <!-- Google Analytics -->
     <script async
       src="https://www.googletagmanager.com/gtag/js?id=G-6K11LM1680"></script>
     <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6K11LM1680');
+    </script>
 
-  gtag('config', 'G-6K11LM1680');
-  </script>
-
-    <!-- Paypal V5 SDK  sandbox-->
-    <script
-      src="https://www.paypal.com/sdk/js?client-id=AYjdj99pG8arH_-ieXF1efNG4nq9wRQtUMj-N52sEQLLDgEz-5cSLICTAt6nLDJrNwcI7QQZrVpkc_5s&currency=USD"></script>
-
-    <!-- Paypal V5 SDK live -->
-    <!-- <script src="https://www.paypal.com/sdk/js?client-id=ARJM41rbR8v20cFnJqj16Gk9PL9Qim2cDeDdN6WcfZX1_AcfIRG9qEo78diNjUyl0lGLs7G6t66pON14&currency=USD"></script> -->
+    <!-- Estilo preventivo para evitar el salto visual mientras Angular hidrata -->
+    <style>
+      app-root:empty { display: block; min-height: 100vh; background-color: #ffffff; }
+    </style>
   </head>
-  <body>
+  <body style="background-color: #ffffff;">
     <app-root></app-root>
   </body>
 </html>

@@ -1,11 +1,12 @@
-<section class="summary-container">
-  <div class="summary-header">
-    <h2 class="summary-title">Operations Summary</h2>
-    <p class="summary-subtitle">Key metrics and current inventory status</p>
+<section class="summary-container flex flex-col gap-6">
+  
+  <div class="summary-header border-l-4 border-l-primary pl-4">
+    <h2 class="summary-title text-2xl font-bold text-foreground">Operations Summary</h2>
+    <p class="summary-subtitle text-sm text-muted-foreground">Key metrics and current inventory status</p>
   </div>
 
   @if (!loading && summaryData) {
-    <div class="stats-grid">
+    <div class="stats-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       
       <app-stats-card-view-admin
         title="Excursions"
@@ -59,8 +60,8 @@
 
     </div>
   } @else if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
+    <div class="loading-state py-12 text-center text-muted-foreground border border-dashed border-border rounded-(--radius)">
+      <div class="spinner w-10 h-10 border-3 border-muted border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
       <p>Loading statistics...</p>
     </div>
   }

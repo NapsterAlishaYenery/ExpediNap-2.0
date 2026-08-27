@@ -16,7 +16,7 @@ export class OrderExcursionService {
   constructor() { }
 
 
-  // --- MÉTODOS DE PAYPAL AÑADIDOS ---
+  // --- MÉTODOS DE PAYPAL AÑADIDOS cuanod tenga mi paypal---
   // 2. Capturar el pago después de que el usuario aprueba en el popup
   // Retorna ApiResponse<OrderExcursionResponse> porque tu backend devuelve la orden actualizada
   // capturePayPalPayment(paypalOrderId: string): Observable<ApiResponse<OrderExcursionResponse>> {

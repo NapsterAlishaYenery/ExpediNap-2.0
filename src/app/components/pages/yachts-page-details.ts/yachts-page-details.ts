@@ -12,6 +12,7 @@ import { IconsModule } from '../../../core/icons.module';
 import { OrderYachtService } from '../../../core/services/orders-services/order-yacht/order-yacht.service';
 import { AlertService } from '../../../core/services/alert/alert';
 import { CreateOrderYacht } from '../../../core/interfaces/orders/order-yachts/order-yacht.interface';
+import { PhoneUtils } from '../../../core/utils/phone-utils';
 
 @Component({
   selector: 'app-yachts-page-details',
@@ -30,24 +31,25 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
   yacht?: YachtResponse;
   bookingForm: FormGroup;
   isLoading = true;
-  isProcessing = false; // <<< NUEVO: Para control de doble click
+  isProcessing = false;
   selectedPrice: number = 0;
   minDate: string;
 
+  // ✅ EXPONER PhoneUtils al template
+  phoneUtils = PhoneUtils;
+
   constructor() {
-
     const tomorrow = new Date();
-    // Sumamos 1 día (24 horas)
     tomorrow.setDate(tomorrow.getDate() + 1);
-
-    // Formateamos a YYYY-MM-DD que es lo que entiende el input date
     this.minDate = tomorrow.toISOString().split('T')[0];
 
     this.bookingForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phonePrefix: ['+1'],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      phone: ['', [
+        Validators.required,
+        PhoneUtils.validatePhone
+      ]],
       destination: ['Saona Island', Validators.required],
       duration: ['Full Day', Validators.required],
       travelDate: ['', Validators.required]
@@ -56,7 +58,7 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
-    if (slug ) {
+    if (slug) {
       this.yachtService.getYachtBySlug(slug)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -77,7 +79,6 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
       .subscribe(() => this.updatePrice());
   }
 
-  // Método nuevo para controlar el UI
   shouldShowHalfDay(): boolean {
     const dest = this.bookingForm.get('destination')?.value;
     if (dest === 'Saona Island') return !!this.yacht?.saonaPrice?.halfDay;
@@ -86,15 +87,12 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
   }
 
   updatePrice() {
-    // 1. Verificamos que el yate exista
     if (!this.yacht) return;
 
     const { destination, duration } = this.bookingForm.value;
 
-    // Lógica idéntica a la del Backend para que el usuario vea lo mismo que se cobrará
     if (destination === 'River Sunset') {
       this.selectedPrice = this.yacht.riverSunset?.price ?? 0;
-      // Forzamos la duración a Half Day internamente si es Sunset
       if (duration !== 'Half Day') {
         this.bookingForm.get('duration')?.setValue('Half Day', { emitEvent: false });
       }
@@ -108,71 +106,152 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
     }
   }
 
-  onReserveAndWhatsApp() {
-    // <<< CAMBIO: Si ya se está enviando, bloqueamos la ejecución
+  // ✅ MÉTODO 1: BOOK NOW - Guarda en BD y abre WhatsApp
+  // ✅ MÉTODO 1: BOOK NOW - Solo guarda en BD (NO abre WhatsApp)
+  onBookNow() {
     if (this.isProcessing) return;
 
     if (this.bookingForm.invalid) {
       this.bookingForm.markAllAsTouched();
+
+      let errorMessage = 'Please complete all required fields: ';
+      const errors = [];
+
+      if (this.bookingForm.get('destination')?.invalid) errors.push('Destination');
+      if (this.bookingForm.get('duration')?.invalid) errors.push('Duration');
+      if (this.bookingForm.get('travelDate')?.invalid) errors.push('Travel Date');
+      if (this.bookingForm.get('fullName')?.invalid) errors.push('Full Name');
+      if (this.bookingForm.get('email')?.invalid) errors.push('Email');
+
+      const phoneControl = this.bookingForm.get('phone');
+      if (phoneControl?.invalid) {
+        if (phoneControl.errors?.['minDigits']) {
+          errors.push('Phone (minimum 7 digits)');
+        } else if (phoneControl.errors?.['maxDigits']) {
+          errors.push('Phone (maximum 20 digits)');
+        } else {
+          errors.push('Phone');
+        }
+      }
+
+      this.alertService.showAlert(
+        'destructive',
+        'Validation Error',
+        errors.length > 0 ? errorMessage + errors.join(', ') : 'Please complete all required fields.'
+      );
       return;
     }
 
-    this.isProcessing = true; // Bloquea el botón
-    const formValues = this.bookingForm.value;
-
-    if (this.yacht?._id) {
-      // Unificamos teléfono quitando cualquier cosa que no sea número
-      const fullPhone = (formValues.phonePrefix + formValues.phone).replace(/\D/g, '');
-
-      const newOrderYacht: CreateOrderYacht = {
-        yachtId: this.yacht._id,
-        fullName: formValues.fullName,
-        email: formValues.email,
-        phone: fullPhone,
-        destination: formValues.destination,
-        duration: formValues.duration,
-        travelDate: formValues.travelDate
-      };
-
-      // 1. Guardamos en la base de datos
-      this.orderYacht.createOrderExcursion(newOrderYacht)
-        .pipe(
-          takeUntil(this.destroy$),
-          // finalize garantiza que el botón se reactive siempre
-          finalize(() => this.isProcessing = false)
-        )
-        .subscribe({
-          next: (res) => {
-            // 2. Abrimos WhatsApp automáticamente
-            this.openWhatsApp(formValues);
-
-            // 3. Mostramos la alerta de éxito
-            this.alertService.showAlert(
-              'success',
-              'YACHT RESERVATION SENT!',
-              'THANK YOU! WE HAVE SAVED YOUR REQUEST AND OPENED WHATSAPP TO FINALIZE DETAILS.'
-            );
-
-            // 4. Reiniciamos el formulario
-            this.bookingForm.reset({
-              destination: 'Saona Island',
-              duration: 'Full Day',
-              phonePrefix: '+1'
-            });
-          },
-          error: (err) => {
-            console.error(err);
-            this.alertService.showAlert(
-              'destructive',
-              'SUBMISSION FAILED',
-              'WE COULD NOT SAVE YOUR ORDER. PLEASE TRY AGAIN OR CONTACT US DIRECTLY.'
-            );
-          }
-        });
+    if (!this.yacht) {
+      this.alertService.showAlert(
+        'destructive',
+        'Error',
+        'Yacht data not loaded. Please refresh the page.'
+      );
+      return;
     }
+
+    this.isProcessing = true;
+    const formValues = this.bookingForm.value;
+    const cleanPhone = PhoneUtils.sanitizePhone(formValues.phone);
+
+    if (!PhoneUtils.isValidPhone(cleanPhone)) {
+      this.isProcessing = false;
+      this.alertService.showAlert(
+        'destructive',
+        'Invalid Phone',
+        'Phone number must have between 7 and 20 digits.'
+      );
+      return;
+    }
+
+    const newOrderYacht: CreateOrderYacht = {
+      yachtId: this.yacht._id,
+      fullName: formValues.fullName,
+      email: formValues.email,
+      phone: cleanPhone,
+      destination: formValues.destination,
+      duration: formValues.duration,
+      travelDate: formValues.travelDate
+    };
+
+    this.orderYacht.createOrderYacht(newOrderYacht)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.isProcessing = false)
+      )
+      .subscribe({
+        next: (res) => {
+          // ❌ ELIMINAR esta línea:
+          // this.openWhatsApp(formValues);
+
+          // ✅ Mostrar solo la alerta de éxito
+          this.alertService.showAlert(
+            'success',
+            'YACHT RESERVATION CONFIRMED! 🎉',
+            `Your reservation #${res.data.orderNumber} has been created successfully. You will receive a confirmation email with payment instructions.`
+          );
+
+          this.bookingForm.reset({
+            destination: 'Saona Island',
+            duration: 'Full Day',
+          });
+        },
+        error: (err) => {
+          console.error(err);
+          this.alertService.showAlert(
+            'destructive',
+            'SUBMISSION FAILED',
+            'We could not save your order. Please try again or contact us directly.'
+          );
+        }
+      });
+  }
+  // ✅ MÉTODO 2: BOOK ON WHATSAPP - Solo abre WhatsApp sin guardar
+  onBookOnWhatsApp() {
+    if (this.isProcessing) return;
+
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched();
+
+      const phoneControl = this.bookingForm.get('phone');
+      if (phoneControl?.invalid) {
+        if (phoneControl.errors?.['minDigits']) {
+          this.alertService.showAlert(
+            'destructive',
+            'Validation Error',
+            'Phone number must have at least 7 digits.'
+          );
+          return;
+        } else if (phoneControl.errors?.['maxDigits']) {
+          this.alertService.showAlert(
+            'destructive',
+            'Validation Error',
+            'Phone number must have maximum 20 digits.'
+          );
+          return;
+        }
+      }
+
+      this.alertService.showAlert(
+        'destructive',
+        'Validation Error',
+        'Please complete all required fields before booking on WhatsApp.'
+      );
+      return;
+    }
+
+    const formValues = this.bookingForm.value;
+    this.openWhatsApp(formValues);
+
+    this.alertService.showAlert(
+      'success',
+      'WhatsApp Opened!',
+      'You will be redirected to WhatsApp to confirm your yacht booking.'
+    );
   }
 
-  // Método privado de apoyo para limpiar el código
+  // Método privado para abrir WhatsApp con los datos del formulario
   private openWhatsApp(orderYacht: any) {
     const myPhone = '18098369303';
     const message = `*YACHT RESERVATION - EXPEDINAP*
@@ -182,10 +261,11 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
 *DURATION:* ${orderYacht.duration.toUpperCase()}
 *DATE:* ${orderYacht.travelDate}
 *CLIENT:* ${orderYacht.fullName.toUpperCase()}
-*PHONE:* ${orderYacht.phonePrefix} ${orderYacht.phone}
+*PHONE:* ${orderYacht.phone}
+*EMAIL:* ${orderYacht.email}
 *ESTIMATED PRICE:* $${this.selectedPrice} USD
 ---------------------------------------
-I just sent my request through the website. Please confirm availability.`;
+I would like to confirm availability for this yacht booking.`;
 
     window.open(`https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`, '_blank');
   }

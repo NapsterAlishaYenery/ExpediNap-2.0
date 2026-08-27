@@ -28,6 +28,7 @@ export class Login {
   });
 
   isLoading = false;
+  showPassword = false;
 
   onLogin() {
     if (this.loginForm.invalid) {
@@ -40,19 +41,19 @@ export class Login {
     // 1. Extraemos los datos paso a paso
     const loginData = {
       username: this.loginForm.value.username,
-      password: this.loginForm.value.password
+      password: this.loginForm.value.password,
+      rememberMe: this.loginForm.value.rememberMe
     };
 
     // 2. Llamamos al servicio
     this.usersService.login(loginData.username, loginData.password).subscribe({
       next: (response) => {
         if (response.ok) {
-          // 3. Guardamos Token y Usuario usando tus métodos del servicio Auth
-          this.authService.savetoken(response.data.token);
+         
           this.authService.saveCurrentUser(response.data.user);
 
           this.alertService.showAlert('success', 'Welcome back', response.message);
-          
+
           // 4. Redirigimos al Home o a un Dashboard
           this.router.navigate(['/admin/dashboard-home']);
         }
@@ -68,5 +69,9 @@ export class Login {
   // Helper para feedback visual en el HTML
   isValidField(field: string): boolean | null {
     return this.loginForm.get(field)!.touched && this.loginForm.get(field)!.invalid;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

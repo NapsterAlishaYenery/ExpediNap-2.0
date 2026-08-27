@@ -1,25 +1,24 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ImageUrlPipe } from '../../../core/pipes/image-url.pipe';
 import { CommonModule } from '@angular/common';
-import { GalleryImage } from '../../../core/interfaces/shared/shared.interface';
+import { ImageItem, ImagesModel } from '../../../core/interfaces/shared/image.interface';
 
 
 @Component({
   selector: 'app-image-gallery',
-  imports: [CommonModule, ImageUrlPipe],
+  imports: [CommonModule],
   templateUrl: './image-gallery.html',
   styleUrl: './image-gallery.css',
 })
 export class ImageGallery implements OnInit {
-  @Input() images!: { main: GalleryImage, gallery: GalleryImage[] };
+  @Input() images!: ImagesModel; // ✅ Usar ImagesModel
 
-  selectedImage!: GalleryImage;
+  selectedImage!: ImageItem; // ✅ Usar ImageItem
 
   ngOnInit() {
     this.selectedImage = this.images.main;
   }
 
-  selectImage(img: GalleryImage) {
+  selectImage(img: ImageItem) { // ✅ Usar ImageItem
     this.selectedImage = img;
   }
 

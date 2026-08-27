@@ -1,15 +1,4 @@
 /**
- * Estructura de Imágenes (Compartida por Yates, Excursiones, Blogs)
- */
-export interface GalleryImage {
-  url: string;
-  alt: string;
-}
-
-export interface ImageStructure {
-  main: GalleryImage;
-  gallery: GalleryImage[];
-}
 
 /**
  * Campos base que vienen de MongoDB

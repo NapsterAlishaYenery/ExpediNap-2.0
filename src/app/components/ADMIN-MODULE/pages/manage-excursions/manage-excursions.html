@@ -1,93 +1,92 @@
-<section class="activity-section">
-  <div class="section-header">
+<section class="activity-section flex flex-col gap-8">
+  
+  <!-- Header -->
+  <div class="section-header flex justify-between items-center">
     <div>
-      <h2 class="section-title">Manage Excursions</h2>
-      <p class="section-subtitle">Create, edit and organize your tour
-        catalog</p>
+      <h2 class="section-title text-2xl font-extrabold text-foreground m-0">Manage Excursions</h2>
+      <p class="section-subtitle text-muted-foreground mt-1">Create, edit and organize your tour catalog</p>
     </div>
-    <div class="header-actions">
-      <button class="btn-add" (click)="navigateToAdd()">
+    <div class="header-actions flex gap-3">
+      <button class="btn-add flex items-center gap-2 bg-emerald-500 text-white border-none px-5 py-3 rounded-(--radius) font-semibold cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110" (click)="navigateToAdd()">
         <lucide-icon name="plus" size="18"></lucide-icon>
         Add New Excursion
       </button>
-      <button class="btn-refresh" (click)="loadExcursions()"
-        [disabled]="loading">
-        <lucide-icon name="refresh-cw" size="16"
-          [class.spinning]="loading"></lucide-icon>
+      <button class="btn-refresh flex items-center justify-center bg-card text-foreground border border-border w-10.5 h-10.5 rounded-(--radius) cursor-pointer" (click)="loadExcursions()" [disabled]="loading">
+        <lucide-icon name="refresh-cw" size="16" [class.spinning]="loading"></lucide-icon>
       </button>
     </div>
   </div>
 
-  <div class="filters-bar">
-    <div class="filter-group">
-      <label>Excursion Name</label>
-      <div class="input-with-icon">
-        <lucide-icon name="search" size="16"></lucide-icon>
-        <input type="text" [(ngModel)]="filters.name"
-          (keyup.enter)="applyFilters()" placeholder="Search by name...">
+  <!-- Filters Bar -->
+  <div class="filters-bar grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-card p-5 border border-border rounded-(--radius) items-end">
+    <div class="filter-group flex flex-col gap-2">
+      <label class="text-xs font-semibold text-muted-foreground uppercase">Excursion Name</label>
+      <div class="input-with-icon relative flex items-center">
+        <lucide-icon name="search" size="16" class="absolute left-3 text-muted-foreground"></lucide-icon>
+        <input type="text" [(ngModel)]="filters.name" (keyup.enter)="applyFilters()" placeholder="Search by name..." 
+          class="bg-background border border-border text-foreground pl-9 pr-3 py-2.5 rounded-md outline-none text-sm w-full">
       </div>
     </div>
 
-    <div class="filter-group">
-      <label>Category</label>
-      <select [(ngModel)]="filters.category" (change)="applyFilters()">
-        <option value>All Categories</option>
+    <div class="filter-group flex flex-col gap-2">
+      <label class="text-xs font-semibold text-muted-foreground uppercase">Category</label>
+      <select [(ngModel)]="filters.category" (change)="applyFilters()" 
+        class="bg-background border border-border text-foreground px-3 py-2.5 rounded-md outline-none text-sm">
+        <option value="">All Categories</option>
         <option value="sea">Sea</option>
         <option value="land">Land</option>
         <option value="adventure">Adventure</option>
       </select>
     </div>
 
-    <div class="filter-group">
-      <label>Location</label>
-      <input type="text" [(ngModel)]="filters.location"
-        (keyup.enter)="applyFilters()" placeholder="Punta Cana, Saona...">
+    <div class="filter-group flex flex-col gap-2">
+      <label class="text-xs font-semibold text-muted-foreground uppercase">Location</label>
+      <input type="text" [(ngModel)]="filters.location" (keyup.enter)="applyFilters()" placeholder="Punta Cana, Saona..." 
+        class="bg-background border border-border text-foreground px-3 py-2.5 rounded-md outline-none text-sm">
     </div>
 
-    <div class="filter-actions">
-      <button class="btn-primary" (click)="applyFilters()">
-        Filter
-      </button>
-      <button class="btn-ghost" (click)="resetFilters()">
+    <div class="filter-actions flex gap-2">
+      <button class="btn-primary bg-primary text-primary-foreground border-none px-6 py-2.5 rounded-md cursor-pointer font-semibold" (click)="applyFilters()">Filter</button>
+      <button class="btn-ghost bg-transparent border border-border text-muted-foreground px-3 py-2.5 rounded-md cursor-pointer" (click)="resetFilters()">
         <lucide-icon name="rotate-ccw" size="18"></lucide-icon>
       </button>
     </div>
   </div>
 
-  <div class="table-card">
-    <div class="card-header">
-      <div class="header-left">
+  <!-- Table Card -->
+  <div class="table-card bg-card border border-border rounded-(--radius) p-6">
+    <div class="card-header flex justify-between items-center mb-6">
+      <div class="header-left flex items-center gap-3 text-primary">
         <lucide-icon name="map" size="20"></lucide-icon>
-        <h3>Active Excursions List</h3>
+        <h3 class="text-foreground m-0">Active Excursions List</h3>
       </div>
-      <span class="count-badge">{{ paginationConfig.totalItems }}
-        excursions</span>
+      <span class="count-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">{{ paginationConfig.totalItems }} excursions</span>
     </div>
 
     @if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Fetching excursions...</p>
-    </div>
+      <div class="loading-state py-16 flex flex-col items-center gap-4 text-muted-foreground">
+        <div class="spinner w-10 h-10 border-3 border-muted border-t-primary rounded-full animate-spin"></div>
+        <p>Fetching excursions...</p>
+      </div>
     } @else {
-    <app-generic-table
-      [columns]="columns"
-      [data]="excursions"
-      [currentPage]="paginationConfig.currentPage"
-      [limit]="paginationConfig.limit"
-      (edit)="handleEdit($event)"
-      (delete)="handleDelete($event)">
-    </app-generic-table>
-
-    <div class="pagination-wrapper">
-      <app-pagination
+      <app-generic-table
+        [columns]="columns"
+        [data]="excursions"
         [currentPage]="paginationConfig.currentPage"
-        [totalPages]="paginationConfig.totalPages"
-        [hasNextPage]="paginationConfig.hasNextPage"
-        [hasPrevPage]="paginationConfig.hasPrevPage"
-        (pageChange)="handlePageChange($event)">
-      </app-pagination>
-    </div>
+        [limit]="paginationConfig.limit"
+        (edit)="handleEdit($event)"
+        (delete)="handleDelete($event)">
+      </app-generic-table>
+
+      <div class="pagination-wrapper mt-6 flex justify-center">
+        <app-pagination
+          [currentPage]="paginationConfig.currentPage"
+          [totalPages]="paginationConfig.totalPages"
+          [hasNextPage]="paginationConfig.hasNextPage"
+          [hasPrevPage]="paginationConfig.hasPrevPage"
+          (pageChange)="handlePageChange($event)">
+        </app-pagination>
+      </div>
     }
   </div>
 </section>

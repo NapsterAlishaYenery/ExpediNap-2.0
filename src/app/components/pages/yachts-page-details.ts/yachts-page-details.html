@@ -1,45 +1,60 @@
 <div class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
-  <div class="breadcrumb-container max-w-350 mx-auto px-6">
+  <div class="breadcrumb-container max-w-350 mx-auto px-4 sm:px-6">
     <app-breadcrumb></app-breadcrumb>
   </div>
 </div>
 
 @if (!isLoading && yacht) {
-<main class="detail-container container-custom max-w-350 mx-auto px-6 pt-8 pb-20">
-  <header class="detail-header mb-8">
-    <h1 class="text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2">{{ yacht.name | uppercase }}</h1>
-    <div class="header-meta flex flex-wrap gap-6 mt-3 text-muted-foreground font-medium">
-      <span class="location-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="users" size="18" class="text-accent"></lucide-icon>
+<main
+  class="detail-container container-custom max-w-350 mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 sm:pb-20">
+  <header class="detail-header mb-6 sm:mb-8">
+    <h1
+      class="text-3xl sm:text-4xl md:text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2">{{
+      yacht.name | uppercase }}</h1>
+    <div
+      class="header-meta flex flex-wrap gap-3 sm:gap-6 mt-3 text-muted-foreground font-medium">
+      <span
+        class="location-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+        <lucide-icon name="users" size="16" class="text-accent"></lucide-icon>
         Capacity: {{ yacht.maxPax }} people
       </span>
-      <span class="duration-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="anchor" size="18" class="text-accent"></lucide-icon>
+      <span
+        class="duration-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+        <lucide-icon name="anchor" size="16" class="text-accent"></lucide-icon>
         Luxury Vessel
       </span>
     </div>
   </header>
 
-  <div class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 lg:gap-16 items-start">
+  <div
+    class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 sm:gap-12 lg:gap-16 items-start">
     <!-- COLUMNA IZQUIERDA: Galería e Información -->
     <div class="main-column min-w-0">
-      <section class="gallery-section mb-14">
+      <section class="gallery-section mb-8 sm:mb-14">
         <app-image-gallery [images]="yacht.images"></app-image-gallery>
       </section>
 
       <div class="info-column">
-        <div class="description-card mb-12 leading-relaxed text-lg text-muted-foreground">
-          <h3 class="text-2xl font-bold mb-5 text-foreground">Onboard Experience</h3>
+        <div
+          class="description-card mb-8 sm:mb-12 leading-relaxed text-base sm:text-lg text-muted-foreground">
+          <h3
+            class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">Onboard
+            Experience</h3>
           <p>{{ yacht.description }}</p>
         </div>
 
-        <div class="details-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 p-10 bg-muted/20 rounded-3xl border border-border/50">
+        <div
+          class="details-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12 p-6 sm:p-10 bg-muted/20 rounded-2xl sm:rounded-3xl border border-border/50">
           <div class="detail-block">
-            <h3 class="text-2xl font-bold mb-5 text-foreground">What does it include?</h3>
-            <ul class="check-list flex flex-col gap-3.5 list-none p-0">
+            <h3
+              class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">What
+              does it include?</h3>
+            <ul class="check-list flex flex-col gap-3 list-none p-0">
               @for (item of yacht.includes; track item) {
-              <li class="flex items-start gap-3 text-sm text-foreground leading-tight">
-                <i class="bi bi-check-circle text-green text-[#22c55e]"></i>
+              <li
+                class="flex items-start gap-2.5 text-sm text-foreground leading-tight">
+                <i
+                  class="bi bi-check-circle text-[#22c55e] shrink-0 mt-0.5"></i>
                 {{ item | titlecase }}
               </li>
               }
@@ -47,14 +62,19 @@
           </div>
 
           <div class="detail-block">
-            <h3 class="text-2xl font-bold mb-5 text-foreground">Departure Times</h3>
-            <div class="time-info text-muted-foreground">
-              <p class="mb-2"><strong>Full Day:</strong> {{ yacht.timeAvailable.fullDay }}</p>
+            <h3
+              class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">Departure
+              Times</h3>
+            <div class="time-info text-muted-foreground text-sm sm:text-base">
+              <p class="mb-2"><strong>Full Day:</strong> {{
+                yacht.timeAvailable.fullDay }}</p>
               @if (yacht.timeAvailable.halfDay.length > 0) {
-              <p class="mb-2"><strong>Half Day:</strong> {{ yacht.timeAvailable.halfDay.join(' / ') }}</p>
+              <p class="mb-2"><strong>Half Day:</strong> {{
+                yacht.timeAvailable.halfDay.join(' / ') }}</p>
               }
               @if (yacht.riverSunset.price) {
-              <p class="mt-2 text-accent"><strong>River Sunset:</strong> Available</p>
+              <p class="mt-2 text-accent"><strong>River Sunset:</strong>
+                Available</p>
               }
             </div>
           </div>
@@ -63,19 +83,39 @@
     </div>
 
     <!-- COLUMNA DERECHA: Formulario Sticky -->
-    <aside class="booking-column sticky top-8 z-10 self-start lg:block">
-      <div class="booking-card-sticky bg-card border border-border rounded-3xl p-9 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
-        <div class="price-header mb-8 pb-6 border-b border-border text-center">
+    <aside
+      class="booking-column sticky top-8 z-10 self-start max-lg:relative max-lg:top-0 max-lg:order-first max-lg:max-w-125 max-lg:mx-auto">
+      <div
+        class="booking-card-sticky bg-card border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-9 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
+        <div
+          class="price-header mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border text-center">
           <div class="price-row">
-            <span class="current-price text-5xl font-extrabold text-foreground leading-none">${{ selectedPrice | number }}</span>
+            @if (selectedPrice > 0) {
+            <span
+              class="current-price text-4xl sm:text-5xl font-extrabold text-foreground leading-none">
+              ${{ selectedPrice | number }}
+            </span>
+            } @else {
+            <span
+              class="current-price text-4xl sm:text-5xl font-extrabold text-muted-foreground leading-none">
+              N/A
+            </span>
+            }
           </div>
-          <span class="price-label block mt-2 text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">ESTIMATED PRICE (USD)</span>
+          <span
+            class="price-label block mt-1 sm:mt-2 text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">ESTIMATED
+            PRICE (USD)</span>
         </div>
 
-        <form [formGroup]="bookingForm" (ngSubmit)="onReserveAndWhatsApp()" class="booking-form flex flex-col gap-5">
-          <div class="form-group flex flex-col gap-2">
-            <label for="destination" class="text-sm font-medium">Destination</label>
-            <select id="destination" formControlName="destination" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
+        <form [formGroup]="bookingForm"
+          class="booking-form flex flex-col gap-4 sm:gap-5">
+          <!-- DESTINATION -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="destination"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Destination
+              <span class="text-red-500">*</span></label>
+            <select id="destination" formControlName="destination"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
               <option value="Saona Island">Saona Island</option>
               <option value="Catalina Island">Catalina Island</option>
               @if (yacht.riverSunset.price) {
@@ -84,11 +124,16 @@
             </select>
           </div>
 
-          <div class="form-group flex flex-col gap-2">
-            <label for="duration" class="text-sm font-medium">Duration</label>
-            <select id="duration" formControlName="duration" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
+          <!-- DURATION -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="duration"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Duration
+              <span class="text-red-500">*</span></label>
+            <select id="duration" formControlName="duration"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
               @if (bookingForm.get('destination')?.value === 'River Sunset') {
-              <option value="Half Day">Sunset Trip ({{yacht.riverSunset.timeTrip}})</option>
+              <option value="Half Day">Sunset Trip
+                ({{yacht.riverSunset.timeTrip}})</option>
               } @else {
               <option value="Full Day">Full Day</option>
               @if (shouldShowHalfDay()) {
@@ -98,64 +143,135 @@
             </select>
           </div>
 
-          <div class="form-group flex flex-col gap-2">
-            <label for="travelDate" class="text-sm font-medium">Travel Date</label>
-            <input id="travelDate" type="date" formControlName="travelDate" [min]="minDate" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
-            <small class="hint text-xs text-muted-foreground">Bookings must be made at least 24 hours in advance.</small>
-            @if (bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched) {
-            <small class="text-red-500 text-xs">Please select a date.</small>
+          <!-- TRAVEL DATE -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="travelDate"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Travel
+              Date <span class="text-red-500">*</span></label>
+            <input id="travelDate" type="date" formControlName="travelDate"
+              [min]="minDate"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+            <small
+              class="hint text-[10px] sm:text-xs text-muted-foreground">Bookings
+              must be made at least 24 hours in
+              advance.</small>
+            @if (bookingForm.get('travelDate')?.invalid &&
+            bookingForm.get('travelDate')?.touched) {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Please
+              select a date.</small>
             }
           </div>
 
-          <hr class="my-2 border-slate-100 dark:border-slate-800">
+          <hr class="my-1 sm:my-2 border-slate-100 dark:border-slate-800">
 
-          <div class="form-group flex flex-col gap-2">
-            <label for="fullName" class="text-sm font-medium">Full Name</label>
-            <input id="fullName" type="text" formControlName="fullName" placeholder="e.g. John Doe" autocomplete="name" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
-            @if (bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched) {
-            <small class="text-red-500 text-xs">Full name is required.</small>
+          <!-- FULL NAME -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="fullName"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Full
+              Name <span class="text-red-500">*</span></label>
+            <input id="fullName" type="text" formControlName="fullName"
+              placeholder="John Doe" autocomplete="name"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+            @if (bookingForm.get('fullName')?.invalid &&
+            bookingForm.get('fullName')?.touched) {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Full name
+              is required.</small>
             }
           </div>
 
-          <div class="form-group flex flex-col gap-2">
-            <label for="email-field" class="text-sm font-medium">Email</label>
-            <input id="email-field" type="email" formControlName="email" name="email" autocomplete="email" placeholder="example@mail.com" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
-            @if (bookingForm.get('email')?.touched && bookingForm.get('email')?.errors?.['required']) {
-            <small class="text-red-500 text-xs">Email is required.</small>
-            } @else if (bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched) {
-            <small class="text-red-500 text-xs">Please enter a valid email address.</small>
+          <!-- EMAIL -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="email-field"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Email
+              <span class="text-red-500">*</span></label>
+            <input id="email-field" type="email" formControlName="email"
+              name="email" autocomplete="email"
+              placeholder="example@mail.com"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+            @if (bookingForm.get('email')?.touched &&
+            bookingForm.get('email')?.errors?.['required']) {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Email is
+              required.</small>
+            } @else if (bookingForm.get('email')?.invalid &&
+            bookingForm.get('email')?.touched) {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Please
+              enter a valid email address.</small>
             }
           </div>
 
-          <div class="form-row grid grid-cols-[100px_1fr] gap-4">
-            <div class="form-group flex flex-col gap-2">
-              <label for="phonePrefix" class="text-sm font-medium">Prefix</label>
-              <select id="phonePrefix" formControlName="phonePrefix" autocomplete="tel-country-code" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+1">🇩🇴 +1</option>
-                <option value="+34">🇪🇸 +34</option>
-                <option value="+52">🇲🇽 +52</option>
-                <option value="+57">🇨🇴 +57</option>
-                <option value="+44">🇬🇧 +44</option>
-              </select>
-            </div>
+          <!-- PHONE -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="phone"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+              <lucide-icon name="phone" [size]="14"
+                class="text-accent"></lucide-icon>
+              Phone / WhatsApp <span class="text-red-500">*</span>
+            </label>
+            <input id="phone" type="tel" formControlName="phone"
+              placeholder="1 (809) 836-9303" autocomplete="tel"
+              (input)="phoneUtils.formatPhoneForDisplay($event, bookingForm, 'phone')"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+              [class.border-red-500]="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
 
-            <div class="form-group flex flex-col gap-2">
-              <label for="phone" class="text-sm font-medium">Phone</label>
-              <input id="phone" type="tel" formControlName="phone" placeholder="1234567890" autocomplete="tel-national" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-3 focus:ring-accent/10">
-              @if (bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched) {
-              <small class="text-red-500 text-xs">Phone is required.</small>
+            @if (bookingForm.get('phone')?.invalid &&
+            bookingForm.get('phone')?.touched) {
+            @if (bookingForm.get('phone')?.errors?.['minDigits']) {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Minimum 7
+              digits required</small>
+            } @else if (bookingForm.get('phone')?.errors?.['maxDigits']) {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Maximum 20
+              digits allowed</small>
+            } @else {
+            <small class="text-red-500 text-[10px] sm:text-xs mt-0.5">Enter a
+              valid phone number</small>
+            }
+            }
+          </div>
+
+          <!-- BOTONES -->
+          <div class="button-row flex flex-col gap-2.5 sm:gap-3 mt-4 sm:mt-6">
+            <!-- Botón BOOK NOW - Solo guarda en BD -->
+            <app-button variant="secondary" size="full" (onClick)="onBookNow()"
+              [disabled]="isProcessing"
+              class="w-full text-sm sm:text-base py-2.5 sm:py-3.5">
+              @if (isProcessing) {
+              <span class="flex items-center justify-center gap-2">
+                <svg class="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10"
+                    stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                  </path>
+                </svg>
+                <span class="text-xs sm:text-sm">PROCESSING...</span>
+              </span>
+              } @else {
+              <span class="text-xs sm:text-sm font-semibold tracking-wide">BOOK
+                NOW</span>
               }
-            </div>
-          </div>
+            </app-button>
 
-          <div class="button-row mt-4">
-            <app-button variant="whatsapp" size="lg" className="w-full col-span-2" [disabled]="isProcessing">
-              {{ isProcessing ? 'SENDING...' : 'BOOK NOW' }}
+            <!-- Botón BOOK ON WHATSAPP - Solo abre WhatsApp -->
+            <app-button variant="whatsapp" size="full"
+              (onClick)="onBookOnWhatsApp()" [disabled]="isProcessing"
+              class="w-full text-sm sm:text-base py-2.5 sm:py-3.5">
+              <span
+                class="text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2">
+                <lucide-icon name="message-circle" [size]="16"></lucide-icon>
+                BOOK ON WHATSAPP
+              </span>
             </app-button>
           </div>
-          <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-3">
-            The reservation is registered and we will automatically redirect you to WhatsApp to confirm availability.
+
+          <!-- INFORMACIÓN ADICIONAL -->
+          <p
+            class="text-center text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 px-2">
+            📌 <strong>BOOK NOW</strong> saves your reservation in our
+            system.<br>
+            📱 <strong>BOOK ON WHATSAPP</strong> opens WhatsApp directly without
+            saving.
           </p>
         </form>
       </div>
@@ -163,8 +279,12 @@
   </div>
 </main>
 } @else if (isLoading) {
-<div class="loading-state flex flex-col items-center justify-center py-20">
-  <div class="spinner w-12 h-12 border-4 border-muted border-t-accent rounded-full animate-spin mb-4"></div>
-  <p class="text-muted-foreground">Preparing the boats...</p>
+<div
+  class="loading-state flex flex-col items-center justify-center py-16 sm:py-20">
+  <div
+    class="spinner w-10 h-10 sm:w-12 sm:h-12 border-4 border-muted border-t-accent rounded-full animate-spin mb-4">
+  </div>
+  <p class="text-sm sm:text-base text-muted-foreground">Preparing the
+    boats...</p>
 </div>
 }

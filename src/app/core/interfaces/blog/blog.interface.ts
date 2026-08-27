@@ -1,3 +1,4 @@
+import { ImageItem } from "../shared/image.interface";
 import { BaseMongoFields } from "../shared/shared.interface";
 
 /**
@@ -13,8 +14,6 @@ export interface BlogBase {
   meta_description: string;
   keywords: string[];
   excerpt: string;
-  image: string; // URL o nombre del archivo
-  alt: string;
   content: string; // Contenido en formato HTML
 }
 
@@ -24,6 +23,9 @@ export interface BlogBase {
  */
 export interface BlogResponse extends BlogBase, BaseMongoFields {
   slug: string;
+  image: ImageItem;
+  //contentImages: ImageItem[];
+  //cloudinaryFolder: string;
 }
 
 /**
@@ -35,4 +37,12 @@ export type CreateBlogRequest = BlogBase;
 /**
  * REQUEST PARA ACTUALIZAR (PATCH)
  */
-export type UpdateBlogRequest = Partial<BlogBase>;
+export type UpdateBlogRequest = Partial<Omit<BlogBase, 'content'>>;
+
+/**
+ * REQUEST PARA ACTUALIZAR SOLO CONTENIDO (PATCH /update-content)
+ * SOLO permite actualizar el content
+ */
+export interface UpdateBlogContentRequest {
+  content: string;
+}

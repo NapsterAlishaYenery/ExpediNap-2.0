@@ -15,7 +15,7 @@ export class OrderYachtService {
 
   constructor() { }
 
-  createOrderExcursion(data: CreateOrderYacht): Observable<ApiResponse<OrderYachtResponse>> {
+  createOrderYacht(data: CreateOrderYacht): Observable<ApiResponse<OrderYachtResponse>> {
     return this.api.post<ApiResponse<OrderYachtResponse>>(`${this.prefix}/request`, data);
   }
 

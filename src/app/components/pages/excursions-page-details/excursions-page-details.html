@@ -1,63 +1,107 @@
 <div class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
-  <div class="breadcrumb-container max-w-350 mx-auto px-6">
+  <div class="breadcrumb-container max-w-350 mx-auto px-4 sm:px-6">
     <app-breadcrumb></app-breadcrumb>
   </div>
 </div>
 
 @if (!isLoading && excursion) {
-<main class="detail-container container-custom max-w-350 mx-auto px-6 pt-8 pb-20">
-  <header class="detail-header mb-8">
-    <h1 class="text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2 max-md:text-4xl max-sm:text-3xl">{{ excursion.name | titlecase }}</h1>
-    <div class="header-meta flex flex-wrap gap-6 mt-3 text-muted-foreground font-medium">
-      <span class="location-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="map-pin" size="18" class="text-accent"></lucide-icon> {{ excursion.location | titlecase }}, RD
+<main
+  class="detail-container container-custom max-w-350 mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 sm:pb-20">
+    <header class="detail-header mb-6 sm:mb-8">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2">
+      {{ excursion.name | titlecase }}
+    </h1>
+    <div class="header-meta flex flex-wrap gap-4 sm:gap-6 mt-3 text-muted-foreground font-medium">
+      <!-- ✅ location.locationName -->
+      <span class="location-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+        <lucide-icon name="map-pin" size="16" class="text-accent"></lucide-icon>
+        {{ excursion.location.locationName | titlecase }}, RD
       </span>
-      <span class="duration-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="clock" size="18" class="text-accent"></lucide-icon> {{ excursion.duration.time }} {{ excursion.duration.unit }}(s)
+      <!-- ✅ duration.value -->
+      <span class="duration-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+        <lucide-icon name="clock" size="16" class="text-accent"></lucide-icon>
+        {{ excursion.duration.value }} {{ excursion.duration.unit }}(s)
       </span>
-      <span class="age-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="baby" size="18" class="text-accent"></lucide-icon> Min. {{ excursion.minimumAge }} years
+      <!-- ✅ minimumAge (igual) -->
+      <span class="age-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+        <lucide-icon name="baby" size="16" class="text-accent"></lucide-icon>
+        Min. {{ excursion.minimumAge }} years
       </span>
     </div>
   </header>
 
-  <div class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_33%] gap-12 items-start">
+  <div class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_33%] gap-8 sm:gap-12 items-start">
+    
     <!-- COLUMNA IZQUIERDA -->
     <div class="main-column min-w-0">
-      <section class="gallery-section mb-14">
+      
+      <!-- GALERÍA -->
+      <section class="gallery-section mb-8 sm:mb-14">
         <app-image-gallery [images]="excursion.images"></app-image-gallery>
       </section>
 
       <div class="info-column">
-        <div class="description-card mb-12 leading-relaxed text-lg text-muted-foreground">
-          <h3 class="text-2xl font-bold mb-5 text-foreground">About this experience</h3>
-          <p>{{ excursion.description }}</p>
+        
+        <!-- DESCRIPCIÓN -->
+        <div class="description-card mb-8 sm:mb-12 leading-relaxed text-base sm:text-lg text-muted-foreground">
+          <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">About this experience</h3>
+          <!-- ✅ longDescription -->
+          <p>{{ excursion.longDescription }}</p>
         </div>
 
-        <div class="details-grid grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 p-10 bg-muted/20 rounded-3xl border border-border/50 max-md:p-6">
+        <!-- INCLUSIONES Y RECOMENDACIONES -->
+        <div class="details-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12 p-6 sm:p-10 bg-muted/20 rounded-2xl sm:rounded-3xl border border-border/50">
+          
+          <!-- INCLUSIONES -->
           <div class="detail-block">
-            <h3 class="text-2xl font-bold mb-5 text-foreground">What does it include?</h3>
-            <ul class="check-list flex flex-col gap-3.5 list-none p-0">
-              @for (item of excursion.includes; track item) {
-              <li class="flex items-start gap-3 text-sm text-foreground leading-tight"><i class="bi bi-check-circle text-[#22c55e]"></i> {{ item }}</li>
+            <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">What does it include?</h3>
+            <ul class="check-list flex flex-col gap-3 list-none p-0">
+              <!-- ✅ inclusions.included -->
+              @for (item of excursion.inclusions.included; track item) {
+                <li class="flex items-start gap-2.5 text-sm text-foreground leading-tight">
+                  <i class="bi bi-check-circle text-[#22c55e] shrink-0 mt-0.5"></i>
+                  {{ item }}
+                </li>
               }
             </ul>
           </div>
+
+          <!-- RECOMENDACIONES -->
           <div class="detail-block">
-            <h3 class="text-2xl font-bold mb-5 text-foreground">Recommendations</h3>
-            <ul class="check-list flex flex-col gap-3.5 list-none p-0">
+            <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">Recommendations</h3>
+            <ul class="check-list flex flex-col gap-3 list-none p-0">
               @for (rec of excursion.recommendations; track rec) {
-              <li class="flex items-start gap-3 text-sm text-foreground leading-tight"><lucide-icon name="info" class="text-accent w-4 h-4 shrink-0"></lucide-icon> {{ rec }}</li>
+                <li class="flex items-start gap-2.5 text-sm text-foreground leading-tight">
+                  <lucide-icon name="info" class="text-accent w-4 h-4 shrink-0 mt-0.5"></lucide-icon>
+                  {{ rec }}
+                </li>
               }
             </ul>
           </div>
         </div>
 
-        <div class="itinerary-section p-10 border-l-5 border-l-accent bg-card rounded-r-3xl mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.03)] max-md:p-6">
-          <h3 class="text-2xl font-bold mb-5 text-foreground">Itinerary</h3>
-          <p class="itinerary-text italic text-muted-foreground mb-8 text-base leading-relaxed">{{ excursion.itinerary }}</p>
-          <div class="meeting-point flex items-center gap-4 p-5 bg-muted/30 rounded-xl text-sm text-foreground">
-            <lucide-icon name="flag" class="text-accent shrink-0"></lucide-icon>
+        <!-- ITINERARIO -->
+        <div class="itinerary-section p-6 sm:p-10 border-l-4 sm:border-l-5 border-l-accent bg-card rounded-r-2xl sm:rounded-r-3xl mb-8 sm:mb-12 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+          <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">Itinerary</h3>
+          
+          <!-- ✅ itinerary es un array de objetos -->
+          <div class="itinerary-list flex flex-col gap-4 sm:gap-5 mb-6 sm:mb-8">
+            @for (step of excursion.itinerary; track step._id || $index) {
+              <div class="itinerary-step flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-muted/20 rounded-xl">
+                <div class="step-number flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 text-accent font-bold text-sm sm:text-base shrink-0">
+                  {{ step.order !== undefined ? step.order + 1 : $index + 1 }}
+                </div>
+                <div>
+                  <h4 class="text-sm sm:text-base font-semibold text-foreground">{{ step.titleItinerary }}</h4>
+                  <p class="text-xs sm:text-sm text-muted-foreground mt-0.5">{{ step.description }}</p>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- MEETING POINT -->
+          <div class="meeting-point flex items-center gap-3 sm:gap-4 p-4 sm:p-5 bg-muted/30 rounded-xl text-sm text-foreground">
+            <lucide-icon name="flag" class="text-accent shrink-0 w-4 h-4 sm:w-5 sm:h-5"></lucide-icon>
             <span><strong>Meeting point:</strong> {{ excursion.startingPoint }}</span>
           </div>
         </div>
@@ -66,53 +110,256 @@
 
     <!-- COLUMNA DERECHA (STICKY) -->
     <aside class="booking-column sticky top-8 z-10 self-start max-lg:relative max-lg:top-0 max-lg:order-first max-lg:max-w-125 max-lg:mx-auto">
-      <div class="booking-card-sticky bg-card border border-border rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
-        <div class="price-header mb-8 pb-6 border-b border-border">
+      <div class="booking-card-sticky bg-card border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
+        
+        <!-- PRECIO -->
+        <div class="price-header mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border">
           <div class="price-row flex justify-between items-end w-full">
-            <div class="price-box flex flex-col items-center gap-1">
-              @if (excursion.regularPriceUsd > excursion.offerPriceUsd) {
-                <span class="old-price line-through text-muted-foreground text-lg font-medium">${{ excursion.regularPriceUsd }}</span>
-              }
-              <span class="price-label block text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Regular</span>
+            
+            <!-- Precio Adulto -->
+            <div class="price-box flex flex-col items-center gap-0.5">
+              <!-- ✅ pricing.adultPrice -->
+              <span class="current-price text-4xl sm:text-5xl font-extrabold text-primary leading-none">
+                ${{ excursion.pricing.adultPrice }}
+              </span>
+              <span class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Adult</span>
             </div>
-            <div class="price-box flex flex-col items-center gap-1">
-              <span class="current-price text-5xl font-extrabold text-[#ef4444] leading-none">${{ excursion.offerPriceUsd }}</span>
-              <span class="price-label block text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Offer per person</span>
+
+            <!-- Precio Niño -->
+            <div class="price-box flex flex-col items-center gap-0.5">
+              <!-- ✅ pricing.childPrice -->
+              <span class="current-price text-4xl sm:text-5xl font-extrabold text-primary leading-none">
+                ${{ excursion.pricing.childPrice }}
+              </span>
+              <span class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Child</span>
             </div>
+
+            <!-- Precio Infante -->
+            <div class="price-box flex flex-col items-center gap-0.5">
+              <!-- ✅ pricing.infantPrice -->
+              <span class="current-price text-4xl sm:text-5xl font-extrabold text-primary leading-none">
+                ${{ excursion.pricing.infantPrice || 0 }}
+              </span>
+              <span class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Infant</span>
+            </div>
+
           </div>
         </div>
 
-        <form [formGroup]="bookingForm" class="booking-form flex flex-col gap-5">
-          <div class="form-group flex flex-col gap-2">
-            <label for="fullName" class="text-sm font-semibold text-muted-foreground ml-1">Full Name</label>
-            <input type="text" id="fullName" formControlName="fullName" placeholder="Ej. Juan Pérez" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+  
+
+        <form [formGroup]="bookingForm"
+          class="booking-form flex flex-col gap-4 sm:gap-5">
+          <!-- FULL NAME -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="fullName"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Full
+              Name <span class="text-red-500">*</span></label>
+            <input
+              type="text"
+              id="fullName"
+              formControlName="fullName"
+              placeholder="Juan Pérez"
+              autocomplete="name"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+              [class.border-red-500]="bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched">
+            @if (bookingForm.get('fullName')?.invalid &&
+            bookingForm.get('fullName')?.touched) {
+            <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Full name
+              is required (minimum 2 characters)</span>
+            }
           </div>
 
-          <div class="form-row grid grid-cols-[110px_1fr] gap-4">
-            <div class="form-group flex flex-col gap-2">
-              <label class="text-sm font-semibold text-muted-foreground ml-1">Prefix</label>
-              <select formControlName="phonePrefix" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
-                <option value="+1">🇩🇴 +1</option>
-                <option value="+34">🇪🇸 +34</option>
-              </select>
+          <!-- EMAIL -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="email"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Email
+              <span class="text-red-500">*</span></label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="juan@email.com"
+              autocomplete="email"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+              [class.border-red-500]="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
+            @if (bookingForm.get('email')?.invalid &&
+            bookingForm.get('email')?.touched) {
+            <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Please
+              enter a valid email address</span>
+            }
+          </div>
+
+          <!-- PHONE - Ahora ocupa todo el ancho -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="phone"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+              <lucide-icon name="phone" [size]="14"
+                class="text-accent"></lucide-icon>
+              Phone / WhatsApp <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              formControlName="phone"
+              placeholder="1 (809) 836-9303"
+              autocomplete="tel"
+              (input)="phoneUtils.formatPhoneForDisplay($event, bookingForm, 'phone')"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+              [class.border-red-500]="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
+
+            <!-- Mensajes de error específicos -->
+            @if (bookingForm.get('phone')?.invalid &&
+            bookingForm.get('phone')?.touched) {
+            @if (bookingForm.get('phone')?.errors?.['minDigits']) {
+            <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Minimum 7
+              digits required</span>
+            } @else if (bookingForm.get('phone')?.errors?.['maxDigits']) {
+            <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Maximum 20
+              digits allowed</span>
+            } @else {
+            <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Enter a
+              valid phone number</span>
+            }
+            }
+          </div>
+
+          <!-- ADULTS & CHILDREN -->
+          <div class="form-row grid grid-cols-2 gap-3 sm:gap-4">
+            <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+              <label for="adults"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Adults
+                <span class="text-red-500">*</span></label>
+              <input
+                type="number"
+                id="adults"
+                formControlName="adults"
+                min="1"
+                autocomplete="off"
+                class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                [class.border-red-500]="bookingForm.get('adults')?.invalid && bookingForm.get('adults')?.touched">
+              @if (bookingForm.get('adults')?.invalid &&
+              bookingForm.get('adults')?.touched) {
+              <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Minimum 1
+                adult required</span>
+              }
             </div>
-            <div class="form-group flex flex-col gap-2">
-              <label class="text-sm font-semibold text-muted-foreground ml-1">Phone</label>
-              <input type="tel" formControlName="phone" placeholder="809-000-0000" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+            <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+              <label for="children"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Children</label>
+              <input
+                type="number"
+                id="children"
+                formControlName="children"
+                min="0"
+                autocomplete="off"
+                class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                [class.border-red-500]="bookingForm.get('children')?.invalid && bookingForm.get('children')?.touched">
+              @if (bookingForm.get('children')?.invalid &&
+              bookingForm.get('children')?.touched) {
+              <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Cannot be
+                negative</span>
+              }
             </div>
           </div>
 
-          <div class="form-group flex flex-col gap-2">
-            <label for="travelDate" class="text-sm font-semibold text-muted-foreground ml-1">Travel Date</label>
-            <input type="date" id="travelDate" formControlName="travelDate" [min]="minDate" class="w-full px-4 py-3.5 rounded-xl border border-border bg-background text-foreground text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+          <!-- TRAVEL DATE -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="travelDate"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Travel
+              Date <span class="text-red-500">*</span></label>
+            <input
+              type="date"
+              id="travelDate"
+              formControlName="travelDate"
+              [min]="minDate"
+              autocomplete="off"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+              [class.border-red-500]="bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched">
+            @if (bookingForm.get('travelDate')?.invalid &&
+            bookingForm.get('travelDate')?.touched) {
+            <span class="text-red-500 text-[10px] sm:text-xs mt-0.5">Please
+              select a travel date (minimum 24 hours in advance)</span>
+            }
           </div>
 
-          <div class="button-row grid grid-cols-2 gap-3 mt-6">
-            <app-button variant="whatsapp" size="lg" (onClick)="onWhatsApp()" class="col-span-2">
-              WHATSAPP
+          <!-- HOTEL NAME -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="hotelName"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Hotel
+              / Airbnb <span
+                class="text-muted-foreground text-[10px] sm:text-xs font-normal">(Optional)</span></label>
+            <input
+              type="text"
+              id="hotelName"
+              formControlName="hotelName"
+              placeholder="Hotel Name or Airbnb address"
+              autocomplete="off"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+          </div>
+
+          <!-- HOTEL NUMBER -->
+          <div class="form-group flex flex-col gap-1.5 sm:gap-2">
+            <label for="hotelNumber"
+              class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Room
+              Number <span
+                class="text-muted-foreground text-[10px] sm:text-xs font-normal">(Optional)</span></label>
+            <input
+              type="text"
+              id="hotelNumber"
+              formControlName="hotelNumber"
+              placeholder="Room # or N/A"
+              autocomplete="off"
+              class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
+          </div>
+
+          <!-- BOTONES -->
+          <div class="button-row flex flex-col gap-2.5 sm:gap-3 mt-4 sm:mt-6">
+            <!-- Botón BOOK DIRECT -->
+            <app-button
+              variant="default"
+              size="full"
+              (onClick)="onBookDirect()"
+              [disabled]="isProcessing"
+              class="w-full text-sm sm:text-base py-2.5 sm:py-3.5">
+              @if (isProcessing) {
+              <span class="flex items-center justify-center gap-2">
+                <svg class="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10"
+                    stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="text-xs sm:text-sm">PROCESSING...</span>
+              </span>
+              } @else {
+              <span class="text-xs sm:text-sm font-semibold tracking-wide">BOOK
+                DIRECT</span>
+              }
+            </app-button>
+
+            <!-- Botón WHATSAPP -->
+            <app-button
+              variant="whatsapp"
+              size="full"
+              (onClick)="onWhatsApp()"
+              [disabled]="isProcessing"
+              class="w-full text-sm sm:text-base py-2.5 sm:py-3.5">
+              <span class="text-xs sm:text-sm font-semibold tracking-wide">BOOK
+                ON WHATSAPP</span>
             </app-button>
           </div>
         </form>
+
+        <!-- INFORMACIÓN ADICIONAL -->
+        <div
+          class="booking-info mt-4 sm:mt-6 text-[10px] sm:text-xs text-center text-muted-foreground border-t border-border pt-3 sm:pt-4">
+          <p>💳 Secure booking. We'll send you payment instructions via
+            email.</p>
+          <p class="mt-1">📱 Or contact us directly on WhatsApp.</p>
+        </div>
       </div>
     </aside>
   </div>

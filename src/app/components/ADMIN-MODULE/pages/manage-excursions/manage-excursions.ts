@@ -24,13 +24,15 @@ export class ManageExcursions implements OnInit, OnDestroy{
   // Columnas estratégicas para gestión rápida
   columns: TableColumn[] = [
     { key: 'name', label: 'Excursion Name' },
-    { key: 'location', label: 'Location' },
-    { key: 'categories', label: 'Categories' }, // El GenericTable debería manejar el array join(', ')
-    { key: 'regularPriceUsd', label: 'Reg. Price', type: 'currency' },
-    { key: 'offerPriceUsd', label: 'Offer Price', type: 'currency' },
-    { key: 'childPriceUsd', label: 'Children Price', type: 'currency'},
-    { key: 'duration.time', label: 'Duration' }, // Acceso a objeto anidado
-    { key: 'minimumAge', label: 'Min. Age' }
+    { key: 'location.locationName', label: 'Location' }, // ✅ Ahora es anidado
+    { key: 'categories', label: 'Categories' },
+    { key: 'pricing.adultPrice', label: 'Adult Price', type: 'currency' }, // ✅ Nuevo
+    { key: 'pricing.childPrice', label: 'Child Price', type: 'currency' }, // ✅ Nuevo
+    { key: 'duration.value', label: 'Duration' }, // ✅ duration.value
+    { key: 'duration.unit', label: 'Unit' }, // ✅ duration.unit (nuevo)
+    { key: 'minimumAge', label: 'Min. Age' },
+    { key: 'isFeatured', label: 'Featured', type: 'boolean' }, // ✅ Cambiar a 'boolean'
+    { key: 'isPublished', label: 'Status', type: 'boolean' } // ✅ Cambiar a 'boolean'
   ];
 
   excursions: any[] = [];
@@ -113,5 +115,4 @@ export class ManageExcursions implements OnInit, OnDestroy{
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

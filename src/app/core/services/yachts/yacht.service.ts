@@ -53,8 +53,8 @@ export class YachtService {
   /**
    * Crear un nuevo yate
    */
-  createYacht(data: CreateYachtRequest): Observable<ApiResponse<YachtResponse>> {
-    return this.api.post<ApiResponse<YachtResponse>>(`${this.prefix}/create`, data);
+  createYacht(formData: FormData): Observable<ApiResponse<YachtResponse>> {
+    return this.api.post<ApiResponse<YachtResponse>>(`${this.prefix}/create`, formData);
   }
 
   /**
@@ -71,10 +71,34 @@ export class YachtService {
     return this.api.delete<ApiResponse<YachtResponse>>(`${this.prefix}/delete/${id}`);
   }
 
-   /**
-   * Get all for select solo nombre, id
-   */
+  /**
+  * Get all for select solo nombre, id
+  */
   getYachtsForSelect(): Observable<ApiResponse<SimpleListResponse[]>> {
-  return this.api.get<ApiResponse<SimpleListResponse[]>>(`${this.prefix}/all-for-select`);
-}
+    return this.api.get<ApiResponse<SimpleListResponse[]>>(`${this.prefix}/all-for-select`);
+  }
+
+  /**
+ * Adregar imagenes o video a una galeria de un yate
+ */
+  addYachtGalleryImages(formData: FormData, id: string): Observable<ApiResponse<YachtResponse>> {
+    return this.api.post<ApiResponse<YachtResponse>>(`${this.prefix}/${id}/gallery`, formData);
+  }
+
+
+  /**
+   * Eliminar Imagen de la galeria del yate 
+   */
+  deleteYachtGalleryImage(id: string, index: number): Observable<ApiResponse<YachtResponse>> {
+    return this.api.delete<ApiResponse<YachtResponse>>(`${this.prefix}/${id}/gallery/${index}`);
+  }
+
+
+  /**
+ * Actualizar yate existente Cambiar la imagen main por la de una galeria
+ */
+  swapYachtMainImage(id: string, index: number): Observable<ApiResponse<YachtResponse>> {
+    return this.api.patch<ApiResponse<YachtResponse>>(`${this.prefix}/${id}/swap-main`, { index: index });
+  }
+
 }

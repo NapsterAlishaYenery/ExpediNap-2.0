@@ -28,7 +28,7 @@ export class ManageYachts implements OnInit, OnDestroy {
     { key: 'saonaPrice.fullDay', label: 'Saona (Full)', type: 'currency' },
     { key: 'catalinaPrice.halfDay', label: 'Catalina (Half)', type: 'currency' },
     { key: 'catalinaPrice.fullDay', label: 'Catalina (Full)', type: 'currency' },
-    { key: 'riverSunset.price', label: 'River Sunse', type: 'currency' },
+    { key: 'riverSunset.price', label: 'River/Sunset', type: 'currency' },
     { key: 'riverSunset.timeTrip', label: 'Time Trip' },
     { key: 'timeAvailable.halfDay', label: 'Half Day Hours' },
     { key: 'timeAvailable.fullDay', label: 'Full Day Hours' },

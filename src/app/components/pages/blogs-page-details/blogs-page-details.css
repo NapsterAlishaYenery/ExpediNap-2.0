@@ -79,3 +79,31 @@
     transform: rotate(360deg);
   }
 }
+
+/* ========================================
+   VIDEOS DEL CONTENIDO DEL BLOG
+   ======================================== */
+
+.blog-body ::ng-deep video {
+  border-radius: 22px;
+  margin: 3rem auto;
+  display: block;
+  max-width: 85%;
+  height: auto;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+  background-color: #0a0a0a; /* Fondo negro para el video */
+}
+
+.blog-body ::ng-deep video:hover {
+  transform: scale(1.02);
+}
+
+/* Estilos para los controles del video (opcional) */
+.blog-body ::ng-deep video::-webkit-media-controls {
+  border-radius: 0 0 22px 22px;
+}
+
+.blog-body ::ng-deep video::-webkit-media-controls-panel {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}

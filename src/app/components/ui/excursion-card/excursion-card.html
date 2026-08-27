@@ -1,63 +1,100 @@
-<div class="group relative flex flex-col h-130 max-md:h-auto max-md:min-h-120 bg-card border border-border rounded-(--radius) overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-3 hover:shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1)]">
-  
+<div
+  class="group relative flex flex-col h-115 max-md:h-auto bg-card border border-border rounded-2xl overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10">
+
+  <!-- ============================================ -->
   <!-- IMAGEN -->
-  <div class="relative w-full h-62.5 max-md:h-50 overflow-hidden">
-    <img [src]="excursion.images.main.url | imageUrl" 
-         [alt]="excursion.name"
-         class="w-full h-full object-cover transition-transform duration-600 ease-in-out group-hover:scale-110">
+  <!-- ============================================ -->
+  <div class="relative w-full h-50 max-md:h-45 overflow-hidden bg-muted/30">
+    <img
+      [src]="excursion.images.main.url"
+      [alt]="excursion.images.main.alt || excursion.name"
+      class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+      loading="lazy">
 
-    <!-- BADGES OVERLAY -->
+    <!-- BADGE CATEGORÍA -->
     <div class="absolute top-3 left-3 z-10">
-      <app-badge variant="accent">{{ mainCategory }}</app-badge>
+      <app-badge variant="accent"
+        class="capitalize text-[0.65rem] font-semibold tracking-wider px-3 py-1">
+        {{ mainCategory }}
+      </app-badge>
     </div>
 
-    @if (excursion.offerPriceUsd) {
-    <div class="absolute top-3 right-3 z-10">
-      <app-badge variant="default">OFFER</app-badge>
+    <!-- DURACIÓN OVERLAY -->
+    <div
+      class="absolute bottom-3 right-3 z-10 bg-black/60 backdrop-blur-sm text-white text-[0.7rem] font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5">
+      <lucide-icon name="clock" class="w-3.5 h-3.5"></lucide-icon>
+      <span>{{ excursion.duration.value }} {{ excursion.duration.unit }}</span>
     </div>
-    }
   </div>
 
-  <!-- CUERPO DE LA CARD -->
-  <div class="p-6 flex flex-col grow">
-    <h3 class="font-serif text-[1.4rem] font-bold capitalize mb-3 text-foreground transition-colors duration-300 cursor-pointer group-hover:text-accent">
-      {{ excursion.name }}
-    </h3>
+  <!-- ============================================ -->
+  <!-- CONTENIDO -->
+  <!-- ============================================ -->
+  <div class="flex-1 p-5 flex flex-col">
 
-    <p class="text-[0.9rem] text-muted-foreground line-clamp-2 mb-5 leading-relaxed min-h-12">
-      {{ excursion.description }}
+    <!-- TÍTULO + RATING (opcional) -->
+    <div class="flex items-start justify-between gap-2 mb-2">
+      <h3
+        class="font-serif text-[1.15rem] font-bold leading-tight text-foreground transition-colors duration-300 cursor-pointer group-hover:text-primary line-clamp-2 flex-1">
+        {{ excursion.name }}
+      </h3>
+      <!-- Rating (si tuvieras) -->
+      <!-- <div class="flex items-center gap-1 text-[0.75rem] text-muted-foreground shrink-0">
+        <lucide-icon name="star" class="w-3.5 h-3.5 fill-accent text-accent"></lucide-icon>
+        <span>4.8</span>
+      </div> -->
+    </div>
+
+    <!-- DESCRIPCIÓN CORTA -->
+    <p
+      class="text-[0.8rem] text-muted-foreground line-clamp-2 mb-3 leading-relaxed flex-1">
+      {{ excursion.shortDescription }}
     </p>
 
-    <!-- FILA DE DETALLES -->
-    <div class="flex items-center flex-wrap gap-5 mb-5">
-      <div class="flex items-center gap-2 text-muted-foreground leading-none">
-        <lucide-icon name="map-pin" class="w-[0.9rem] h-[0.9rem] stroke-[2.5px] flex shrink-0 items-center"></lucide-icon>
-        <span class="text-[0.9rem]">{{ excursion.location }}</span>
+    <!-- ============================================ -->
+    <!-- INFO RÁPIDA (Ubicación + Edad) -->
+    <!-- ============================================ -->
+    <div
+      class="flex items-center gap-4 mb-4 text-[0.75rem] text-muted-foreground">
+      <div class="flex items-center gap-1.5">
+        <lucide-icon name="map-pin"
+          class="w-3.5 h-3.5 text-primary"></lucide-icon>
+        <span class="truncate </div>
+">{{ excursion.location.locationName }}</span>
       </div>
-      <div class="flex items-center gap-2 text-muted-foreground leading-none">
-        <lucide-icon name="clock" class="w-[0.9rem] h-[0.9rem] stroke-[2.5px] flex shrink-0 items-center"></lucide-icon>
-        <span class="text-[0.9rem]">{{ excursion.duration.time }} {{ excursion.duration.unit }}</span>
-      </div>
-      <div class="flex items-center gap-2 text-muted-foreground leading-none">
-        <lucide-icon name="users" class="w-[0.9rem] h-[0.9rem] stroke-[2.5px] flex shrink-0 items-center"></lucide-icon>
-        <span class="text-[0.9rem]"> + {{ excursion.minimumAge }} años</span>
+      <div class="flex items-center gap-1.5">
+        <lucide-icon name="users"
+          class="w-3.5 h-3.5 text-primary"></lucide-icon>
+        <span>+{{ excursion.minimumAge }} años</span>
       </div>
     </div>
 
-    <div class="h-px bg-border mb-5"></div>
+    <!-- ============================================ -->
+    <!-- PRECIO + BOTÓN -->
+    <!-- ============================================ -->
+    <div
+      class="flex items-center justify-between gap-2 mt-auto pt-4 border-t border-border/50">
 
-    <!-- FOOTER -->
-    <div class="flex justify-between items-center mt-auto">
-      <div class="flex items-center gap-2">
-        @if (excursion.regularPriceUsd) {
-        <span class="text-[0.9rem] line-through text-muted-foreground">${{ excursion.regularPriceUsd }}</span>
-        }
-        <span class="text-[1.4rem] font-extrabold text-primary">${{ excursion.offerPriceUsd }}</span>
+      <!-- PRECIO -->
+      <div class="flex items-end gap-2 shrink-0">
+        <span
+          class="text-[1.6rem] font-extrabold text-primary tracking-tight leading-none">
+          ${{ excursion.pricing.adultPrice }}
+        </span>
+        <span
+          class="text-[0.7rem] text-muted-foreground font-medium leading-none mb-1">/
+          adult</span>
       </div>
-      
+
+      <!-- BOTÓN -->
       <a [routerLink]="['/excursions', excursion.slug]">
-        <app-button variant="accent" size="default">
-          BOOKING
+        <app-button
+          variant="accent"
+          size="default"
+          class="group/btn font-semibold text-[0.7rem] tracking-wider transition-all duration-300 hover:scale-105 px-5 h-10 max-sm:px-3 max-sm:h-8 max-sm:text-[0.6rem]">
+          <span>Ver más</span>
+          <lucide-icon name="arrow-right"
+            class="w-3.5 h-3.5 transition-transform duration-300 group-hover/btn:translate-x-1 max-sm:w-3 max-sm:h-3"></lucide-icon>
         </app-button>
       </a>
     </div>

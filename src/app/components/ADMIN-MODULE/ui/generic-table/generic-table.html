@@ -1,43 +1,43 @@
-<div class="table-wrapper">
-  <div class="table-container">
-    <table>
+<div class="table-wrapper w-full bg-card rounded-(--radius) border border-border overflow-hidden">
+  <div class="table-container w-full overflow-x-auto [overflow-scrolling:touch] block">
+    <table class="w-full border-collapse border-spacing-0 text-left text-sm table-auto">
       <thead>
         <tr>
-          <th class="col-number">No.</th>
+          <th class="col-number w-15 min-w-15 text-center p-4 bg-muted text-muted-foreground font-semibold uppercase text-xs tracking-wider border-b border-border whitespace-nowrap sticky left-0 z-20">No.</th>
           
           @for (col of columns; track col.key) {
-          <th>{{ col.label }}</th>
+          <th class="p-4 bg-muted text-muted-foreground font-semibold uppercase text-xs tracking-wider border-b border-border whitespace-nowrap">{{ col.label }}</th>
           }
-          <th class="text-right">Acciones</th>
+          <th class="text-right p-4 text-muted-foreground font-semibold uppercase text-xs tracking-wider border-b border-border whitespace-nowrap sticky right-0 z-20 bg-muted">Acciones</th>
         </tr>
       </thead>
       <tbody>
         @for (row of data; track row._id || $index) {
-        <tr>
-          <td class="col-number">
-            <span class="row-index">#{{ getGlobalIndex($index) }}</span>
+        <tr class="group hover:bg-primary/20">
+          <td class="col-number w-15 text-center p-4 border-b border-border/50 text-foreground whitespace-nowrap min-w-15 bg-card sticky left-0 z-10 ">
+            <span class="row-index bg-muted/80 text-muted-foreground px-2 py-0.5 rounded font-mono text-xs font-bold">#{{ getGlobalIndex($index) }}</span>
           </td>
 
           @for (col of columns; track col.key) {
-          <td>
+          <td class="p-4 border-b border-border/50 text-foreground whitespace-nowrap min-w-25 bg-card">
             @let value = getValue(row, col.key);
 
             @switch (col.type) {
             @case ('currency') { {{ value | currency:'USD' }} }
             @case ('date') { {{ value | date:'dd/MM/yyyy' }} }
             @case ('badge') {
-            <span class="badge" [ngClass]="value?.toLowerCase()">{{ value }}</span>
+            <span class="badge inline-block px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="value?.toLowerCase()">{{ value }}</span>
             }
             @default { {{ value }} }
             }
           </td>
           }
-          <td>
-            <div class="actions-cell">
-              <button (click)="edit.emit(row)" class="btn-action btn-edit" title="Editar">
+          <td class="p-4 border-b border-border/50 text-foreground whitespace-nowrap min-w-25 bg-card sticky right-0 z-10">
+            <div class="actions-cell flex gap-2 justify-end">
+              <button (click)="edit.emit(row)" class="btn-action flex items-center justify-center w-8 h-8 rounded-md border border-border bg-transparent text-inherit cursor-pointer transition-all duration-200 hover:bg-primary hover:text-white hover:border-primary" title="Editar">
                 <lucide-icon name="pencil" size="16"></lucide-icon>
               </button>
-              <button (click)="delete.emit(row)" class="btn-action btn-delete" title="Eliminar">
+              <button (click)="delete.emit(row)" class="btn-action flex items-center justify-center w-8 h-8 rounded-md border border-border bg-transparent text-inherit cursor-pointer transition-all duration-200 hover:bg-red-500 hover:text-white hover:border-red-500" title="Eliminar">
                 <lucide-icon name="trash" size="16"></lucide-icon>
               </button>
             </div>
@@ -45,7 +45,7 @@
         </tr>
         } @empty {
         <tr>
-          <td [attr.colspan]="columns.length + 2" class="empty-state">
+          <td [attr.colspan]="columns.length + 2" class="empty-state p-12 text-center text-muted-foreground">
             No records were found.
           </td>
         </tr>

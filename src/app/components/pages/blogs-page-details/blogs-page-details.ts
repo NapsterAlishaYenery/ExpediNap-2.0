@@ -8,9 +8,9 @@ import { IconsModule } from '../../../core/icons.module';
 import { Breadcrumb } from '../../ui/breadcrumb/breadcrumb';
 import { Badge } from '../../ui/badge/badge';
 import { Button } from '../../ui/button/button';
-import { GalleryImage } from '../../../core/interfaces/shared/shared.interface';
 import { ImageGallery } from '../../ui/image-gallery/image-gallery';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ImagesModel } from '../../../core/interfaces/shared/image.interface';
 
 @Component({
   selector: 'app-blogs-page-details',
@@ -27,7 +27,7 @@ export class BlogsPageDetails implements OnInit, OnDestroy {
   private sanitizer = inject(DomSanitizer); // Inyecta el servicio
 
   // Agregamos esta propiedad para el componente de galería
-  formattedImages?: { main: GalleryImage, gallery: GalleryImage[] };
+  formattedImages?: ImagesModel;
 
   blog?: BlogResponse;
   isLoading = true;
@@ -54,12 +54,9 @@ export class BlogsPageDetails implements OnInit, OnDestroy {
           this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.blog.content);
 
           // Transformamos la imagen simple del blog al objeto que espera la galería
-          this.formattedImages = {
-            main: {
-              url: this.blog.image, // La URL limpia, el pipe imageUrl se encarga en el componente
-              alt: this.blog.alt || this.blog.title
-            },
-            gallery: [] // Lista vacía para que no explote y no muestre miniaturas
+           this.formattedImages = {
+            main: this.blog.image, // ✅ Ya es ImageItem
+            gallery: [] // ✅ Array vacío de ImageItem (no mostrará miniaturas)
           };
           this.isLoading = false;
         },

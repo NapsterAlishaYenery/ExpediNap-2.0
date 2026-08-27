@@ -1,6 +1,6 @@
 <div class="group flex bg-card border border-border rounded-lg overflow-hidden transition-all duration-400 ease hover:-translate-y-2 hover:shadow-xl h-100 max-lg:h-95 max-sm:flex-col max-sm:h-auto">
   <div class="image-container relative w-1/2 h-full shrink-0 overflow-hidden max-sm:w-full max-sm:h-62.5">
-    <img [src]="yacht.images.main.url | imageUrl" 
+    <img [src]="yacht.images.main.url" 
          [alt]="yacht.images.main.alt" 
          class="w-full h-full object-cover transition-transform duration-600 ease group-hover:scale-110">
     <div class="pax-badge absolute top-4 left-4">
@@ -24,41 +24,47 @@
     </div>
 
     <div class="price-list flex flex-col gap-1 mb-3 grow justify-center">
-      @if (yacht.catalinaPrice?.halfDay) {
-        <div class="price-item flex justify-between items-center text-sm">
-          <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-            <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-            Catalina - Half day
+      <!-- ✅ Usar @if con asignación a variable local -->
+      @if (yacht.catalinaPrice; as catalinaPrice) {
+        @if (catalinaPrice.halfDay) {
+          <div class="price-item flex justify-between items-center text-sm">
+            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
+              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
+              Catalina - Half day
+            </div>
+            <div class="value text-secondary font-bold">${{ catalinaPrice.halfDay }}</div>
           </div>
-          <div class="value text-secondary font-bold">${{ yacht.catalinaPrice?.halfDay }}</div>
-        </div>
+        }
+        @if (catalinaPrice.fullDay) {
+          <div class="price-item flex justify-between items-center text-sm">
+            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
+              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
+              Catalina - Full day
+            </div>
+            <div class="value text-secondary font-bold">${{ catalinaPrice.fullDay }}</div>
+          </div>
+        }
       }
-      @if (yacht.catalinaPrice?.fullDay) {
-        <div class="price-item flex justify-between items-center text-sm">
-          <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-            <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-            Catalina - Full day
+
+      @if (yacht.saonaPrice; as saonaPrice) {
+        @if (saonaPrice.halfDay) {
+          <div class="price-item flex justify-between items-center text-sm">
+            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
+              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
+              Saona - Half day
+            </div>
+            <div class="value text-secondary font-bold">${{ saonaPrice.halfDay }}</div>
           </div>
-          <div class="value text-secondary font-bold">${{ yacht.catalinaPrice?.fullDay }}</div>
-        </div>
-      }
-      @if (yacht.saonaPrice?.halfDay) {
-        <div class="price-item flex justify-between items-center text-sm">
-          <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-            <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-            Saona - Half day
+        }
+        @if (saonaPrice.fullDay) {
+          <div class="price-item flex justify-between items-center text-sm">
+            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
+              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
+              Saona - Full day
+            </div>
+            <div class="value text-secondary font-bold">${{ saonaPrice.fullDay }}</div>
           </div>
-          <div class="value text-secondary font-bold">${{ yacht.saonaPrice?.halfDay }}</div>
-        </div>
-      }
-      @if (yacht.saonaPrice?.fullDay) {
-        <div class="price-item flex justify-between items-center text-sm">
-          <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-            <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-            Saona - Full day
-          </div>
-          <div class="value text-secondary font-bold">${{ yacht.saonaPrice?.fullDay }}</div>
-        </div>
+        }
       }
     </div>
 

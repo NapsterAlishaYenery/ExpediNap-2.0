@@ -1,115 +1,142 @@
-<div class="page-container">
-  <div class="brand-side">
-    <div class="brand-bg-image"></div>
-    <div class="brand-overlay"></div>
+<div class="page-container flex h-screen w-full bg-background overflow-hidden max-lg:overflow-auto max-lg:h-auto">
+  
+  <!-- Panel Izquierdo (ESTÁTICO/FIJO) - Se oculta en móvil -->
+  <div class="brand-side flex-1 relative flex items-center justify-center p-16 bg-black max-lg:hidden">
+    <div class="brand-bg-image absolute inset-0 bg-[url('/img/image-tecnology.webp')] bg-cover bg-center z-0"></div>
+    <div class="brand-overlay absolute inset-0 bg-linear-to-br from-black/90 to-black/50 z-1"></div>
     
-    <div class="brand-content">
-      <div class="brand-logo">
+    <div class="brand-content relative z-2 text-center text-white">
+      <div class="brand-logo w-17.5 h-17.5 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mx-auto mb-6 border border-white/30">
         <lucide-icon name="shield-check" size="64"></lucide-icon>
       </div>
-      <h2 class="brand-title">ExpediNap <span>Security</span></h2>
-      <p class="brand-tagline">Join our team and manage the Caribbean adventure.</p>
+      <h2 class="brand-title text-[clamp(1.8rem,3vw,2.8rem)] font-extrabold mb-2">ExpediNap <span class="font-serif font-normal block opacity-80 text-[0.8em]">Security</span></h2>
+      <p class="brand-tagline text-base max-w-80 mx-auto opacity-70">Join our team and manage the Caribbean adventure.</p>
     </div>
   </div>
 
-  <div class="form-side">
-    <div class="form-container">
+  <!-- Lado del Formulario (CON SCROLL INDEPENDIENTE) -->
+  <div class="form-side flex-1.4 h-screen overflow-y-auto flex flex-col items-center p-16 pt-12 bg-background max-lg:h-auto max-lg:p-12 max-sm:p-6">
+    <div class="form-container w-full max-w-137.5 my-auto">
       
       <header class="step-header">
-        <h1>Create Account</h1>
-        <p>Join ExpediNap and start working or enjoying the Caribbean adventure.</p>
+        <h1 class="text-[2.2rem] font-[850] text-foreground mb-2">Create Account</h1>
+        <p class="text-muted-foreground mb-10 text-base">Join ExpediNap and start working or enjoying the Caribbean adventure.</p>
       </header>
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="animated-form">
-        
-        <div class="form-section">
-          <h3 class="section-title"><lucide-icon name="user" size="18"></lucide-icon> Personal Information</h3>
+
+        <!-- Personal Information -->
+        <div class="form-section mb-10">
+          <h3 class="section-title flex items-center gap-2 text-lg font-bold text-foreground mb-6 pb-2 border-b border-border/70">
+            <lucide-icon name="user" size="18"></lucide-icon> Personal Information
+          </h3>
           
-          <div class="grid-2">
-            <div class="input-group">
-              <label for="reg-name">First Name*</label>
+          <div class="grid-2 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="input-group flex flex-col gap-2">
+              <label for="reg-name" class="text-sm font-semibold text-foreground">First Name*</label>
               <div class="input-wrapper">
-                <input type="text" id="reg-name" formControlName="name" placeholder="John" [class.error]="isValidField('name')">
+                <input type="text" id="reg-name" formControlName="name" placeholder="John" 
+                  class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+                  [class.border-red-500]="isValidField('name')">
               </div>
-              @if (isValidField('name')) { <small class="error-msg">Name is required</small> }
+              @if (isValidField('name')) { <small class="error-msg text-red-500 text-xs font-medium mt-1 block">Name is required</small> }
             </div>
 
-            <div class="input-group">
-              <label for="reg-lastname">Last Name*</label>
+            <div class="input-group flex flex-col gap-2">
+              <label for="reg-lastname" class="text-sm font-semibold text-foreground">Last Name*</label>
               <div class="input-wrapper">
-                <input type="text" id="reg-lastname" formControlName="lastname" placeholder="Doe" [class.error]="isValidField('lastname')">
+                <input type="text" id="reg-lastname" formControlName="lastname" placeholder="Doe" 
+                  class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+                  [class.border-red-500]="isValidField('lastname')">
               </div>
-              @if (isValidField('lastname')) { <small class="error-msg">Last name is required</small> }
+              @if (isValidField('lastname')) { <small class="error-msg text-red-500 text-xs font-medium mt-1 block">Last name is required</small> }
             </div>
           </div>
 
-          <div class="grid-2">
-            <div class="input-group">
-              <label for="reg-username">Username*</label>
+          <div class="grid-2 grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+            <div class="input-group flex flex-col gap-2">
+              <label for="reg-username" class="text-sm font-semibold text-foreground">Username*</label>
               <div class="input-wrapper">
-                <input type="text" id="reg-username" formControlName="username" placeholder="johndoe123" [class.error]="isValidField('username')">
+                <input type="text" id="reg-username" formControlName="username" placeholder="johndoe123" 
+                  class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+                  [class.border-red-500]="isValidField('username')">
               </div>
             </div>
-            <div class="input-group">
-              <label for="reg-phone">Phone Number</label>
+            <div class="input-group flex flex-col gap-2">
+              <label for="reg-phone" class="text-sm font-semibold text-foreground">Phone Number</label>
               <div class="input-wrapper">
-                <input type="tel" id="reg-phone" formControlName="phone" placeholder="809...">
+                <input type="tel" id="reg-phone" formControlName="phone" placeholder="809..." 
+                  class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10">
               </div>
             </div>
           </div>
         </div>
 
-        <div class="form-section">
-          <h3 class="section-title"><lucide-icon name="lock" size="18"></lucide-icon> Account Security</h3>
-          <div class="input-group">
-            <label for="reg-email">Email Address*</label>
+        <!-- Account Security -->
+        <div class="form-section mb-10">
+          <h3 class="section-title flex items-center gap-2 text-lg font-bold text-foreground mb-6 pb-2 border-b border-border/70">
+            <lucide-icon name="lock" size="18"></lucide-icon> Account Security
+          </h3>
+          <div class="input-group flex flex-col gap-2 mb-5">
+            <label for="reg-email" class="text-sm font-semibold text-foreground">Email Address*</label>
             <div class="input-wrapper">
-              <input type="email" id="reg-email" formControlName="email" placeholder="john@example.com" [class.error]="isValidField('email')">
+              <input type="email" id="reg-email" formControlName="email" placeholder="john@example.com" 
+                class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+                [class.border-red-500]="isValidField('email')">
             </div>
           </div>
-          <div class="input-group">
-            <label for="reg-password">Password*</label>
+          <div class="input-group flex flex-col gap-2">
+            <label for="reg-password" class="text-sm font-semibold text-foreground">Password*</label>
             <div class="input-wrapper">
-              <input type="password" id="reg-password" formControlName="password" placeholder="••••••••" [class.error]="isValidField('password')">
+              <input type="password" id="reg-password" formControlName="password" placeholder="••••••••" 
+                class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10"
+                [class.border-red-500]="isValidField('password')">
             </div>
-            <small class="hint-text">Min. 6 characters</small>
+            <small class="hint-text text-muted-foreground text-xs mt-1">Min. 6 characters</small>
           </div>
         </div>
 
-        <div class="form-section" formGroupName="direction">
-          <h3 class="section-title"><lucide-icon name="map-pin" size="18"></lucide-icon> Location (Optional)</h3>
-          <div class="input-group">
-            <label for="reg-street">Street</label>
+        <!-- Location (Optional) -->
+        <div class="form-section mb-10" formGroupName="direction">
+          <h3 class="section-title flex items-center gap-2 text-lg font-bold text-foreground mb-6 pb-2 border-b border-border/70">
+            <lucide-icon name="map-pin" size="18"></lucide-icon> Location (Optional)
+          </h3>
+          <div class="input-group flex flex-col gap-2 mb-5">
+            <label for="reg-street" class="text-sm font-semibold text-foreground">Street</label>
             <div class="input-wrapper">
-              <input type="text" id="reg-street" formControlName="street" placeholder="Av. Barceló KM 10">
+              <input type="text" id="reg-street" formControlName="street" placeholder="Av. Barceló KM 10" 
+                class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10">
             </div>
           </div>
-          <div class="grid-2">
-            <div class="input-group">
-              <label for="reg-city">City</label>
+          <div class="grid-2 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="input-group flex flex-col gap-2">
+              <label for="reg-city" class="text-sm font-semibold text-foreground">City</label>
               <div class="input-wrapper">
-                <input type="text" id="reg-city" formControlName="city" placeholder="Punta Cana">
+                <input type="text" id="reg-city" formControlName="city" placeholder="Punta Cana" 
+                  class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10">
               </div>
             </div>
-            <div class="input-group">
-              <label for="reg-zip">Zip Code</label>
+            <div class="input-group flex flex-col gap-2">
+              <label for="reg-zip" class="text-sm font-semibold text-foreground">Zip Code</label>
               <div class="input-wrapper">
-                <input type="text" id="reg-zip" formControlName="zip_code" placeholder="23000">
+                <input type="text" id="reg-zip" formControlName="zip_code" placeholder="23000" 
+                  class="w-full py-3 px-4 rounded-xl border border-border bg-muted/30 text-foreground transition-all duration-200 focus:outline-none focus:border-primary focus:bg-background focus:ring-4 focus:ring-primary/10">
               </div>
             </div>
           </div>
         </div>
 
-        <app-button variant="default" className="w-full btn-responsive" [disabled]="isSubmitting">
+        <app-button variant="default" className="w-full py-4 font-bold uppercase mt-6" [disabled]="isSubmitting">
           {{ isSubmitting ? 'CREATING ACCOUNT...' : 'REGISTER NOW' }}
         </app-button>
       </form>
 
-      <footer class="form-footer">
-        <p class="login-link">
-          Already have an account? <a routerLink="/login">Sign In</a>
+      <footer class="form-footer mt-12 pt-8 border-t border-border/50 text-center pb-12">
+        <p class="login-link text-muted-foreground text-sm">
+          Already have an account? <a routerLink="/login" class="text-red-500 font-bold no-underline hover:underline">Sign In</a>
         </p>
       </footer>
+
     </div>
   </div>
 </div>

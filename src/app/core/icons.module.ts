@@ -11,7 +11,7 @@ import {
   TriangleAlert,Bookmark,Droplets,
   LogOut, Bell, FileText, PanelLeftOpen, LayoutGrid, Settings, ShoppingBag, CirclePlus,ExternalLink,
   Map, Activity, FileDigit, 
-  RefreshCw, Pencil, Trash, RotateCcw
+  RefreshCw, Pencil, Trash, RotateCcw, EyeOff
 } from 'lucide-angular';
 
 const icons = {
@@ -25,7 +25,7 @@ const icons = {
   TriangleAlert,Bookmark, Droplets,
   LogOut, Bell, FileText, PanelLeftOpen, LayoutGrid, Settings, ShoppingBag, CirclePlus, ExternalLink,
   Map, Activity, FileDigit,
-  RefreshCw, Pencil, Trash, RotateCcw
+  RefreshCw, Pencil, Trash, RotateCcw, EyeOff
 };
 
 @NgModule({
