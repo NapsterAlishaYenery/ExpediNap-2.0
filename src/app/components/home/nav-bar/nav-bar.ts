@@ -1,13 +1,14 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, PLATFORM_ID, signal } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
 import { Button } from '../../ui/button/button';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MobileMenuService } from '../../../core/services/mobile/mobile-menu';
 import { ThemeService } from '../../../core/services/theme-service/theme.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [IconsModule,Button, RouterLink, RouterLinkActive],
+  imports: [IconsModule, Button, RouterLink, RouterLinkActive],
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.css',
 })
@@ -16,6 +17,8 @@ export class NavBar {
   // Inyecciones
   public themeService = inject(ThemeService); // Público para usarlo en el HTML
   private menuService = inject(MobileMenuService);
+
+  private platformId = inject(PLATFORM_ID);
 
   // Estados con Signals
   isScrollingDown = signal(false);
@@ -32,10 +35,11 @@ export class NavBar {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const st = window.pageYOffset || document.documentElement.scrollTop;
-    // Actualizamos el signal
-    this.isScrollingDown.set(st > this.lastScrollTop && st > 50);
-    this.lastScrollTop = st <= 0 ? 0 : st;
+    if (isPlatformBrowser(this.platformId)) {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      this.isScrollingDown.set(st > this.lastScrollTop && st > 50);
+      this.lastScrollTop = st <= 0 ? 0 : st;
+    }
   }
 
   toggleTheme() {

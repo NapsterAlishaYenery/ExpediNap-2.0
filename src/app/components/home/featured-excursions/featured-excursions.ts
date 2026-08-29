@@ -1,10 +1,11 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { ExcursionResponse } from '../../../core/interfaces/excursion/excursion.interface';
 import { ExcursionService } from '../../../core/services/excursios/excursion.service';
 import { ExcursionCard } from '../../ui/excursion-card/excursion-card';
 import { Button } from '../../ui/button/button';
 import { RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-featured-excursions',
@@ -16,12 +17,16 @@ export class FeaturedExcursions implements OnInit, OnDestroy {
   private excursionService = inject(ExcursionService);
   private readonly destroy$ = new Subject<void>(); // 3. Crear el Subject
 
+  private platformId = inject(PLATFORM_ID);
+
   // Almacenamos solo las 3 que queremos mostrar
   featuredList: ExcursionResponse[] = [];
   isLoading = true;
 
   ngOnInit(): void {
-    this.loadFeaturedExcursions();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadFeaturedExcursions();
+    }
   }
 
   loadFeaturedExcursions(): void {

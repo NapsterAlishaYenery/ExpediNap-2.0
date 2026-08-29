@@ -5,6 +5,7 @@ import { YachtCard } from '../../ui/yacht-card/yacht-card';
 import { Pagination } from '../../ui/pagination/pagination';
 import { PaginationMetadata } from '../../../core/interfaces/shared/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-yachts-page',
@@ -12,9 +13,12 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './yachts-page.html',
   styleUrl: './yachts-page.css',
 })
-export class YachtsPage implements OnInit, OnDestroy{
- private yachtService = inject(YachtService);
- private readonly destroy$ = new Subject<void>(); // 3. Crear el Subject
+export class YachtsPage implements OnInit, OnDestroy {
+  private yachtService = inject(YachtService);
+  private readonly destroy$ = new Subject<void>(); // 3. Crear el Subject
+
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
   yachts: YachtResponse[] = [];
   isLoading = false;
@@ -24,28 +28,62 @@ export class YachtsPage implements OnInit, OnDestroy{
 
 
   ngOnInit(): void {
-   this.loadYachts();
+
+    this.titleService.setTitle('Private Yacht Rentals & Boat Charters Punta Cana | Luxury Yachts | ExpediNap');
+
+    this.metaService.updateTag({
+      name: 'description',
+      content: 'Book luxury private yacht rentals and boat charters in Punta Cana. Sail the Caribbean in style with our exclusive fleet. Perfect for parties, sunsets, and unforgettable experiences.'
+    });
+
+    this.metaService.updateTag({
+      name: 'keywords',
+      content: 'yacht rental Punta Cana, private yacht charters, luxury boat rentals, catamaran Punta Cana, sailing tours, Caribbean yacht, boat party Punta Cana, sunset cruise, ExpediNap yachts'
+    });
+
+    // 🔥 Open Graph (para compartir en redes)
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: 'Luxury Yacht Rentals in Punta Cana | Sail the Caribbean | ExpediNap'
+    });
+
+    this.metaService.updateTag({
+      property: 'og:description',
+      content: 'Discover our exclusive fleet of luxury yachts in Punta Cana. Perfect for private parties, romantic sunsets, and unforgettable sailing experiences.'
+    });
+
+    this.metaService.updateTag({
+      property: 'og:image',
+      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-yachts.webp' // ⚠️ Cambiar por una imagen de yates
+    });
+
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: 'https://www.expedinap.com/yachts'
+    });
+
+    this.loadYachts();
   }
 
- loadYachts(page: number = 1): void {
+  loadYachts(page: number = 1): void {
     // 1️⃣ encendemos loading
     this.isLoading = true;
 
     this.yachtService.getYachts(page, 12)
-    .pipe(takeUntil(this.destroy$)) // 4. Cortar suscripción al salir de la página
-    .subscribe({
-      next: (res) => {
-        this.yachts = res.data;
-        this.paginationData = res.pagination;
-        this.currentPage = page;  
+      .pipe(takeUntil(this.destroy$)) // 4. Cortar suscripción al salir de la página
+      .subscribe({
+        next: (res) => {
+          this.yachts = res.data;
+          this.paginationData = res.pagination;
+          this.currentPage = page;
 
-        // 2️⃣ apagamos loading
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.isLoading = false;
-      }
-    });
+          // 2️⃣ apagamos loading
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+        }
+      });
   }
   // 5. Limpieza obligatoria
   ngOnDestroy(): void {

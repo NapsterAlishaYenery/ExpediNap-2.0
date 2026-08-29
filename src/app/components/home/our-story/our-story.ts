@@ -9,7 +9,7 @@ import { IconsModule } from '../../../core/icons.module';
 })
 export class OurStory implements OnInit {
 
-  // Variable para almacenar el número de años
+  // Variable para almacenar el número de años listo
   yearsOfExperience: number = 0;
 
   valores = [

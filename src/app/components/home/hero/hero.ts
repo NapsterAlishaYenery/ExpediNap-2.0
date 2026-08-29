@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconsModule } from '../../../core/icons.module';
 import { Button } from '../../ui/button/button';
@@ -19,6 +19,8 @@ interface HeroSlide {
   styleUrl: './hero.css',
 })
 export class Hero implements OnInit, OnDestroy {
+
+  private platformId = inject(PLATFORM_ID);
 
   currentSlide = 0;
   private intervalId: any;
@@ -59,17 +61,23 @@ export class Hero implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.startAutoPlay();
+    if (isPlatformBrowser(this.platformId)) {
+      this.startAutoPlay();
+    }
   }
 
   ngOnDestroy(): void {
-    this.stopAutoPlay();
+    if (isPlatformBrowser(this.platformId)) {
+      this.stopAutoPlay();
+    }
   }
 
   startAutoPlay(): void {
-    this.intervalId = setInterval(() => {
-      this.nextSlide();
-    }, 6000);
+    if (isPlatformBrowser(this.platformId)) {
+      this.intervalId = setInterval(() => {
+        this.nextSlide();
+      }, 6000);
+    }
   }
 
   stopAutoPlay(): void {
@@ -79,9 +87,11 @@ export class Hero implements OnInit, OnDestroy {
   }
 
   goToSlide(index: number): void {
-    this.currentSlide = index;
-    this.stopAutoPlay();
-    this.startAutoPlay();
+    if (isPlatformBrowser(this.platformId)) {
+      this.currentSlide = index;
+      this.stopAutoPlay();
+      this.startAutoPlay();
+    }
   }
 
   prevSlide(): void {

@@ -9,7 +9,7 @@ import { Breadcrumb } from '../../ui/breadcrumb/breadcrumb';
 import { Badge } from '../../ui/badge/badge';
 import { Button } from '../../ui/button/button';
 import { ImageGallery } from '../../ui/image-gallery/image-gallery';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { ImagesModel } from '../../../core/interfaces/shared/image.interface';
 
 @Component({
@@ -23,6 +23,9 @@ export class BlogsPageDetails implements OnInit, OnDestroy {
   private router = inject(Router);
   private blogService = inject(BlogService);
   private destroy$ = new Subject<void>();
+
+  private titleService = inject(Title);      // ✅ Para metadatos
+  private metaService = inject(Meta);        // ✅ Para metadatos
 
   private sanitizer = inject(DomSanitizer); // Inyecta el servicio
 
@@ -50,11 +53,14 @@ export class BlogsPageDetails implements OnInit, OnDestroy {
         next: (res) => {
           this.blog = res.data;
 
+          // 🔥 METADATOS - Después de cargar el blog
+          this.updateMetadata();
+
           // AQUÍ LIMPIAMOS EL HTML
           this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.blog.content);
 
           // Transformamos la imagen simple del blog al objeto que espera la galería
-           this.formattedImages = {
+          this.formattedImages = {
             main: this.blog.image, // ✅ Ya es ImageItem
             gallery: [] // ✅ Array vacío de ImageItem (no mostrará miniaturas)
           };
@@ -65,6 +71,83 @@ export class BlogsPageDetails implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       });
+  }
+
+  // 🔥 NUEVO: Método para actualizar metadatos
+  private updateMetadata(): void {
+    if (!this.blog) return;
+
+    // 🔥 Título - Usar meta_title de la base de datos
+    const seoTitle = this.blog.meta_title ||
+      `${this.blog.title} | Travel Blog | ExpediNap`;
+
+    // 🔥 Meta description - Usar meta_description de la base de datos
+    const seoDescription = this.blog.meta_description ||
+      `Read our blog about ${this.blog.title}. Discover tips, recommendations, and insights about Punta Cana and the Dominican Republic.`;
+
+    // 🔥 Keywords - Usar keywords de la base de datos
+    const seoKeywords = this.blog.keywords?.length
+      ? this.blog.keywords.join(', ')
+      : `${this.blog.title}, Punta Cana blog, Dominican Republic travel, ${this.blog.category?.join(', ')}`;
+
+    this.titleService.setTitle(seoTitle);
+
+    this.metaService.updateTag({
+      name: 'description',
+      content: seoDescription
+    });
+
+    this.metaService.updateTag({
+      name: 'keywords',
+      content: seoKeywords
+    });
+
+    // 🔥 Open Graph (para compartir en redes)
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: seoTitle
+    });
+
+    this.metaService.updateTag({
+      property: 'og:description',
+      content: seoDescription
+    });
+
+    // 🔥 Imagen dinámica - usa la imagen principal del blog
+    if (this.blog.image && this.blog.image.url) {
+      this.metaService.updateTag({
+        property: 'og:image',
+        content: this.blog.image.url
+      });
+    }
+
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: `https://www.expedinap.com/blogs/${this.blog.slug}`
+    });
+
+    // 🔥 Twitter Cards (opcional pero recomendado para blogs)
+    this.metaService.updateTag({
+      name: 'twitter:card',
+      content: 'summary_large_image'
+    });
+
+    this.metaService.updateTag({
+      name: 'twitter:title',
+      content: seoTitle
+    });
+
+    this.metaService.updateTag({
+      name: 'twitter:description',
+      content: seoDescription
+    });
+
+    if (this.blog.image && this.blog.image.url) {
+      this.metaService.updateTag({
+        name: 'twitter:image',
+        content: this.blog.image.url
+      });
+    }
   }
 
   ngOnDestroy() {

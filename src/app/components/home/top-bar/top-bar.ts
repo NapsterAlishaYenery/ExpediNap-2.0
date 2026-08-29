@@ -1,9 +1,10 @@
-import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
 import { Button } from '../../ui/button/button';
 import { WeatherService } from '../../../core/services/weather/weather.service';
 import { Subject, takeUntil } from 'rxjs';
 import { WeatherBase } from '../../../core/interfaces/weather/weather.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-top-bar',
@@ -16,6 +17,8 @@ export class TopBar implements OnInit, OnDestroy {
   private weatherService = inject(WeatherService);
   private readonly destroy$ = new Subject<void>();
 
+  private platformId = inject(PLATFORM_ID);
+
   weatherDetails?: WeatherBase;
   isLoading = true;
 
@@ -25,28 +28,32 @@ export class TopBar implements OnInit, OnDestroy {
   // Escuchamos el scroll para ocultar/mostrar el TopBar
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const st = window.pageYOffset || document.documentElement.scrollTop;
+    if (isPlatformBrowser(this.platformId)) {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Si bajamos más de 10px, ocultamos el TopBar
-    if (st > this.lastScrollTop && st > 10) {
-      this.isScrollingDown = true;
-    } else {
-      // Si subimos, lo mostramos
-      this.isScrollingDown = false;
+      if (st > this.lastScrollTop && st > 10) {
+        this.isScrollingDown = true;
+      } else {
+        this.isScrollingDown = false;
+      }
+
+      this.lastScrollTop = st <= 0 ? 0 : st;
     }
-
-    this.lastScrollTop = st <= 0 ? 0 : st;
   }
 
   onWhatsApp() {
-    const phone = '18098369303';
-    const message = "Hello *ExpediNap!* I'm visiting your website and I'd like to receive information.";
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    if (isPlatformBrowser(this.platformId)) {
+      const phone = '18098369303';
+      const message = "Hello *ExpediNap!* I'm visiting your website and I'd like to receive information.";
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
   }
 
   ngOnInit(): void {
-    this.loadingWeather();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadingWeather();
+    }
   }
 
   ngOnDestroy(): void {
