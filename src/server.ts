@@ -11,7 +11,11 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine({
-  allowedHosts: ['localhost']
+  allowedHosts: [
+    'localhost',           // ✅ Desarrollo local
+    'expedinap.com',       // ✅ Producción sin www
+    'www.expedinap.com'    // ✅ Producción con www
+  ]
 });
 
 /**
@@ -56,7 +60,7 @@ app.use((req, res, next) => {
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 5001;
   app.listen(port, (error) => {
     if (error) {
       throw error;

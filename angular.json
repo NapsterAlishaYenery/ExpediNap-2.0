@@ -31,7 +31,9 @@
             "outputMode": "server",
             "security": {
               "allowedHosts": [
-                "localhost"
+                "localhost",
+                "expedinap.com",
+                "www.expedinap.com"
               ]
             },
             "ssr": {
