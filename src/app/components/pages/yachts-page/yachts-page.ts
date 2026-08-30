@@ -54,7 +54,7 @@ export class YachtsPage implements OnInit, OnDestroy {
 
     this.metaService.updateTag({
       property: 'og:image',
-      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-yachts.webp' // ⚠️ Cambiar por una imagen de yates
+      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065963/social-imag-yachts.webp' // ⚠️ Cambiar por una imagen de yates
     });
 
     this.metaService.updateTag({

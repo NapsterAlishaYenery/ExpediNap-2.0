@@ -69,7 +69,7 @@ export class BlogPage implements OnInit, OnDestroy {
 
     this.metaService.updateTag({
       property: 'og:image',
-      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-blog.webp' // ⚠️ Cambiar por una imagen de blog
+      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065967/social-imag-travel-blogs.webp' // ⚠️ Cambiar por una imagen de blog
     });
 
     this.metaService.updateTag({

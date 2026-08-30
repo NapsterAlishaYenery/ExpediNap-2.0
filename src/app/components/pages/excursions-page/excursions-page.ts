@@ -70,7 +70,7 @@ export class ExcursionsPage implements OnInit, OnDestroy {
 
     this.metaService.updateTag({
       property: 'og:image',
-      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-imag.webp'
+      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065963/social-imag-excursions.webp'
     });
 
     this.metaService.updateTag({
