@@ -15,7 +15,9 @@ const angularApp = new AngularNodeAppEngine({
     'localhost',           // ✅ Desarrollo local
     'expedinap.com',       // ✅ Producción sin www
     'www.expedinap.com'    // ✅ Producción con www
-  ]
+  ],
+  // 🔥 HABILITAR CONFIANZA EN HEADERS DEL PROXY 🔥
+  trustProxyHeaders: true  // Confía en 'Forwarded' y en todos los 'X-Forwarded-*'
 });
 
 /**
