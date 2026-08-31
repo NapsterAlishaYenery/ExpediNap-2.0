@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IconsModule } from '../../../core/icons.module';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
+  imports: [IconsModule],
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',
 })

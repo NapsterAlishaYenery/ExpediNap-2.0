@@ -1,19 +1,36 @@
-<div class="flex items-center justify-center gap-6 mt-16">
-  <button 
-    class="w-11 h-11 rounded-full border border-border bg-card text-foreground flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:bg-accent hover:enabled:text-white hover:enabled:border-accent"
-    [disabled]="!hasNextPage && !hasPrevPage || !hasPrevPage"
+<nav
+  class="flex items-center justify-center gap-6 mt-16"
+  aria-label="Navegación de paginación">
+
+  <!-- BOTÓN ANTERIOR -->
+  <button
+    type="button"
+    class="w-11 h-11 rounded-full border border-border bg-card text-foreground flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:bg-accent hover:enabled:text-accent-foreground hover:enabled:border-accent hover:enabled:-translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    [disabled]="!hasPrevPage"
+    aria-label="Ir a la página anterior"
     (click)="onPageChange(currentPage - 1)">
-    <i class="bi bi-chevron-left"></i>
+    <lucide-icon name="chevron-left" class="w-5 h-5"
+      aria-hidden="true"></lucide-icon>
   </button>
 
-  <div class="page-numbers font-medium text-muted-foreground">
-    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+  <!-- INDICADOR DE PÁGINA -->
+  <div
+    class="page-numbers font-medium text-sm text-muted-foreground select-none"
+    aria-live="polite">
+    <span>Página <strong class="text-foreground font-semibold">{{ currentPage
+        }}</strong> de <strong class="text-foreground font-semibold">{{
+        totalPages }}</strong></span>
   </div>
 
-  <button 
-    class="w-11 h-11 rounded-full border border-border bg-card text-foreground flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:bg-accent hover:enabled:text-white hover:enabled:border-accent"
+  <!-- BOTÓN SIGUIENTE -->
+  <button
+    type="button"
+    class="w-11 h-11 rounded-full border border-border bg-card text-foreground flex items-center justify-center transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:bg-accent hover:enabled:text-accent-foreground hover:enabled:border-accent hover:enabled:translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     [disabled]="!hasNextPage"
+    aria-label="Ir a la página siguiente"
     (click)="onPageChange(currentPage + 1)">
-    <i class="bi bi-chevron-right"></i>
+    <lucide-icon name="chevron-right" class="w-5 h-5"
+      aria-hidden="true"></lucide-icon>
   </button>
-</div>
+
+</nav>

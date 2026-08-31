@@ -1,14 +1,18 @@
-<div [class]="'relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full ' + customClass">
+<div 
+  class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+  [class]="customClass">
   
-  @if (src && src !== 'null' && src !== '' && !hasError) {
+  @if (src && src !== 'null' && !hasError) {
     <img 
       [src]="src" 
       [alt]="alt" 
+      loading="lazy"
+      decoding="async"
       class="aspect-square h-full w-full object-cover" 
       (error)="handleError()"
     />
   } @else {
-    <div class="flex h-full w-full items-center justify-center rounded-full bg-muted text-muted-foreground text-[0.875rem] font-medium uppercase">
+    <div class="flex h-full w-full items-center justify-center rounded-full bg-muted text-muted-foreground text-sm font-medium uppercase">
       {{ fallbackText }}
       <ng-content></ng-content>
     </div>

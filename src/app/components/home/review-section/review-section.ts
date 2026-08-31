@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
-import { Button } from '../../ui/button/button';
 import { ReviewService } from '../../../core/services/review/review.service';
 import { Subject, takeUntil } from 'rxjs';
 import { GoogleReviewData } from '../../../core/interfaces/review/google-review.interface';
@@ -10,32 +9,28 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-review-section',
-  imports: [IconsModule, ReviewGoogleCard, Button],
+  imports: [IconsModule, ReviewGoogleCard],
   templateUrl: './review-section.html',
   styleUrl: './review-section.css',
 })
 export class ReviewSection implements OnInit, OnDestroy {
-
   private reviewServices = inject(ReviewService);
   private readonly destroy$ = new Subject<void>();
-
   private platformId = inject(PLATFORM_ID);
 
   googleReviewData: GoogleReviewData = {
     rating: 0,
     totalReviews: 0,
     businessName: '',
-    reviews: [] // <--- Importante para que el carrusel no rompa al inicio
+    reviews: []
   };
 
-  showingCount: number = 0
-
+  showingCount: number = 0;
   isLoading = true;
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   activeIndex = 0;
 
-  // Escucha el scroll para actualizar qué "dot" está activo
   @HostListener('window:resize')
   onResize() {
     if (isPlatformBrowser(this.platformId)) {
@@ -51,7 +46,6 @@ export class ReviewSection implements OnInit, OnDestroy {
     }
   }
 
-  // 1. Función para navegar al hacer clic en un punto
   scrollToIndex(index: number) {
     if (isPlatformBrowser(this.platformId)) {
       const container = this.scrollContainer?.nativeElement;
@@ -69,14 +63,9 @@ export class ReviewSection implements OnInit, OnDestroy {
     }
   }
 
-
-  // Metodos del ciclo de vida del componente
   ngOnInit(): void {
-    // reviews data de google 
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadReviewDataGoogle();
-    }
-
+    // SSR Habilitado: ya no restringimos la llamada API al navegador
+    this.loadReviewDataGoogle();
   }
 
   ngOnDestroy(): void {
@@ -84,17 +73,17 @@ export class ReviewSection implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-
   loadReviewDataGoogle(): void {
     this.reviewServices.getGoogleReviews()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           this.googleReviewData = response.data;
-          this.showingCount = response.data.reviews.length
+          this.showingCount = response.data.reviews.length;
           this.isLoading = false;
         },
         error: (error) => {
+          console.error('Error loading Google Reviews:', error);
           this.isLoading = false;
         }
       });

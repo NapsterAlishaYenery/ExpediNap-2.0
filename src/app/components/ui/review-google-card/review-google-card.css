@@ -1,17 +1,3 @@
 :host {
   display: block;
 }
-
-/* Estilos específicos de las estrellas que dependen de la clase dinámica */
-.star-filled {
-  fill: #eab308;
-}
-
-.star-empty {
-  color: hsl(var(--muted) / 0.5);
-}
-
-/* Estilo exclusivo para la variante Google (línea azul inferior) */
-.google-variant {
-  border-bottom: 4px solid #4285F4;
-}

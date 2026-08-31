@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
 
 @Component({
   selector: 'app-why-choose-us',
-  imports: [CommonModule, IconsModule],
+  imports: [IconsModule],
   templateUrl: './why-choose-us.html',
   styleUrl: './why-choose-us.css',
 })

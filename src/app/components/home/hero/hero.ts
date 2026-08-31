@@ -2,7 +2,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IconsModule } from '../../../core/icons.module';
-import { Button } from '../../ui/button/button';
 
 interface HeroSlide {
   id: number;
@@ -14,7 +13,7 @@ interface HeroSlide {
 }
 @Component({
   selector: 'app-hero',
-  imports: [CommonModule, RouterLink, IconsModule, Button],
+  imports: [CommonModule, RouterLink, IconsModule],
   templateUrl: './hero.html',
   styleUrl: './hero.css',
 })

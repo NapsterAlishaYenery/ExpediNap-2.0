@@ -1,17 +1,8 @@
-<div class="flex flex-col gap-6 w-full">
-  <!-- Imagen Principal -->
-  <div class="main-view">
-    <div
-      class="relative w-full pt-[56.25%] bg-muted/50 rounded-3xl overflow-hidden shadow-lg">
-      <!-- ✅ SI ES IMAGEN -->
-      @if (selectedImage.mediaType === 'image' || !selectedImage.mediaType) {
-      <img
-        [src]="selectedImage.url"
-        [alt]="selectedImage.alt"
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-400 ease-in-out">
-      }
-      <!-- ✅ SI ES VIDEO -->
-      @if (selectedImage.mediaType === 'video') {
+<div class="flex flex-col gap-4 w-full">
+  
+  <!-- VISTA PRINCIPAL (MEDIOS SELECCIONADOS) -->
+  <div class="relative w-full aspect-video bg-muted/40 rounded-3xl overflow-hidden shadow-lg border border-border/50">
+    @if (selectedImage.mediaType === 'video') {
       <video
         [src]="selectedImage.url"
         [poster]="selectedImage.thumbnailUrl"
@@ -19,85 +10,77 @@
         muted
         playsinline
         preload="metadata"
-        class="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-400 ease-in-out">
-        Tu navegador no soporta videos.
+        class="absolute inset-0 w-full h-full object-cover">
+        Tu navegador no soporta reproducción de video.
       </video>
-      }
-    </div>
+    } @else {
+      <img
+        [src]="selectedImage.url"
+        [alt]="selectedImage.alt || 'Galería de imágenes'"
+        class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out">
+    }
   </div>
 
-  <!-- Carrusel de Miniaturas -->
-  <div class="relative flex items-center gap-2 px-2.5">
+  <!-- CARRUSEL DE MINIATURAS -->
+  <div class="relative flex items-center gap-2 px-1">
+    
+    <!-- BOTÓN ANTERIOR -->
     <button
-      class="nav-btn prev bg-background border border-border text-foreground w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 shadow-md z-2 hover:bg-accent hover:text-white hover:border-accent max-sm:hidden"
+      type="button"
+      class="hidden sm:flex shrink-0 w-10 h-10 rounded-full border border-border bg-card text-foreground items-center justify-center transition-all duration-200 shadow-sm hover:bg-accent hover:text-accent-foreground hover:border-accent disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       (click)="scrollGallery(-1)"
-      aria-label="Previous">
-      <i class="bi bi-chevron-left"></i>
+      aria-label="Ver imagen anterior">
+      <lucide-icon name="chevron-left" class="w-5 h-5"></lucide-icon>
     </button>
 
-    <!-- CONTENEDOR DE MINIATURAS -->
+    <!-- CONTENEDOR CON SCROLL HORIZONTAL -->
     <div
-      class="thumbnails-carousel flex gap-3 overflow-x-auto scroll-smooth py-2 no-scrollbar"
-      #carousel>
-      <button
-        class="thumb-btn flex-none w-30 h-21.25 p-0 border-3 border-transparent rounded-2xl overflow-hidden cursor-pointer bg-none transition-all duration-300 ease-in-out max-sm:w-25 max-sm:h-17.5"
-        [class.is-active]="selectedImage.url === images.main.url"
-        (click)="selectImage(images.main)">
-        <!-- ✅ Si main es imagen -->
-        @if (images.main.mediaType === 'image' || !images.main.mediaType) {
-        <img
-          [src]="images.main.url"
-          [alt]="images.main.alt"
-          class="w-full h-full object-cover">
-        }
-
-        <!-- ✅ Si main es video -->
-        @if (images.main.mediaType === 'video') {
-        <video
-          [src]="images.main.url"
-          class="w-full h-full object-cover"
-          muted
-          playsinline
-          preload="metadata"
-          (click)="$event.stopPropagation()">
-        </video>
-        }
-      </button>
-
-      <!-- GALLERY ITEMS -->
-      @for (img of images.gallery; track img.url) {
-      <button
-        class="thumb-btn flex-none w-30 h-21.25 p-0 border-3 border-transparent rounded-2xl overflow-hidden cursor-pointer bg-none transition-all duration-300 ease-in-out max-sm:w-25 max-sm:h-17.5"
-        [class.is-active]="selectedImage.url === img.url"
-        (click)="selectImage(img)">
-        <!-- ✅ Si es imagen -->
-        @if (img.mediaType === 'image' || !img.mediaType) {
-        <img
-          [src]="img.url"
-          [alt]="img.alt"
-          class="w-full h-full object-cover">
-        }
-        <!-- ✅ Si es video -->
-        @if (img.mediaType === 'video') {
-        <video
-          [src]="img.url"
-          class="w-full h-full object-cover"
-          muted
-          playsinline
-          preload="metadata"
-          (click)="$event.stopPropagation()">
-        </video>
-
-        }
-      </button>
+      #carousel
+      class="flex gap-3 overflow-x-auto scroll-smooth py-2 no-scrollbar px-1">
+      
+      @for (item of allImages; track item.url) {
+        <button
+          type="button"
+          (click)="selectImage(item)"
+          [class.ring-2]="selectedImage.url === item.url"
+          [class.ring-accent]="selectedImage.url === item.url"
+          [class.-translate-y-1]="selectedImage.url === item.url"
+          [class.shadow-md]="selectedImage.url === item.url"
+          class="relative flex-none w-28 h-20 sm:w-32 sm:h-22 p-0 rounded-xl overflow-hidden border border-border bg-muted cursor-pointer transition-all duration-200 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+          
+          <!-- CONTENIDO DE LA MINIATURA -->
+          @if (item.mediaType === 'video') {
+            <video
+              [src]="item.url"
+              class="w-full h-full object-cover pointer-events-none"
+              muted
+              playsinline
+              preload="metadata">
+            </video>
+            <!-- INDICADOR DE VIDEO PLAY -->
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <div class="w-7 h-7 rounded-full bg-background/80 backdrop-blur-xs flex items-center justify-center text-foreground">
+                <lucide-icon name="play" class="w-3.5 h-3.5 fill-current ml-0.5"></lucide-icon>
+              </div>
+            </div>
+          } @else {
+            <img
+              [src]="item.url"
+              [alt]="item.alt || 'Miniatura'"
+              class="w-full h-full object-cover">
+          }
+        </button>
       }
     </div>
 
+    <!-- BOTÓN SIGUIENTE -->
     <button
-      class="nav-btn next bg-background border border-border text-foreground w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 shadow-md z-2 hover:bg-accent hover:text-white hover:border-accent max-sm:hidden"
+      type="button"
+      class="hidden sm:flex shrink-0 w-10 h-10 rounded-full border border-border bg-card text-foreground items-center justify-center transition-all duration-200 shadow-sm hover:bg-accent hover:text-accent-foreground hover:border-accent disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       (click)="scrollGallery(1)"
-      aria-label="Next">
-      <i class="bi bi-chevron-right"></i>
+      aria-label="Ver imagen siguiente">
+      <lucide-icon name="chevron-right" class="w-5 h-5"></lucide-icon>
     </button>
   </div>
+
 </div>

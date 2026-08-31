@@ -1,88 +1,131 @@
-<div class="group flex bg-card border border-border rounded-lg overflow-hidden transition-all duration-400 ease hover:-translate-y-2 hover:shadow-xl h-100 max-lg:h-95 max-sm:flex-col max-sm:h-auto">
-  <div class="image-container relative w-1/2 h-full shrink-0 overflow-hidden max-sm:w-full max-sm:h-62.5">
-    <img [src]="yacht.images.main.url" 
-         [alt]="yacht.images.main.alt" 
-         class="w-full h-full object-cover transition-transform duration-600 ease group-hover:scale-110">
-    <div class="pax-badge absolute top-4 left-4">
-      <app-badge variant="secondary">
-        <lucide-icon name="users"></lucide-icon>
-        {{ yacht.maxPax }} Máx
+<article
+  class="group flex bg-card border border-border rounded-xl overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl h-100 max-lg:h-95 max-sm:flex-col max-sm:h-auto">
+
+  <!-- ============================================ -->
+  <!-- IMAGEN Y BADGE DE CAPACIDAD -->
+  <!-- ============================================ -->
+  <div
+    class="relative w-1/2 h-full shrink-0 overflow-hidden max-sm:w-full max-sm:h-62.5 bg-muted/40">
+    <img
+      [src]="yacht.images.main.url"
+      [alt]="yacht.images.main.alt || yacht.name"
+      width="450"
+      height="350"
+      decoding="async"
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105">
+
+    <div class="absolute top-3 left-3 z-10">
+      <app-badge variant="secondary"
+        className="flex items-center gap-1.5 text-xs px-2.5 py-1 backdrop-blur-md">
+        <lucide-icon name="users" class="w-3.5 h-3.5"
+          aria-hidden="true"></lucide-icon>
+        <span>{{ yacht.maxPax }} Máx</span>
       </app-badge>
     </div>
   </div>
 
-  <div class="content-container w-1/2 p-6 flex flex-col justify-between overflow-hidden max-sm:w-full max-sm:p-5">
+  <!-- ============================================ -->
+  <!-- CONTENIDO DE LA TARJETA -->
+  <!-- ============================================ -->
+  <div
+    class="w-1/2 p-6 flex flex-col justify-between overflow-hidden max-sm:w-full max-sm:p-5">
     <div>
-      <h3 class="yacht-title flex items-center gap-2 text-[1.6rem] font-bold text-foreground transition-colors duration-300 ease group-hover:text-secondary mb-2">
-        <lucide-icon name="anchor" class="anchor-icon text-secondary w-[1.6rem] h-[1.6rem] stroke-[2.5px]"></lucide-icon>
-        {{ yacht.name }}
+      <!-- TÍTULO DE YATE (Permanece como a nativo) -->
+      <h3
+        class="font-serif text-2xl font-bold text-foreground transition-colors duration-300 group-hover:text-secondary line-clamp-1 mb-2">
+        <a [routerLink]="['/yachts', yacht.slug]"
+          class="focus:outline-none focus:underline flex items-center gap-2">
+          <lucide-icon name="anchor" class="text-secondary w-6 h-6 shrink-0"
+            aria-hidden="true"></lucide-icon>
+          <span>{{ yacht.name }}</span>
+        </a>
       </h3>
 
-      <p class="yacht-description text-sm text-foreground/50 line-clamp-3 leading-tight mb-3 min-h-[2.3rem]">
+      <!-- DESCRIPCIÓN CORTA -->
+      <p
+        class="text-xs text-muted-foreground line-clamp-3 leading-relaxed mb-3 min-h-10">
         {{ yacht.description }}
       </p>
     </div>
 
-    <div class="price-list flex flex-col gap-1 mb-3 grow justify-center">
-      <!-- ✅ Usar @if con asignación a variable local -->
+    <!-- LISTA DE PRECIOS POR DESTINO -->
+    <div
+      class="flex flex-col gap-1.5 my-3 grow justify-center border-y border-border/40 py-3">
       @if (yacht.catalinaPrice; as catalinaPrice) {
-        @if (catalinaPrice.halfDay) {
-          <div class="price-item flex justify-between items-center text-sm">
-            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-              Catalina - Half day
-            </div>
-            <div class="value text-secondary font-bold">${{ catalinaPrice.halfDay }}</div>
-          </div>
-        }
-        @if (catalinaPrice.fullDay) {
-          <div class="price-item flex justify-between items-center text-sm">
-            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-              Catalina - Full day
-            </div>
-            <div class="value text-secondary font-bold">${{ catalinaPrice.fullDay }}</div>
-          </div>
-        }
+      @if (catalinaPrice.halfDay) {
+      <div class="flex justify-between items-center text-xs">
+        <span class="flex items-center gap-1.5 text-muted-foreground">
+          <lucide-icon name="clock" class="w-3.5 h-3.5 text-secondary shrink-0"
+            aria-hidden="true"></lucide-icon>
+          Catalina - Half day
+        </span>
+        <span class="text-secondary font-bold">${{ catalinaPrice.halfDay
+          }}</span>
+      </div>
+      }
+      @if (catalinaPrice.fullDay) {
+      <div class="flex justify-between items-center text-xs">
+        <span class="flex items-center gap-1.5 text-muted-foreground">
+          <lucide-icon name="clock" class="w-3.5 h-3.5 text-secondary shrink-0"
+            aria-hidden="true"></lucide-icon>
+          Catalina - Full day
+        </span>
+        <span class="text-secondary font-bold">${{ catalinaPrice.fullDay
+          }}</span>
+      </div>
+      }
       }
 
       @if (yacht.saonaPrice; as saonaPrice) {
-        @if (saonaPrice.halfDay) {
-          <div class="price-item flex justify-between items-center text-sm">
-            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-              Saona - Half day
-            </div>
-            <div class="value text-secondary font-bold">${{ saonaPrice.halfDay }}</div>
-          </div>
-        }
-        @if (saonaPrice.fullDay) {
-          <div class="price-item flex justify-between items-center text-sm">
-            <div class="label flex items-center gap-2 text-foreground/50 leading-none">
-              <lucide-icon name="clock" class="w-3.5 h-3.5 flex items-center shrink-0"></lucide-icon>
-              Saona - Full day
-            </div>
-            <div class="value text-secondary font-bold">${{ saonaPrice.fullDay }}</div>
-          </div>
-        }
+      @if (saonaPrice.halfDay) {
+      <div class="flex justify-between items-center text-xs">
+        <span class="flex items-center gap-1.5 text-muted-foreground">
+          <lucide-icon name="clock" class="w-3.5 h-3.5 text-secondary shrink-0"
+            aria-hidden="true"></lucide-icon>
+          Saona - Half day
+        </span>
+        <span class="text-secondary font-bold">${{ saonaPrice.halfDay }}</span>
+      </div>
+      }
+      @if (saonaPrice.fullDay) {
+      <div class="flex justify-between items-center text-xs">
+        <span class="flex items-center gap-1.5 text-muted-foreground">
+          <lucide-icon name="clock" class="w-3.5 h-3.5 text-secondary shrink-0"
+            aria-hidden="true"></lucide-icon>
+          Saona - Full day
+        </span>
+        <span class="text-secondary font-bold">${{ saonaPrice.fullDay }}</span>
+      </div>
+      }
       }
     </div>
 
-    <div class="includes-row flex flex-wrap gap-1 mb-4">
+    <!-- BADGES DE INCLUSIONES -->
+    <div class="flex flex-wrap gap-1 mb-4">
       @for (item of yacht.includes.slice(0, 4); track item) {
-        <app-badge variant="outline" class="include-badge">{{ item }}</app-badge>
+      <app-badge
+        variant="outline"
+        className="rounded-md text-[0.65rem] border-secondary/30 text-secondary bg-transparent capitalize px-2 py-0.5">
+        {{ item }}
+      </app-badge>
       }
       @if (yacht.includes.length > 4) {
-        <app-badge variant="outline" class="include-badge">+{{ yacht.includes.length - 4 }} more</app-badge>
+      <app-badge
+        variant="outline"
+        className="rounded-md text-[0.65rem] border-secondary/30 text-secondary bg-transparent px-2 py-0.5">
+        +{{ yacht.includes.length - 4 }} más
+      </app-badge>
       }
     </div>
 
-    <div class="footer-action w-full">
-      <a [routerLink]="['/yachts', yacht.slug]" class="no-underline w-full">
-        <app-button variant="secondary" size="default" class="w-full footer-button">
-          SEE DETAILS
-        </app-button>
+    <!-- BOTÓN DE ACCIÓN: Cambiado a app-button-link -->
+    <div class="w-full mt-auto pt-2">
+      <a
+        [routerLink]="['/yachts', yacht.slug]"
+        class="inline-flex items-center justify-center gap-2 rounded-(--radius) transition-all duration-300 cursor-pointer border-none hover:brightness-110 hover:-translate-y-0.5 no-underline bg-secondary text-secondary-foreground shadow-md w-full font-bold tracking-wider text-xs uppercase h-10">
+        VER DETALLES
       </a>
     </div>
   </div>
-</div>
+</article>

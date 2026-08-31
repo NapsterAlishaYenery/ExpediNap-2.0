@@ -1,18 +1,20 @@
 @if (showWhatsapp) {
-  <app-whatsapp-chat></app-whatsapp-chat>
+<app-whatsapp-chat></app-whatsapp-chat>
 }
 
 <router-outlet />
 
 <!-- LAS ALERTAS GLOBALES -->
 @if (alertService.visible$ | async) {
-  @if (alertService.alert$ | async; as data) {
-    <app-alert
-      [variant]="data.variant"
-      [title]="data.title"
-      [description]="data.description">
-    </app-alert>
-  }
+@if (alertService.alert$ | async; as data) {
+<div aria-live="polite" role="status" class="contents">
+  <app-alert
+    [variant]="data.variant"
+    [title]="data.title"
+    [description]="data.description">
+  </app-alert>
+</div>
+}
 }
 
 <!-- Modal de confirmacion Global -->

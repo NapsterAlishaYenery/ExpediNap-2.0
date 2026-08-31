@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.css',
 })
 export class Footer {
-currentYear = new Date().getFullYear();
+  currentYear = new Date().getFullYear();
 
   exploraLinks = [
     { name: 'Home', icon: 'house', route: '/' },
@@ -20,7 +20,7 @@ currentYear = new Date().getFullYear();
     { name: 'Contact', icon: 'message-circle', route: '/contact' }
   ];
 
-legalLinks = [
+  legalLinks = [
     { label: 'Terms and Conditions', route: '/terms-and-conditions' },
     { label: 'Privacy Policy', route: '/privacy-policy' },
     { label: 'Cookie Policy', route: '/cookie-policy' },
@@ -29,9 +29,9 @@ legalLinks = [
   ];
 
   socials = [
-    { icon: 'bi-facebook', route: 'https://facebook.com/expedinap' },
-    { icon: 'bi-instagram', route: 'https://instagram.com/expedinap' },
-    { icon: 'bi-whatsapp', route: 'https://wa.me/8098369303' },
-    { icon: 'bi-youtube', route: 'https://www.youtube.com/@ExpediNap' }
+    { name: 'Facebook', icon: 'bi-facebook', route: 'https://facebook.com/expedinap' },
+    { name: 'Instagram', icon: 'bi-instagram', route: 'https://instagram.com/expedinap' },
+    { name: 'WhatsApp', icon: 'bi-whatsapp', route: 'https://wa.me/8098369303' },
+    { name: 'YouTube', icon: 'bi-youtube', route: 'https://www.youtube.com/@ExpediNap' }
   ];
 }

@@ -2,6 +2,7 @@
   [type]="type"
   [disabled]="disabled"
   [class]="buttonClasses"
+  [attr.aria-label]="ariaLabel || null"
   (click)="handleButtonClick($event)"
 >
   <ng-content></ng-content>

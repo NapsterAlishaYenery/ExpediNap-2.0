@@ -2,7 +2,12 @@
   @let opt = service.options();
   
   <!-- Contenedor fijo que ocupa toda la pantalla -->
-  <div class="fixed inset-0 z-1000 flex items-center justify-center p-4">
+  <div 
+    class="fixed inset-0 z-1000 flex items-center justify-center p-4"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title"
+    aria-describedby="dialog-description">
     
     <!-- Backdrop (Oscurece el fondo) -->
     <div 
@@ -10,12 +15,16 @@
       (click)="service.handleCancel()">
     </div>
 
-    <!-- Card del Diálogo: Sin traslaciones, posición directa -->
+    <!-- Card del Diálogo -->
     <div class="relative z-1001 w-full max-w-125 bg-card border border-border/50 rounded-2xl p-8 shadow-2xl animate-in zoom-in-95 fade-in duration-300">
       
       <div class="mb-8">
-        <h2 class="font-serif text-2xl font-bold text-foreground mb-3 leading-tight">{{ opt?.title }}</h2>
-        <p class="text-muted-foreground leading-relaxed">{{ opt?.description }}</p>
+        <h2 id="dialog-title" class="font-serif text-2xl font-bold text-foreground mb-3 leading-tight">
+          {{ opt?.title }}
+        </h2>
+        <p id="dialog-description" class="text-muted-foreground leading-relaxed">
+          {{ opt?.description }}
+        </p>
       </div>
 
       <div class="flex justify-end gap-4 max-sm:flex-col-reverse">

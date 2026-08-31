@@ -1,6 +1,5 @@
 import { Component, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
-import { Button } from '../../ui/button/button';
 import { WeatherService } from '../../../core/services/weather/weather.service';
 import { Subject, takeUntil } from 'rxjs';
 import { WeatherBase } from '../../../core/interfaces/weather/weather.interface';
@@ -8,7 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-top-bar',
-  imports: [IconsModule, Button],
+  imports: [IconsModule],
   templateUrl: './top-bar.html',
   styleUrl: './top-bar.css',
 })

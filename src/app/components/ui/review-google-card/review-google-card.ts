@@ -2,11 +2,10 @@ import { Component, Input } from '@angular/core';
 import { GoogleReviewItem } from '../../../core/interfaces/review/google-review.interface';
 import { IconsModule } from '../../../core/icons.module';
 import { Avatar } from '../avatar/avatar';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-review-google-card',
-  imports: [CommonModule, IconsModule, Avatar],
+  imports: [IconsModule, Avatar],
   templateUrl: './review-google-card.html',
   styleUrl: './review-google-card.css',
 })

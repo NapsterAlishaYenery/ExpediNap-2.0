@@ -16,6 +16,7 @@ export class Button {
   @Input() className: string = '';
   @Input() disabled: boolean = false;
   @Input() type: 'button' | 'submit' | 'reset' = 'submit';
+  @Input() ariaLabel: string = '';
 
   @Output() onClick = new EventEmitter<Event>();
 

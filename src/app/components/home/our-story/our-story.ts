@@ -24,21 +24,19 @@ export class OurStory implements OnInit {
     this.calculateExperience();
   }
 
-  calculateExperience(): void {
-  // Según tu CV, en 2015 ya estabas en la "línea de fuego" del servicio al pasajero
-  const startYear = 2015; 
-  const startMonth = 0; // Enero (asumido para simplificar)
-  const startDate = new Date(startYear, startMonth, 1);
-  const today = new Date();
-  
-  let years = today.getFullYear() - startDate.getFullYear();
-  
-  // Verificamos si ya pasó el aniversario este año
-  const monthDiff = today.getMonth() - startDate.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < startDate.getDate())) {
-    years--;
-  }
+  private calculateExperience(): void {
+    const startYear = 2015;
+    const startMonth = 0; // Enero
+    const startDate = new Date(startYear, startMonth, 1);
+    const today = new Date();
 
-  this.yearsOfExperience = years;
-}
+    let years = today.getFullYear() - startDate.getFullYear();
+    const monthDiff = today.getMonth() - startDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < startDate.getDate())) {
+      years--;
+    }
+
+    this.yearsOfExperience = years;
+  }
 }

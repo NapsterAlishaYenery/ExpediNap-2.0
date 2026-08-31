@@ -1,38 +1,57 @@
-<div class="review-card w-80 h-80 bg-card border border-border rounded-3xl p-6 flex flex-col shadow-md box-border max-sm:w-62.5 max-sm:h-62.5 max-sm:p-4.5 max-sm:rounded-2xl google-variant">
-  <div class="card-header flex items-center gap-4 mb-4">
+<article class="review-card w-80 h-80 bg-card border border-border border-b-4 border-b-[#4285F4] rounded-3xl p-6 flex flex-col shadow-sm transition-shadow duration-300 hover:shadow-md box-border max-sm:w-62.5 max-sm:h-62.5 max-sm:p-4.5 max-sm:rounded-2xl">
+  
+  <!-- CABECERA DE AUTOR Y PLATAFORMA -->
+  <header class="card-header flex items-center gap-3 mb-4">
     <app-avatar [src]="review.photo" [fallbackText]="getInitials(review.author)"></app-avatar>
     
-    <div class="user-info overflow-hidden flex-1">
-      <h4 class="user-name font-extrabold text-base text-foreground m-0 whitespace-nowrap text-ellipsis overflow-hidden">{{ review.author }}</h4>
-      <p class="user-meta text-sm text-muted-foreground m-0">Google Maps • {{ review.relativeTime }}</p>
+    <div class="user-info overflow-hidden flex-1 min-w-0">
+      <h4 class="user-name font-bold text-base text-foreground m-0 truncate">
+        {{ review.author }}
+      </h4>
+      <p class="user-meta text-xs text-muted-foreground m-0">
+        Google Maps • <time>{{ review.relativeTime }}</time>
+      </p>
     </div>
     
-    <div class="google-badge ml-auto">
-      <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google" class="google-icon w-5 h-5">
+    <div class="google-badge ml-auto shrink-0" title="Reseña publicada en Google Maps">
+      <img 
+        src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" 
+        alt="Logo de Google Maps" 
+        width="20" 
+        height="20"
+        decoding="async"
+        loading="lazy"
+        class="google-icon w-5 h-5">
     </div>
-  </div>
+  </header>
 
-  <div class="stars-row flex gap-0.5 mb-4 text-yellow-500">
-    @for (star of [1,2,3,4,5]; track star) {
+  <!-- CALIFICACIÓN POR ESTRELLAS (Accesible para Screen Readers) -->
+  <div 
+    class="stars-row flex items-center gap-0.5 mb-3" 
+    [attr.aria-label]="'Calificación: ' + review.rating + ' de 5 estrellas'">
+    @for (star of [1, 2, 3, 4, 5]; track star) {
       <lucide-icon 
         name="star" 
         [size]="16" 
-        [class.star-filled]="review.rating >= star"
-        [class.star-empty]="review.rating < star">
+        [class]="review.rating >= star ? 'fill-amber-400 text-amber-400' : 'fill-muted/20 text-muted-foreground/30'"
+        aria-hidden="true">
       </lucide-icon>
     }
   </div>
 
-  <p class="review-text text-sm leading-relaxed text-foreground italic mb-auto line-clamp-3">
-    "{{ review.text }}"
-  </p>
+  <!-- TEXTO DE LA RESEÑA -->
+  <blockquote class="m-0 mb-auto">
+    <p class="review-text text-sm leading-relaxed text-foreground/90 italic line-clamp-3">
+      "{{ review.text }}"
+    </p>
+  </blockquote>
 
-  <div class="divider h-px bg-border my-4"></div>
+  <div class="divider h-px bg-border my-3" role="separator"></div>
 
-  <div class="card-footer flex flex-col gap-2">
-    <div class="google-verification flex items-center gap-2 text-blue-600">
-      <lucide-icon name="CircleCheck" [size]="14" class="check-icon"></lucide-icon>
-      <span class="label-verified text-xs font-bold uppercase">Verified Customer Review</span>
-    </div>
-  </div>
-</div>
+  <!-- PIE CON VERIFICACIÓN -->
+  <footer class="card-footer flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+    <lucide-icon name="circle-check" [size]="14" class="check-icon shrink-0" aria-hidden="true"></lucide-icon>
+    <span class="label-verified text-[0.65rem] font-bold tracking-wider uppercase">Verified Customer Review</span>
+  </footer>
+
+</article>

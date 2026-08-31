@@ -1,16 +1,25 @@
-<nav class="mt-30 max-md:mt-26.25 py-3 max-md:py-2 bg-muted/50 border-b border-border/50 dark:bg-card/80 dark:border-border/20">
-  <div class="max-w-350 mx-auto px-8 max-md:px-4">
-    <ol class="flex items-center gap-2 flex-wrap list-none">
+<nav 
+  aria-label="Breadcrumb" 
+  class="mt-30 max-md:mt-26 py-3 max-md:py-2 bg-muted/60 border-b border-border/60 dark:bg-muted/20 dark:border-border/40">
+  <div class="max-w-7xl mx-auto px-8 max-md:px-4">
+    <ol class="flex items-center gap-2 flex-wrap list-none p-0 m-0">
       @for (crumb of (breadcrumbService.breadcrumbs$ | async); track crumb.url; let last = $last) {
-        <li class="flex items-center">
+        <li class="flex items-center text-xs sm:text-sm">
           @if (!last) {
-            <a [routerLink]="crumb.url" 
-               class="text-[0.85rem] font-medium text-muted-foreground no-underline transition-all duration-200 hover:text-accent">
+            <a 
+              [routerLink]="crumb.url" 
+              class="font-medium text-muted-foreground dark:text-zinc-400 transition-colors duration-200 hover:text-accent dark:hover:text-accent focus-visible:outline-none focus-visible:underline">
               {{ crumb.label }}
             </a>
-            <i class="bi bi-chevron-right ml-2 text-[0.7rem] text-muted-foreground/50"></i>
+            <lucide-icon 
+              name="chevron-right" 
+              class="w-3.5 h-3.5 ml-2 text-muted-foreground/60 dark:text-zinc-500 shrink-0" 
+              aria-hidden="true">
+            </lucide-icon>
           } @else {
-            <span class="text-[0.85rem] font-semibold text-foreground dark:text-accent">
+            <span 
+              class="font-semibold text-foreground dark:text-zinc-100 truncate max-w-50 sm:max-w-none" 
+              aria-current="page">
               {{ crumb.label }}
             </span>
           }

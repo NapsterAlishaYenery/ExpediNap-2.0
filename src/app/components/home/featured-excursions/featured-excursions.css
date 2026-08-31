@@ -7,7 +7,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Estilos del botón con ::ng-deep - Tailwind no puede penetrar componentes hijos */
+/* Estilos del botón con ::ng-deep */
 .cta-button-container ::ng-deep .btn {
   width: 100% !important;
   background-color: hsl(var(--accent)) !important;

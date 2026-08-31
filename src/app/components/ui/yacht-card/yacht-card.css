@@ -1,30 +1,3 @@
 :host { 
   display: block; 
 }
-
-/* 
- * NOTA: Las clases .image-container, .content-container, .yacht-title, 
- * .anchor-icon, .pax-badge, .yacht-description, .price-list, .price-item,
- * .label, .value, .includes-row, .footer-action ya NO son necesarias
- * porque ahora están en Tailwind
- */
-
-/* Estilos que requieren ::ng-deep o son específicos de componentes hijos */
-::ng-deep .include-badge .badge {
-  border-radius: 6px !important;
-  font-size: 0.65rem;
-  border-color: hsl(var(--secondary) / 0.3) !important;
-  color: hsl(var(--secondary)) !important;
-  text-transform: capitalize;
-  background-color: transparent !important;
-}
-
-::ng-deep .footer-button .btn {
-  width: 100% !important;
-  background-color: hsl(var(--secondary)) !important;
-  color: hsl(var(--secondary-foreground)) !important;
-  border: none !important;
-  font-weight: 600 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}

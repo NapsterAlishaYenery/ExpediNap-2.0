@@ -1,35 +1,43 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ImageItem, ImagesModel } from '../../../core/interfaces/shared/image.interface';
+import { IconsModule } from '../../../core/icons.module';
 
 
 @Component({
   selector: 'app-image-gallery',
-  imports: [CommonModule],
+  imports: [IconsModule],
   templateUrl: './image-gallery.html',
   styleUrl: './image-gallery.css',
 })
-export class ImageGallery implements OnInit {
-  @Input() images!: ImagesModel; // ✅ Usar ImagesModel
+export class ImageGallery implements OnChanges {
+ @Input({ required: true }) images!: ImagesModel;
 
-  selectedImage!: ImageItem; // ✅ Usar ImageItem
+  @ViewChild('carousel') carousel!: ElementRef<HTMLDivElement>;
 
-  ngOnInit() {
-    this.selectedImage = this.images.main;
+  selectedImage!: ImageItem;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['images'] && this.images?.main) {
+      this.selectedImage = this.images.main;
+    }
   }
 
-  selectImage(img: ImageItem) { // ✅ Usar ImageItem
+  selectImage(img: ImageItem): void {
     this.selectedImage = img;
   }
 
-  // Dentro de tu clase:
-  @ViewChild('carousel') carousel!: ElementRef;
+  scrollGallery(direction: number): void {
+    const scrollAmount = 280;
+    if (this.carousel) {
+      this.carousel.nativeElement.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  }
 
-  scrollGallery(direction: number) {
-    const scrollAmount = 300; // Ajusta según qué tanto quieras que se mueva
-    this.carousel.nativeElement.scrollBy({
-      left: direction * scrollAmount,
-      behavior: 'smooth'
-    });
+  get allImages(): ImageItem[] {
+    if (!this.images) return [];
+    return [this.images.main, ...(this.images.gallery || [])];
   }
 }

@@ -1,23 +1,32 @@
-<nav 
-  class="fixed left-0 z-1000 flex items-center w-full transition-all duration-400 ease-in-out shadow-sm border-b border-border/50 bg-card "
+<nav
+  aria-label="Main navigation"
+  class="fixed left-0 z-1000 flex items-center w-full transition-all duration-400 ease-in-out shadow-sm border-b border-border/50 bg-card"
   [class.h-20]="!isScrollingDown()"
   [class.h-[70px]]="isScrollingDown()"
   [class.top-10]="!isScrollingDown()"
   [class.top-0]="isScrollingDown()"
   [class.-translate-y-full]="isScrollingDown()">
 
-  <div class="flex justify-between items-center w-full max-w-1400px mx-auto px-4 md:px-8">
-    
+  <div
+    class="flex justify-between items-center w-full max-w-1400px mx-auto px-4 md:px-8">
+
     <!-- Brand / Logo -->
-    <a routerLink="/" class="no-underline">
+    <a routerLink="/" aria-label="ExpediNap - Home"
+      class="no-underline rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
       <div class="flex items-center gap-3">
-        <img src="/logo.png" alt="ExpediNap Logo" 
-             class="w-auto transition-all duration-300 h-8 md:h-9 lg:h-45px">
+        <img
+          src="/logo.png"
+          alt="ExpediNap Logo"
+          width="160"
+          height="45"
+          class="w-auto transition-all duration-300 h-8 md:h-9 lg:h-45px">
         <div class="flex flex-col justify-center">
-          <span class="font-serif text-[1.1rem] md:text-[1.3rem] lg:text-[1.6rem] font-bold text-primary leading-none tracking-[1px] md:tracking-[2px] uppercase">
+          <span
+            class="font-serif text-[1.1rem] md:text-[1.3rem] lg:text-[1.6rem] font-bold text-primary leading-none tracking-[1px] md:tracking-[2px] uppercase">
             ExpediNap
           </span>
-          <span class="hidden md:block text-[0.6rem] font-normal text-foreground/80 tracking-[0.5px] mt-0.5 whitespace-nowrap">
+          <span
+            class="hidden md:block text-[0.6rem] font-normal text-foreground/80 tracking-[0.5px] mt-0.5 whitespace-nowrap">
             Trips you dream of, Adventures you live
           </span>
         </div>
@@ -28,10 +37,11 @@
     <ul class="hidden lg:flex items-center gap-1 list-none m-0 p-0">
       @for (item of menuItems; track item.name) {
       <li>
-        <a [routerLink]="item.route" 
-           routerLinkActive="!bg-accent/20 !text-accent font-semibold"
-           [routerLinkActiveOptions]="{exact: true}"
-           class="px-4 py-2 rounded-lg no-underline text-foreground/80 font-medium text-[0.95rem] transition-all duration-300 hover:bg-accent/15 hover:text-accent dark:hover:bg-accent/20">
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="!bg-accent/20 !text-accent font-semibold"
+          [routerLinkActiveOptions]="{exact: true}"
+          class="px-4 py-2 rounded-lg no-underline text-foreground/80 font-medium text-[0.95rem] transition-all duration-300 hover:bg-accent/15 hover:text-accent dark:hover:bg-accent/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
           {{ item.name }}
         </a>
       </li>
@@ -40,21 +50,34 @@
 
     <!-- Actions -->
     <div class="flex items-center gap-4">
-      <button class="bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1" 
-              (click)='themeService.toggleTheme()'>
-        <lucide-icon [name]="themeService.darkMode() ? 'sun' : 'moon'"></lucide-icon>
+      <!-- Dark/Light Theme Toggle (Permanece como button) -->
+      <button
+        type="button"
+        class="bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary hover:bg-accent/10 transition-colors"
+        [attr.aria-label]="themeService.darkMode() ? 'Switch to light mode' : 'Switch to dark mode'"
+        (click)="themeService.toggleTheme()">
+        <lucide-icon [name]="themeService.darkMode() ? 'sun' : 'moon'"
+          aria-hidden="true"></lucide-icon>
       </button>
 
-      <a routerLink="/excursions" class="hidden lg:block">
-        <app-button variant="accent" size="sm">
-          <i class="bi bi-book mr-1"></i>
-          booking
-        </app-button>
+      <!-- Booking Button: Reemplazado por app-button-link -->
+      <a
+        routerLink="/excursions"
+        aria-label="Go to excursion bookings section"
+        class="hidden lg:inline-flex items-center justify-center gap-2 rounded-(--radius) font-medium transition-all duration-300 cursor-pointer border-none hover:brightness-110 hover:-translate-y-0.5 no-underline bg-accent text-accent-foreground shadow-glow h-8 px-3 text-xs">
+        <i class="bi bi-book mr-1" aria-hidden="true"></i>
+        Booking
       </a>
 
-      <button class="lg:hidden bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1" 
-              (click)="openMobileMenu()">
-        <lucide-icon name="menu"></lucide-icon>
+      <!-- Mobile Menu Toggle (Permanece como button) -->
+      <button
+        type="button"
+        class="lg:hidden bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary hover:bg-accent/10 transition-colors"
+        aria-label="Open navigation menu"
+        aria-haspopup="true"
+        [attr.aria-expanded]="menuService.isOpen$ | async"
+        (click)="openMobileMenu()">
+        <lucide-icon name="menu" aria-hidden="true"></lucide-icon>
       </button>
     </div>
   </div>

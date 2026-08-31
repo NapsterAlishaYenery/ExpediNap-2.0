@@ -1,29 +1,46 @@
-<section class="why-section py-25 bg-background relative overflow-hidden">
+<section class="why-section py-25 bg-background relative overflow-hidden" aria-labelledby="why-choose-us-heading">
   <!-- Decoración de fondo (Glows suaves) -->
-  <div class="bg-decor absolute inset-0 pointer-events-none opacity-8">
+  <div class="bg-decor absolute inset-0 pointer-events-none opacity-8" aria-hidden="true">
     <div class="glow glow-1 absolute w-100 h-100 rounded-full blur-[80px] top-[-10%] left-[20%] bg-accent"></div>
     <div class="glow glow-2 absolute w-100 h-100 rounded-full blur-[80px] bottom-[-10%] right-[20%] bg-primary"></div>
   </div>
 
   <div class="container max-w-350 mx-auto px-6 relative z-10">
+    <!-- Header de Sección -->
     <div class="section-header text-center mb-20">
-      <span class="sub-title text-accent uppercase tracking-[2px] font-semibold text-sm">Why choose us?</span>
-      <h2 class="main-title text-[clamp(2rem,5vw,3rem)] text-foreground my-2 mb-4 font-extrabold">The ExpediNap Difference</h2>
-      <p class="section-description text-muted-foreground max-w-150 mx-auto">More than a decade creating unique experiences in the Dominican Caribbean.</p>
+      <span class="sub-title text-accent uppercase tracking-[2px] font-semibold text-sm block mb-1">
+        Why choose us?
+      </span>
+      <h2 id="why-choose-us-heading" class="main-title text-[clamp(2rem,5vw,3rem)] text-foreground my-2 mb-4 font-extrabold">
+        The ExpediNap Difference
+      </h2>
+      <p class="section-description text-muted-foreground max-w-150 mx-auto">
+        More than a decade creating unique experiences in the Dominican Caribbean.
+      </p>
     </div>
 
+    <!-- Grilla de Beneficios -->
     <div class="benefits-grid grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       @for (benefit of benefits; track benefit.title) {
         <div class="benefit-card text-center group">
           <div class="icon-wrapper relative inline-flex mb-6 justify-center">
             <div class="iconbg w-25 h-25 bg-accent/10 rounded-3xl flex items-center justify-center mx-auto relative z-2 transition-all duration-400 ease-in-out(0.4,0,0.2,1) border border-accent/10 leading-none group-hover:-translate-y-2.5 group-hover:rotate-3 group-hover:bg-accent group-hover:shadow-[0_15px_30px_hsla(var(--accent),0.3)] dark:group-hover:bg-accent/25 dark:group-hover:border-accent dark:group-hover:shadow-[0_0_30px_hsla(var(--accent),0.4)]">
-              <lucide-icon [name]="benefit.icon" class="icon text-accent w-15 h-15 transition-all duration-400 group-hover:text-white dark:group-hover:text-accent" [strokeWidth]="1.5"></lucide-icon>
+              <lucide-icon 
+                [name]="benefit.icon" 
+                class="icon text-accent w-15 h-15 transition-all duration-400 group-hover:text-white dark:group-hover:text-accent" 
+                [strokeWidth]="1.5"
+                aria-hidden="true">
+              </lucide-icon>
             </div>
-            <div class="icon-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-accent rounded-full blur-[25px] opacity-0 transition-opacity duration-400 z-1 group-hover:opacity-50"></div>
+            <div class="icon-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-accent rounded-full blur-[25px] opacity-0 transition-opacity duration-400 z-1 group-hover:opacity-50" aria-hidden="true"></div>
           </div>
           
-          <h3 class="benefit-title text-xl font-bold text-foreground mb-4">{{ benefit.title }}</h3>
-          <p class="benefit-description text-muted-foreground text-sm leading-relaxed">{{ benefit.description }}</p>
+          <h3 class="benefit-title text-xl font-bold text-foreground mb-4">
+            {{ benefit.title }}
+          </h3>
+          <p class="benefit-description text-muted-foreground text-sm leading-relaxed">
+            {{ benefit.description }}
+          </p>
         </div>
       }
     </div>

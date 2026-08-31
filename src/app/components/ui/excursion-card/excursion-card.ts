@@ -1,14 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { IconsModule } from '../../../core/icons.module';
-import { Button } from '../button/button';
 import { Badge } from '../badge/badge';
 import { ExcursionResponse } from '../../../core/interfaces/excursion/excursion.interface';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-excursion-card',
-  imports: [CommonModule, IconsModule, Button, Badge, RouterLink],
+  imports: [IconsModule, Badge, RouterLink],
   templateUrl: './excursion-card.html',
   styleUrl: './excursion-card.css',
 })

@@ -2,11 +2,12 @@
   <div class="container-custom max-w-350 mx-auto px-6 w-full box-border py-16 flex-1 flex flex-col justify-center">
     <div class="footer-grid grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 
+      <!-- Branding Column -->
       <div class="footer-col branding">
         <div class="footer-logo flex items-center gap-4 mb-6">
           <img src="company-logo.png" alt="ExpediNap Logo" class="logo-img h-15 w-auto">
           <div class="logo-text">
-            <h3 class="text-2xl m-0 text-background">ExpediNap</h3>
+            <h3 class="text-2xl m-0 text-background font-bold">ExpediNap</h3>
             <p class="text-sm opacity-70 italic m-0">Trips you dream of, Adventures you live.</p>
           </div>
         </div>
@@ -17,52 +18,78 @@
         </p>
         <div class="social-links flex gap-4">
           @for (social of socials; track social.icon) {
-          <a [href]="social.route" target="_blank" class="social-icon w-10 h-10 rounded-full bg-background/10 flex items-center justify-center text-background no-underline transition-all duration-300 text-lg hover:bg-accent hover:-translate-y-1">
-            <i [class]="'bi ' + social.icon"></i>
-          </a>
+            <a [href]="social.route" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               [attr.aria-label]="'Síguenos en ' + social.name"
+               class="social-icon w-10 h-10 rounded-full bg-background/10 flex items-center justify-center text-background no-underline transition-all duration-300 text-lg hover:bg-accent hover:-translate-y-1">
+              <i [class]="'bi ' + social.icon" aria-hidden="true"></i>
+            </a>
           }
         </div>
       </div>
 
+      <!-- Links Column: Explora -->
       <div class="footer-col">
         <h4 class="text-2xl font-bold mb-8 text-background">Explora</h4>
-        <ul class="footer-links flex flex-col gap-4">
-          @for (link of exploraLinks; track link.name) {
-          <li><a [routerLink]="link.route" class="text-background/70 no-underline transition-colors text-sm hover:text-accent">{{ link.name }}</a></li>
-          }
-        </ul>
+        <nav aria-label="Navegación principal del pie de página">
+          <ul class="footer-links flex flex-col gap-4 p-0 m-0 list-none">
+            @for (link of exploraLinks; track link.name) {
+              <li>
+                <a [routerLink]="link.route" class="text-background/70 no-underline transition-colors text-sm hover:text-accent">
+                  {{ link.name }}
+                </a>
+              </li>
+            }
+          </ul>
+        </nav>
       </div>
 
+      <!-- Links Column: Legal -->
       <div class="footer-col">
         <h4 class="text-2xl font-bold mb-8 text-background">Legal</h4>
-        <ul class="footer-links flex flex-col gap-4">
-          @for (link of legalLinks; track link.label) {
-          <li><a [routerLink]="link.route" class="text-background/70 no-underline transition-colors text-sm hover:text-accent">{{ link.label }}</a></li>
-          }
-        </ul>
+        <nav aria-label="Enlaces legales">
+          <ul class="footer-links flex flex-col gap-4 p-0 m-0 list-none">
+            @for (link of legalLinks; track link.label) {
+              <li>
+                <a [routerLink]="link.route" class="text-background/70 no-underline transition-colors text-sm hover:text-accent">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </nav>
       </div>
 
+      <!-- Contact Info Column -->
       <div class="footer-col contact-info">
         <h4 class="text-2xl font-bold mb-8 text-background">Contacto</h4>
-        <ul class="flex flex-col gap-5">
+        <ul class="flex flex-col gap-5 p-0 m-0 list-none">
           <li class="flex gap-4 text-sm text-background">
-            <lucide-icon name="map-pin" class="icon-accent text-accent shrink-0"></lucide-icon>
+            <lucide-icon name="map-pin" class="icon-accent text-accent shrink-0" aria-hidden="true"></lucide-icon>
             <span>Av. Pablo Gerrero #27, San Pedro, Higuey, Rep. Dom.</span>
           </li>
           <li class="flex gap-4 text-sm text-background">
-            <lucide-icon name="phone" class="icon-accent text-accent shrink-0"></lucide-icon>
-            <a href="https://wa.me/18298369303" target="_blank" class="text-inherit no-underline hover:text-accent">+1 (809) 836-9303 (WhatsApp)</a>
+            <lucide-icon name="phone" class="icon-accent text-accent shrink-0" aria-hidden="true"></lucide-icon>
+            <a href="https://wa.me/18298369303" target="_blank" rel="noopener noreferrer" class="text-inherit no-underline hover:text-accent">
+              +1 (809) 836-9303 (WhatsApp)
+            </a>
           </li>
           <li class="flex gap-4 text-sm text-background">
-            <lucide-icon name="mail" class="icon-accent text-accent shrink-0"></lucide-icon>
-            <a href="mailto:info@expedinap.com" target="_blank" class="text-inherit no-underline hover:text-accent">info@expedinap.com</a>
+            <lucide-icon name="mail" class="icon-accent text-accent shrink-0" aria-hidden="true"></lucide-icon>
+            <a href="mailto:info@expedinap.com" target="_blank" rel="noopener noreferrer" class="text-inherit no-underline hover:text-accent">
+              info@expedinap.com
+            </a>
           </li>
           <li class="flex gap-4 text-sm text-background">
-            <lucide-icon name="mail" class="icon-accent text-accent shrink-0"></lucide-icon>
-            <a href="mailto:expedinap@gmail.com" target="_blank" class="text-inherit no-underline hover:text-accent">expedinap@gmail.com</a>
+            <lucide-icon name="mail" class="icon-accent text-accent shrink-0" aria-hidden="true"></lucide-icon>
+            <a href="mailto:expedinap@gmail.com" target="_blank" rel="noopener noreferrer" class="text-inherit no-underline hover:text-accent">
+              expedinap@gmail.com
+            </a>
           </li>
         </ul>
       </div>
+
     </div>
   </div>
 
