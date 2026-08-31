@@ -70,14 +70,16 @@
       </a>
 
       <!-- Mobile Menu Toggle (Permanece como button) -->
+      <!-- Mobile Menu Toggle -->
       <button
         type="button"
-        class="lg:hidden bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary hover:bg-accent/10 transition-colors"
-        aria-label="Open navigation menu"
+        class="lg:hidden bg-transparent border-none cursor-pointer text-foreground/80 flex items-center p-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary hover:bg-accent/10 transition-colors z-1001"
+        aria-label="Toggle navigation menu"
         aria-haspopup="true"
         [attr.aria-expanded]="menuService.isOpen$ | async"
-        (click)="openMobileMenu()">
-        <lucide-icon name="menu" aria-hidden="true"></lucide-icon>
+        (click)="toggleMobileMenu()">
+        <lucide-icon [name]="(menuService.isOpen$ | async) ? 'x' : 'menu'"
+          aria-hidden="true"></lucide-icon>
       </button>
     </div>
   </div>

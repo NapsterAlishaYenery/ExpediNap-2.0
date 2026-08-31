@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -6,18 +7,22 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MobileMenuService {
   private isOpenSubject = new BehaviorSubject<boolean>(false);
-  
-  // Observable que el componente MobileMenu escuchará
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
   isOpen$ = this.isOpenSubject.asObservable();
 
   open() {
     this.isOpenSubject.next(true);
-    document.body.style.overflow = 'hidden';
+    if (this.isBrowser) {
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   close() {
     this.isOpenSubject.next(false);
-    document.body.style.overflow = 'auto';
+    if (this.isBrowser) {
+      document.body.style.overflow = 'auto';
+    }
   }
 
   toggle() {

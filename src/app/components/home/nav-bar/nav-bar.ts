@@ -49,4 +49,7 @@ export class NavBar {
   openMobileMenu() {
     this.menuService.open();
   }
+  toggleMobileMenu() {
+  this.menuService.toggle();
+}
 }
