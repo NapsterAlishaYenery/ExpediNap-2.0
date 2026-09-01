@@ -7,8 +7,8 @@ import { CreateOrderTransfer } from '../../../core/interfaces/orders/order-trans
 import { OrderTransferService } from '../../../core/services/orders-services/order-transfer/order-transfer.service';
 import { AlertService } from '../../../core/services/alert/alert';
 import { PhoneUtils } from '../../../core/utils/phone-utils';
-import { Meta, Title } from '@angular/platform-browser';
 import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 
 @Component({
@@ -25,8 +25,7 @@ export class TransfersPage {
   private alertService = inject(AlertService);
   private readonly destroy$ = new Subject<void>(); // 3. Subject listo
 
-  private titleService = inject(Title);      // ✅ Para metadatos
-  private metaService = inject(Meta);        // ✅ Para metadatos
+  private seoService = inject(SeoService);
 
   transferForm!: FormGroup;
   isLoading = false;
@@ -44,38 +43,23 @@ export class TransfersPage {
   }
 
   ngOnInit() {
-    // 🔥 METADATOS
-    this.titleService.setTitle('Private Airport Transfers Punta Cana | Book Your Ride | ExpediNap');
-
-    this.metaService.updateTag({
-      name: 'description',
-      content: 'Book private airport transfers in Punta Cana. Safe, reliable, and comfortable transportation from PUJ airport to hotels and resorts. Fixed prices, professional drivers, and 24/7 service.'
-    });
-
-    this.metaService.updateTag({
-      name: 'keywords',
-      content: 'airport transfers Punta Cana, private transportation, shuttle service Punta Cana, PUJ airport transfer, hotel transfers, Dominican Republic transport, private driver, ExpediNap transfers, safe travel, resort shuttle'
-    });
-
-    // 🔥 Open Graph (para compartir en redes)
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: 'Private Airport Transfers in Punta Cana | Book Your Ride | ExpediNap'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:description',
-      content: 'Book reliable and comfortable private transfers in Punta Cana. Fixed prices, professional drivers, and 24/7 service from PUJ airport to your hotel.'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:image',
-      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-transfers.webp' // ⚠️ Cambiar por una imagen de transfers
-    });
-
-    this.metaService.updateTag({
-      property: 'og:url',
-      content: 'https://www.expedinap.com/transfers'
+    this.seoService.setPageSeo({
+      title: 'Private Airport Transfers Punta Cana | Book Your Ride | ExpediNap',
+      description: 'Book private airport transfers in Punta Cana. Safe, reliable, and comfortable transportation from PUJ airport to hotels and resorts. Fixed prices, professional drivers, and 24/7 service.',
+      url: 'https://www.expedinap.com/transfers',
+      image: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-transfers.webp',
+      keywords: [
+        'airport transfers Punta Cana',
+        'private transportation',
+        'shuttle service Punta Cana',
+        'PUJ airport transfer',
+        'hotel transfers',
+        'Dominican Republic transport',
+        'private driver',
+        'ExpediNap transfers',
+        'safe travel',
+        'resort shuttle'
+      ]
     });
 
     this.initForm();

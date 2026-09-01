@@ -6,9 +6,9 @@ import { BlogService } from '../../../core/services/blogs/blog.service';
 import { BlogResponse } from '../../../core/interfaces/blog/blog.interface';
 import { PaginationMetadata } from '../../../core/interfaces/shared/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
-import { Meta, Title } from '@angular/platform-browser';
 import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
 import { TitleCasePipe } from '@angular/common';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 @Component({
   selector: 'app-blog-page',
@@ -21,8 +21,7 @@ export class BlogPage implements OnInit, OnDestroy {
   private blogService = inject(BlogService);
   private readonly destroy$ = new Subject<void>(); // 4. El interruptor
 
-  private titleService = inject(Title);
-  private metaService = inject(Meta);
+  private seoService = inject(SeoService);
 
 
   blogs: BlogResponse[] = [];
@@ -44,39 +43,26 @@ export class BlogPage implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
-
-    this.titleService.setTitle('Punta Cana Travel Blog & Tips | Discover Caribbean Adventures | ExpediNap');
-
-    this.metaService.updateTag({
-      name: 'description',
-      content: 'Explore the Punta Cana travel blog by ExpediNap. Discover expert tips, destination guides, culture, history, and the best excursions in the Dominican Republic. Plan your Caribbean adventure today.'
+    this.seoService.setPageSeo({
+      title: 'Punta Cana Travel Blog & Tips | Discover Caribbean Adventures | ExpediNap',
+      description: 'Explore expert travel tips, destination guides, culture, history, and the best excursions in Punta Cana. Plan your dream Caribbean vacation with ExpediNap.',
+      keywords: [
+        'Punta Cana blog',
+        'Dominican Republic travel blog',
+        'travel tips Caribbean',
+        'Punta Cana guide',
+        'things to do Punta Cana',
+        'excursions blog',
+        'travel recommendations',
+        'Caribbean destinations',
+        'ExpediNap blog',
+        'travel advice'
+      ],
+      url: 'https://www.expedinap.com/blogs',
+      image: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065967/social-imag-travel-blogs.webp',
+      type: 'website'
     });
 
-    this.metaService.updateTag({
-      name: 'keywords',
-      content: 'Punta Cana blog, Dominican Republic travel blog, travel tips Caribbean, Punta Cana guide, things to do Punta Cana, excursions blog, travel recommendations, Caribbean destinations, ExpediNap blog, travel advice'
-    });
-
-    // 🔥 Open Graph (para compartir en redes)
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: 'Punta Cana Travel Blog & Tips | Discover Caribbean Adventures | ExpediNap'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:description',
-      content: 'Explore expert travel tips, destination guides, and the best excursions in Punta Cana. Plan your dream Caribbean vacation with ExpediNap.'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:image',
-      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065967/social-imag-travel-blogs.webp' // ⚠️ Cambiar por una imagen de blog
-    });
-
-    this.metaService.updateTag({
-      property: 'og:url',
-      content: 'https://www.expedinap.com/blogs'
-    });
 
     this.loadBlogs();
   }

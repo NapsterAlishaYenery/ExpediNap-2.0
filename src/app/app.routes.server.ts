@@ -47,19 +47,19 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'privacy-policy',
-    renderMode: RenderMode.Client
+    renderMode: RenderMode.Prerender
   },
   {
     path: 'cookie-policy',
-    renderMode: RenderMode.Client
+    renderMode: RenderMode.Prerender
   },
   {
     path: 'terms-and-conditions',
-    renderMode: RenderMode.Client
+    renderMode: RenderMode.Prerender
   },
   {
     path: 'cancellation-policy',
-    renderMode: RenderMode.Client
+    renderMode: RenderMode.Prerender
   },
 
   // --- Admin y Autenticación - CSR (Client) ---

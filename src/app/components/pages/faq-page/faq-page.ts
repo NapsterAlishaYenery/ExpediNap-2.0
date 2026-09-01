@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Accordeon } from '../../ui/accordeon/accordeon';
 import { Button } from '../../ui/button/button';
 import { itemCuestion } from '../../../core/interfaces/shared/shared.interface';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 @Component({
   selector: 'app-faq-page',
@@ -9,7 +10,10 @@ import { itemCuestion } from '../../../core/interfaces/shared/shared.interface';
   templateUrl: './faq-page.html',
   styleUrl: './faq-page.css',
 })
-export class FaqPage {
+export class FaqPage implements OnInit {
+
+  private seoService = inject(SeoService);
+
   faqs: itemCuestion[] = [
     {
       question: "What is included in a private yacht rental?",
@@ -88,11 +92,28 @@ export class FaqPage {
     }
   ];
 
+  ngOnInit(): void {
+    // ✅ Configuración SEO optimizada para FAQ
+    this.seoService.setPageSeo({
+      title: 'Frequently Asked Questions (FAQ) | ExpediNap Punta Cana',
+      description: 'Find answers to common questions about booking excursions, private yacht rentals, cancellation policies, weather procedures, and transportation in Punta Cana.',
+      url: 'https://www.expedinap.com/faq',
+      keywords: [
+        'expedinap faq',
+        'punta cana excursion questions',
+        'yacht rental cancellation policy',
+        'punta cana tour transportation',
+        'excursion payment methods punta cana'
+      ],
+      type: 'website'
+    });
+  }
+
   openWhatsApp() {
     const phoneNumber = "18098369303"; // Reemplaza con tu número real
     const message = "Hello ExpediNap! I have a question about the excursions.";
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    
+
     window.open(url, '_blank');
   }
 }

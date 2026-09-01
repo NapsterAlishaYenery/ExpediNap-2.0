@@ -12,7 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { OrderExcursionService } from '../../../core/services/orders-services/order-excursion/order-excursion.service';
 import { AlertService } from '../../../core/services/alert/alert';
 import { PhoneUtils } from '../../../core/utils/phone-utils';
-import { Meta, Title } from '@angular/platform-browser';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 @Component({
   selector: 'app-excursions-page-details',
@@ -27,8 +27,7 @@ export class ExcursionsPageDetails implements OnInit, OnDestroy {
   private alertService = inject(AlertService);
   private fb = inject(FormBuilder);
 
-  private titleService = inject(Title);      // ✅ Para metadatos
-  private metaService = inject(Meta);        // ✅ Para metadatos
+  private seoService = inject(SeoService);
 
   private readonly destroy$ = new Subject<void>();
 
@@ -81,7 +80,6 @@ export class ExcursionsPageDetails implements OnInit, OnDestroy {
     }
   }
 
-  // 🔥 NUEVO: Método para actualizar metadatos
   private updateMetadata(): void {
     if (!this.excursion) return;
 
@@ -90,53 +88,32 @@ export class ExcursionsPageDetails implements OnInit, OnDestroy {
     const duration = this.excursion.duration?.value || '';
     const durationUnit = this.excursion.duration?.unit || 'hours';
 
-    // 🔥 Título - Usar SEO title de la base de datos o generar uno
     const seoTitle = this.excursion.seo?.title ||
       `${excursionName} | Best Excursion in ${location} | ExpediNap`;
 
-    // 🔥 Meta description - Usar SEO description de la base de datos o generar una
     const seoDescription = this.excursion.seo?.description ||
       `Book the ${excursionName} excursion in ${location}. Duration: ${duration} ${durationUnit}. Experience the best of Punta Cana with ExpediNap. Secure booking and best price guaranteed.`;
 
-    // 🔥 Keywords - Usar SEO keywords de la base de datos o generar
+
     const seoKeywords = this.excursion.seo?.keywords?.length
-      ? this.excursion.seo.keywords.join(', ')
-      : `${excursionName}, excursions ${location}, Punta Cana tours, Dominican Republic adventures, ${location} excursions, ExpediNap, ${duration} hour tour`;
+      ? this.excursion.seo.keywords
+      : [
+        excursionName,
+        `excursions ${location}`,
+        'Punta Cana tours',
+        'Dominican Republic adventures',
+        `${location} excursions`,
+        'ExpediNap',
+        `${duration} hour tour`
+      ];
 
-    this.titleService.setTitle(seoTitle);
-
-    this.metaService.updateTag({
-      name: 'description',
-      content: seoDescription
-    });
-
-    this.metaService.updateTag({
-      name: 'keywords',
-      content: seoKeywords
-    });
-
-    // 🔥 Open Graph (para compartir en redes)
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: seoTitle
-    });
-
-    this.metaService.updateTag({
-      property: 'og:description',
-      content: seoDescription
-    });
-
-    // 🔥 Imagen dinámica - usa la imagen principal de la excursión
-    if (this.excursion.images && this.excursion.images.main) {
-      this.metaService.updateTag({
-        property: 'og:image',
-        content: this.excursion.images.main.url
-      });
-    }
-
-    this.metaService.updateTag({
-      property: 'og:url',
-      content: `https://www.expedinap.com/excursions/${this.excursion.slug}`
+    this.seoService.setPageSeo({
+      title: seoTitle,
+      description: seoDescription,
+      url: `https://www.expedinap.com/excursions/${this.excursion.slug}`,
+      image: this.excursion.images?.main?.url,
+      keywords: seoKeywords,
+      type: 'article'
     });
   }
 

@@ -6,9 +6,9 @@ import { ExcursionService } from '../../../core/services/excursios/excursion.ser
 import { ExcursionResponse } from '../../../core/interfaces/excursion/excursion.interface';
 import { PaginationMetadata } from '../../../core/interfaces/shared/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
-import { Meta, Title } from '@angular/platform-browser';
 import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
 import { TitleCasePipe } from '@angular/common';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 @Component({
   selector: 'app-excursions-page',
@@ -20,8 +20,7 @@ export class ExcursionsPage implements OnInit, OnDestroy {
   private excursionService = inject(ExcursionService);
   private readonly destroy$ = new Subject<void>(); // 4. El "interruptor" de memoria
 
-  private titleService = inject(Title);
-  private metaService = inject(Meta);
+  private seoService = inject(SeoService);
 
   excursions: ExcursionResponse[] = [];
   paginationData?: PaginationMetadata | null = null;
@@ -45,39 +44,27 @@ export class ExcursionsPage implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
-    // 🔥 METADATOS
-    this.titleService.setTitle('Best Excursions in Punta Cana | Book Tours & Adventures | ExpediNap');
-
-    this.metaService.updateTag({
-      name: 'description',
-      content: 'Discover the best excursions in Punta Cana, Dominican Republic. Book Saona Island tours, buggy adventures, snorkeling, catamaran trips, and private yacht rentals. Best price guaranteed.'
+    this.seoService.setPageSeo({
+      title: 'Best Excursions in Punta Cana | Book Tours & Adventures | ExpediNap',
+      description: 'Discover the best excursions in Punta Cana, Dominican Republic. Book Saona Island tours, buggy adventures, snorkeling, catamaran trips, and private yacht rentals. Best price guaranteed.',
+      keywords: [
+        'excursions Punta Cana',
+        'tours Dominican Republic',
+        'Saona Island',
+        'buggy adventure',
+        'snorkeling Punta Cana',
+        'catamaran tour',
+        'scuba diving',
+        'Punta Cana excursions',
+        'things to do Punta Cana',
+        'Caribbean tours',
+        'adventure travel'
+      ],
+      url: 'https://www.expedinap.com/excursions',
+      image: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065963/social-imag-excursions.webp',
+      type: 'website'
     });
-
-    this.metaService.updateTag({
-      name: 'keywords',
-      content: 'excursions Punta Cana, tours Dominican Republic, Saona Island, buggy adventure, snorkeling Punta Cana, catamaran tour, scuba diving, Punta Cana excursions, things to do Punta Cana, Caribbean tours, adventure travel'
-    });
-
-    // Open Graph (para compartir en redes)
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: 'Best Excursions in Punta Cana | Book Tours & Adventures | ExpediNap'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:description',
-      content: 'Discover and book the best excursions in Punta Cana. From Saona Island to buggy adventures, find your perfect tour with ExpediNap.'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:image',
-      content: 'https://res.cloudinary.com/dfwpolska/image/upload/v1788065963/social-imag-excursions.webp'
-    });
-
-    this.metaService.updateTag({
-      property: 'og:url',
-      content: 'https://www.expedinap.com/excursions'
-    });
+    
     this.loadExcursions();
   }
 

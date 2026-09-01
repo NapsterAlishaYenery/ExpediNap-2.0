@@ -5,7 +5,8 @@ import { Button } from '../../ui/button/button';
 import { AlertService } from '../../../core/services/alert/alert';
 import { EmailSenderService } from '../../../core/services/email-sender/email-sender.service';
 import { EmailSenderBase } from '../../../core/interfaces/contact-email/email.interface';
-import { finalize, pipe, Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 @Component({
   selector: 'app-contact-page',
@@ -20,7 +21,7 @@ export class ContactPage implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private alertService = inject(AlertService);
   private emailSenderService = inject(EmailSenderService);
-
+  private seoService = inject(SeoService);
 
   constructor() {
     this.contactoForm = this.fb.group({
@@ -28,6 +29,22 @@ export class ContactPage implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.pattern('^[0-9+ ]*$')]],
       message: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
+
+  ngOnInit(): void {
+    // ✅ Configuración SEO para la página de Contacto
+    this.seoService.setPageSeo({
+      title: 'Contact Us | ExpediNap - Excursions & Transportation in Punta Cana',
+      description: 'Get in touch with ExpediNap for questions, custom excursion bookings, or private transportation in Punta Cana and the Dominican Republic.',
+      url: 'https://www.expedinap.com/contact',
+      keywords: [
+        'contact expedinap',
+        'punta cana excursion customer service',
+        'book transportation punta cana',
+        'expedinap support'
+      ],
+      type: 'website'
     });
   }
 
@@ -81,8 +98,5 @@ export class ContactPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  ngOnInit(): void {
   }
 }

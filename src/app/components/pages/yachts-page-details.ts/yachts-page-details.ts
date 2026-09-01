@@ -14,6 +14,7 @@ import { AlertService } from '../../../core/services/alert/alert';
 import { CreateOrderYacht } from '../../../core/interfaces/orders/order-yachts/order-yacht.interface';
 import { PhoneUtils } from '../../../core/utils/phone-utils';
 import { Meta, Title } from '@angular/platform-browser';
+import { SeoService } from '../../../core/services/seo/seo.service';
 
 @Component({
   selector: 'app-yachts-page-details',
@@ -29,8 +30,7 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private readonly destroy$ = new Subject<void>();
 
-  private titleService = inject(Title);      // ✅ Para metadatos
-  private metaService = inject(Meta);        // ✅ Para metadatos
+  private seoService = inject(SeoService);
 
   yacht?: YachtResponse;
   bookingForm: FormGroup;
@@ -85,52 +85,30 @@ export class YachtsPageDetails implements OnInit, OnDestroy {
       .subscribe(() => this.updatePrice());
   }
 
-
   private updateMetadata(): void {
     if (!this.yacht) return;
 
     const yachtName = this.yacht.name;
     const maxPax = this.yacht.maxPax;
+    const imageUrl = this.yacht.images?.main?.url;
 
-    // 🔥 Título - Incluye el nombre del yate
-    this.titleService.setTitle(
-      `${yachtName} | Luxury Yacht Rental in Punta Cana | ExpediNap`
-    );
-
-    // 🔥 Meta description
-    this.metaService.updateTag({
-      name: 'description',
-      content: `Charter the ${yachtName} luxury yacht in Punta Cana. Capacity for ${maxPax} guests. Experience the Caribbean in style with ExpediNap. Book now for an unforgettable sailing adventure.`
-    });
-
-    // 🔥 Keywords
-    this.metaService.updateTag({
-      name: 'keywords',
-      content: `${yachtName}, yacht rental Punta Cana, luxury yacht charter, private boat rental, Caribbean sailing, ${maxPax} passenger yacht, ExpediNap, Punta Cana yacht, boat party, sunset cruise`
-    });
-
-    // 🔥 Open Graph (para compartir en redes)
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: `${yachtName} | Luxury Yacht in Punta Cana | ExpediNap`
-    });
-
-    this.metaService.updateTag({
-      property: 'og:description',
-      content: `Charter the ${yachtName} luxury yacht in Punta Cana. Capacity for ${maxPax} guests. Perfect for private parties, romantic sunsets, and unforgettable experiences.`
-    });
-
-    // 🔥 Imagen dinámica - usa la imagen principal del yate
-    if (this.yacht.images && this.yacht.images.main) {
-      this.metaService.updateTag({
-        property: 'og:image',
-        content: this.yacht.images.main.url
-      });
-    }
-
-    this.metaService.updateTag({
-      property: 'og:url',
-      content: `https://www.expedinap.com/yachts/${this.yacht.slug}`
+    this.seoService.setPageSeo({
+      title: `${yachtName} | Luxury Yacht Rental in Punta Cana | ExpediNap`,
+      description: `Charter the ${yachtName} luxury yacht in Punta Cana. Capacity for ${maxPax} guests. Experience the Caribbean in style with ExpediNap. Book now for an unforgettable sailing adventure.`,
+      url: `https://www.expedinap.com/yachts/${this.yacht.slug}`,
+      image: imageUrl,
+      keywords: [
+        yachtName,
+        'yacht rental Punta Cana',
+        'luxury yacht charter',
+        'private boat rental',
+        'Caribbean sailing',
+        `${maxPax} passenger yacht`,
+        'ExpediNap',
+        'Punta Cana yacht',
+        'boat party',
+        'sunset cruise'
+      ]
     });
   }
 

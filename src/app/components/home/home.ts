@@ -6,7 +6,7 @@ import { WhyChooseUs } from "./why-choose-us/why-choose-us";
 import { OurStory } from "./our-story/our-story";
 import { PropuestaValor } from './propuesta-valor/propuesta-valor';
 import { ReviewSection } from './review-section/review-section';
-import { Meta, Title } from '@angular/platform-browser';
+import { SeoService } from '../../core/services/seo/seo.service';
 
 
 @Component({
@@ -16,15 +16,15 @@ import { Meta, Title } from '@angular/platform-browser';
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
-  private titleService = inject(Title)
-  private metaService = inject(Meta)
+  private seoService = inject(SeoService);
 
   ngOnInit(): void {
-    // 🔥 Título de la página
-    this.titleService.setTitle('ExpediNap | Punta Cana Excursions & Private Yacht Rentals');
-
-    // 🔥 Meta tags
-    this.metaService.updateTag({ name: 'description', content: 'Book the best excursions in Punta Cana with ExpediNap. Discover tours, adventures, and unforgettable experiences in the Dominican Republic.' });
-    this.metaService.updateTag({ name: 'keywords', content: 'Punta Cana excursions, tours Dominican Republic, things to do Punta Cana' });
+    this.seoService.setPageSeo({
+      title: 'ExpediNap | Punta Cana Excursions & Private Yacht Rentals',
+      description: 'Book the best excursions in Punta Cana with ExpediNap. Discover tours, private yacht charters, adventures, and unforgettable experiences in the Dominican Republic.',
+      keywords: ['Punta Cana excursions', 'tours Dominican Republic', 'things to do Punta Cana', 'private yacht rentals', 'ExpediNap'],
+      url: 'https://www.expedinap.com/',
+      image: 'https://res.cloudinary.com/dfwpolska/image/upload/v1776901038/social-imag.webp'
+    });
   }
 }
