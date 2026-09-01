@@ -1,33 +1,39 @@
-<div class="w-full max-w-212.5 mx-auto flex flex-col gap-3 px-4 md:px-0">
+<div class="w-full max-w-212.5 mx-auto flex flex-col gap-3.5 px-4 md:px-0">
   
   @for (item of items; track $index) {
     <div 
-      class="group transition-all duration-500 rounded-xl border overflow-hidden backdrop-blur-md"
+      class="group transition-all duration-300 rounded-2xl border overflow-hidden shadow-xs"
       [ngClass]="item.isOpen 
-        ? 'bg-card/80 border-accent/50 shadow-[0_10px_25px_-5px_hsl(var(--accent)/0.1)] scale-[1.01]' 
-        : 'bg-white/5 border-border/50 hover:bg-white/10'">
+        ? 'bg-card border-accent/60 shadow-md scale-[1.005]' 
+        : 'bg-card/60 border-border/70 hover:bg-card hover:border-border'">
       
-      <!-- Trigger (Botón) -->
-      <button 
-        type="button"
-        class="w-full flex items-center justify-between p-5 text-left cursor-pointer transition-colors"
-        [attr.aria-expanded]="item.isOpen"
-        [attr.aria-controls]="'faq-panel-' + $index"
-        [id]="'faq-button-' + $index"
-        (click)="toggleItem($index)">
-        
-        <span class="font-sans font-semibold text-lg md:text-xl text-foreground pr-4">
-          {{ item.question }}
-        </span>
+      <!-- Trigger (Botón envuelto en h3 para accesibilidad de lectores de pantalla) -->
+      <h3 class="m-0 p-0">
+        <button 
+          type="button"
+          class="w-full flex items-center justify-between p-5 md:p-6 text-left cursor-pointer transition-colors"
+          [attr.aria-expanded]="item.isOpen"
+          [attr.aria-controls]="'faq-panel-' + $index"
+          [id]="'faq-button-' + $index"
+          (click)="toggleItem($index)">
+          
+          <span 
+            class="font-sans font-semibold text-base md:text-lg transition-colors pr-4"
+            [ngClass]="item.isOpen ? 'text-accent font-bold' : 'text-foreground group-hover:text-accent'">
+            {{ item.question }}
+          </span>
 
-        <lucide-icon 
-          name="chevron-down" 
-          class="w-5 h-5 text-muted-foreground transition-all duration-500 shrink-0"
-          [class.rotate-180]="item.isOpen"
-          [class.text-accent]="item.isOpen"
-          aria-hidden="true">
-        </lucide-icon>
-      </button>
+          <div 
+            class="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shrink-0"
+            [ngClass]="item.isOpen ? 'bg-accent/15 text-accent rotate-180' : 'bg-muted/60 text-muted-foreground group-hover:bg-accent/10 group-hover:text-accent'">
+            <lucide-icon 
+              name="chevron-down" 
+              class="w-4 h-4 transition-transform duration-300"
+              aria-hidden="true">
+            </lucide-icon>
+          </div>
+        </button>
+      </h3>
 
       <!-- Contenido Animado con Grid -->
       <div 
@@ -39,11 +45,13 @@
         [style.opacity]="item.isOpen ? '1' : '0'">
         
         <div 
-          class="p-6 pt-0 font-sans text-base text-foreground/70 leading-relaxed transition-transform duration-500 overflow-hidden"
+          class="p-5 md:p-6 pt-0 font-sans text-sm md:text-base text-muted-foreground leading-relaxed transition-transform duration-500 overflow-hidden border-t border-border/30 mt-1"
           [class.translate-y-0]="item.isOpen"
           [class.-translate-y-2]="!item.isOpen">
-          {{ item.answer }}
-          <ng-content></ng-content>
+          <div class="pt-4">
+            {{ item.answer }}
+            <ng-content></ng-content>
+          </div>
         </div>
       </div>
 

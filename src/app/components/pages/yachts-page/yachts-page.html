@@ -1,52 +1,43 @@
 <div class="yachts-page-wrapper bg-background">
 
-  <!-- HERO -->
-  <section class="hero-header relative h-[75vh] flex items-center justify-center overflow-hidden bg-foreground">
-    <div class="hero-image-bg absolute inset-0 z-1">
-      <img src="/img/yacht-luxury.webp" alt="Luxury Yachts" class="w-full h-full object-cover opacity-70">
-    </div>
+  <!-- HERO GENÉRICO -->
+  <app-hero-generic
+    title="Luxury Yachts"
+    description="Sail the crystal-clear waters of the Caribbean on our exclusive yachts. Private experiences tailored to your needs."
+    badgeText="VIP Fleet"
+    bgImageUrl="/img/yacht-luxury.webp">
+  </app-hero-generic>
 
-    <div class="container-custom relative z-3 max-w-350 mx-auto px-6 w-full">
-      <div class="hero-content text-center text-foreground">
-        <h1 class="hero-title text-[clamp(3rem,6vw,4rem)] leading-none mb-4 font-extrabold">Luxury Yachts</h1>
-        <p class="hero-description text-[clamp(1rem,1vw,2rem)] opacity-90 max-w-175 mx-auto">
-          Sail the crystal-clear waters of the Caribbean on our exclusive yachts.
-          Private experiences tailored to your needs.
-        </p>
-      </div>
-    </div>
-
-    <div class="bottom-gradient-mask absolute bottom-0 w-full h-75 bg-linear-to-b from-transparent to-background z-2"></div>
-  </section>
-
-  <!-- LISTADO -->
-  <section class="featured-section py-20">
+  <!-- FEATURED SECTION -->
+  <section class="featured-section py-20 min-h-[80vh]">
     <div class="container-custom max-w-350 mx-auto px-6">
 
       @if (isLoading) {
-      <div class="loading-state flex flex-col items-center gap-4 py-20 text-muted-foreground">
-        <div class="spinner w-10 h-10 border-4 border-border border-t-secondary rounded-full animate-spin"></div>
-        <p>Loading exclusive fleet...</p>
-      </div>
+        <div class="loading-state min-h-[45vh] flex flex-col items-center justify-center gap-4 text-muted-foreground text-center" aria-live="polite">
+          <div class="spinner w-11 h-11 rounded-full border-4 border-border border-t-accent animate-spin"></div>
+          <p>Loading exclusive fleet...</p>
+        </div>
       } @else {
 
-        <!-- Grid de yates -->
-      <div class="yachts-grid grid gap-8 w-full max-w-350 mx-auto p-4 box-border lg:grid-cols-2">
-        @for (item of yachts; track item._id) {
-        <app-yacht-card [yacht]="item"></app-yacht-card>
-        }
-      </div>
+        <!-- Grid de yates (2 columnas en pantallas grandes para tarjetas mas anchas/detalladas) -->
+        <div class="yachts-grid grid gap-8 grid-cols-1 lg:grid-cols-2">
+          @for (item of yachts; track item._id) {
+            <article class="h-full">
+              <app-yacht-card [yacht]="item"></app-yacht-card>
+            </article>
+          }
+        </div>
 
-      <!-- Pagination -->
-      @if (paginationData && paginationData.totalPages > 1) {
-      <app-pagination
-        [currentPage]="currentPage"
-        [totalPages]="paginationData.totalPages"
-        [hasNextPage]="paginationData.hasNextPage"
-        [hasPrevPage]="paginationData.hasPrevPage"
-        (pageChange)="loadYachts($event)">
-      </app-pagination>
-      }
+        <!-- Paginación -->
+        @if (paginationData && paginationData.totalPages > 1) {
+          <app-pagination
+            [currentPage]="currentPage"
+            [totalPages]="paginationData.totalPages"
+            [hasNextPage]="paginationData.hasNextPage"
+            [hasPrevPage]="paginationData.hasPrevPage"
+            (pageChange)="loadYachts($event)">
+          </app-pagination>
+        }
 
       }
 

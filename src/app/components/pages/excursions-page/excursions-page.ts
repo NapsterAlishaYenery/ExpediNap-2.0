@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Pagination } from '../../ui/pagination/pagination';
 import { ExcursionCard } from '../../ui/excursion-card/excursion-card';
@@ -8,10 +7,12 @@ import { ExcursionResponse } from '../../../core/interfaces/excursion/excursion.
 import { PaginationMetadata } from '../../../core/interfaces/shared/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
+import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-excursions-page',
-  imports: [CommonModule, Pagination, ExcursionCard, IconsModule],
+  imports: [Pagination, ExcursionCard, IconsModule, HeroGeneric, TitleCasePipe,],
   templateUrl: './excursions-page.html',
   styleUrl: './excursions-page.css',
 })

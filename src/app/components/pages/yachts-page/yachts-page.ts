@@ -6,10 +6,11 @@ import { Pagination } from '../../ui/pagination/pagination';
 import { PaginationMetadata } from '../../../core/interfaces/shared/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
+import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
 
 @Component({
   selector: 'app-yachts-page',
-  imports: [YachtCard, Pagination],
+  imports: [YachtCard, Pagination, HeroGeneric],
   templateUrl: './yachts-page.html',
   styleUrl: './yachts-page.css',
 })

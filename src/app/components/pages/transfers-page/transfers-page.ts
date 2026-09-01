@@ -8,11 +8,12 @@ import { OrderTransferService } from '../../../core/services/orders-services/ord
 import { AlertService } from '../../../core/services/alert/alert';
 import { PhoneUtils } from '../../../core/utils/phone-utils';
 import { Meta, Title } from '@angular/platform-browser';
+import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
 
 
 @Component({
   selector: 'app-transfers-page',
-  imports: [Button, IconsModule, ReactiveFormsModule],
+  imports: [Button, IconsModule, ReactiveFormsModule, HeroGeneric],
   templateUrl: './transfers-page.html',
   styleUrl: './transfers-page.css',
 })
@@ -219,8 +220,11 @@ WHAT WOULD BE THE PRICE FOR THIS ROUTE?`;
   }
 
   // ✅ NUEVO MÉTODO: Reservar por WhatsApp (sin guardar en backend)
-  onWhatsAppBooking() {
-    // Validar que el formulario sea válido antes de enviar
+  onWhatsAppBooking(): void {
+    // 1. Bloqueo inmediato de seguridad
+    if (this.isProcessing) return;
+
+    // 2. Validación de formulario
     if (this.transferForm.invalid) {
       this.transferForm.markAllAsTouched();
       this.alertService.showAlert(
@@ -231,32 +235,35 @@ WHAT WOULD BE THE PRICE FOR THIS ROUTE?`;
       return;
     }
 
-    if (this.isProcessing) return;
-
     this.isProcessing = true;
 
-    const formValues = this.transferForm.value;
-    const myPhone = '18098369303';
+    try {
+      const formValues = this.transferForm.value;
+      const myPhone = '18098369303';
 
-    // Formatear fecha más legible
-    const formattedDate = formValues.pickUpDate
-      ? new Date(formValues.pickUpDate).toLocaleDateString('es-ES', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
-      : 'PENDING';
+      // Formatear fecha más legible
+      let formattedDate = 'PENDING';
+      if (formValues.pickUpDate) {
+        // split('T')[0] previene desajustes de zona horaria UTC/local
+        const [year, month, day] = formValues.pickUpDate.split('T')[0].split('-');
+        const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
+        formattedDate = dateObj.toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      }
 
-    // Tipos de transferencia en español para el mensaje
-    const transferTypes: { [key: string]: string } = {
-      'airport-hotel': '✈️ Airport → Hotel',
-      'hotel-airport': '🏨 Hotel → Airport',
-      'round-trip': '🔄 Round Trip (Ida y Vuelta)',
-      'hotel-hotel': '🏨 Hotel → Hotel',
-      'country': '🇩🇴 Interior del País'
-    };
+      // Tipos de transferencia para el mensaje
+      const transferTypes: Record<string, string> = {
+        'airport-hotel': '✈️ Airport → Hotel',
+        'hotel-airport': '🏨 Hotel → Airport',
+        'round-trip': '🔄 Round Trip (Ida y Vuelta)',
+        'hotel-hotel': '🏨 Hotel → Hotel',
+        'country': '🇩🇴 Interior del País'
+      };
 
-    const message = `*🆕 NEW TRANSFER BOOKING - EXPEDINAP*
+      const message = `*🆕 NEW TRANSFER BOOKING - EXPEDINAP*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 *👤 CLIENT INFORMATION:*
@@ -287,16 +294,25 @@ Payment upon collection. Driver will be waiting with a sign.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 *Please confirm availability and total price.* 🙏`;
 
-    const url = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+      const url = `https://wa.me/${myPhone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
 
-    // Opcional: Mostrar un mensaje de éxito
-    this.alertService.showAlert(
-      'success',
-      'Booking Request Sent!',
-      'You will be redirected to WhatsApp to confirm your transfer.'
-    );
+      this.alertService.showAlert(
+        'success',
+        'Booking Request Sent!',
+        'You will be redirected to WhatsApp to confirm your transfer.'
+      );
 
-    this.isProcessing = false;
+    } catch (error) {
+      console.error('Error opening WhatsApp booking:', error);
+      this.alertService.showAlert(
+        'destructive',
+        'Error',
+        'Could not redirect to WhatsApp. Please try again.'
+      );
+    } finally {
+      // 3. Garantiza que el formulario nunca se quede bloqueado permanentemente
+      this.isProcessing = false;
+    }
   }
 }

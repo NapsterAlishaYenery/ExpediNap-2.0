@@ -1,25 +1,46 @@
-<main class="faq-page max-w-225 mx-auto py-16 px-4">
-  
-  <!-- HEADER -->
-  <header class="faq-header pt-8 text-center mb-16">
-    <h1 class="text-5xl font-[850] mb-4 max-sm:text-3xl">Frequently Asked Questions</h1>
-    <p class="text-lg text-muted-foreground max-sm:text-base">Everything you need to know about our experiences at ExpediNap.</p>
-  </header>
+<section class="faq-page-wrapper bg-background text-foreground py-16 px-4 min-h-[80vh] transition-colors duration-300">
+  <div class="container-custom max-w-225 mx-auto">
 
-  <!-- CONTENIDO -->
-  <section class="faq-content">
-    <app-accordeon [items]="faqs" [allowMultiple]="false"></app-accordeon>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="faq-footer mt-20 flex justify-center">
-    <div class="support-card bg-muted/20 p-12 rounded-4xl text-center border border-dashed border-border w-full max-sm:p-6">
-      <h3 class="text-xl font-bold mb-3">Do you still have doubts?</h3>
-      <p class="text-muted-foreground mb-6">Our team is available 24/7 to help you via WhatsApp.</p>
-      <app-button variant="accent" (click)="openWhatsApp()">
-        SPEAK TO SUPPORT
-      </app-button>
+    <!-- CABECERA DE LA SECCIÓN -->
+    <div class="section-header text-center mb-12">
+      <span class="inline-block text-xs uppercase font-extrabold tracking-[2px] text-accent bg-accent/10 px-3 py-1 rounded-full mb-3">
+        Help Center
+      </span>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-foreground">
+        Frequently Asked Questions
+      </h1>
+      <p class="text-base md:text-lg text-muted-foreground max-w-150 mx-auto">
+        Everything you need to know about our experiences, bookings, and policies at ExpediNap.
+      </p>
     </div>
-  </footer>
 
-</main>
+    <!-- LISTADO DE ACORDEONES -->
+    <div class="faq-content-card bg-card border border-border/60 rounded-3xl p-6 md:p-8 shadow-sm transition-all duration-300">
+      <app-accordeon [items]="faqs" [allowMultiple]="false"></app-accordeon>
+    </div>
+
+    <!-- TARJETA DE SOPORTE SECUNDARIA -->
+    <div class="support-banner mt-12 bg-linear-to-r from-primary/10 via-accent/5 to-secondary/10 border border-border/80 rounded-3xl p-8 md:p-10 text-center relative overflow-hidden">
+      
+      <!-- Glow de fondo decorativo para el modo oscuro -->
+      <div class="glow-effect absolute -right-10 -bottom-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-125 mx-auto">
+        <h2 class="text-2xl font-bold mb-2 text-foreground">
+          Do you still have questions?
+        </h2>
+        <p class="text-muted-foreground text-sm md:text-base mb-6">
+          Can't find the answer you're looking for? Our team is available 24/7 to help you via WhatsApp.
+        </p>
+        
+        <div class="flex justify-center">
+          <app-button variant="accent" (click)="openWhatsApp()">
+            SPEAK TO SUPPORT
+          </app-button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

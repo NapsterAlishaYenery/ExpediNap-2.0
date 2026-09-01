@@ -1,57 +1,39 @@
 <div class="transfers-page-wrapper bg-background">
 
-  <!-- HERO -->
-  <section
-    class="hero-header relative h-[60vh] sm:h-[75vh] flex items-center justify-center overflow-hidden bg-foreground max-md:h-[50vh]">
-    <div class="hero-image-bg absolute inset-0 z-1">
-      <img src="/img/airport-transfer.webp" alt="Servicio de Traslados"
-        class="w-full h-full object-cover opacity-70">
-    </div>
+  <!-- HERO COMPONENT (Incluye el único H1 de la página) -->
+  <app-hero-generic
+    [bgImageUrl]="'/img/airport-transfer.webp'"
+    [badgeText]="'Door to Door Service'"
+    [title]="'Private Transfers'"
+    [description]="'Travel comfortably and safely from the airport to your hotel and back.'">
+  </app-hero-generic>
 
-    <div
-      class="container-custom relative z-3 max-w-350 mx-auto px-4 sm:px-6 w-full">
-      <div class="hero-content text-center text-foreground">
-        <span
-          class="hero-sub-title uppercase tracking-[2px] sm:tracking-[3px] font-bold text-[10px] sm:text-sm mb-1 sm:mb-2 block">Door
-          to Door Service</span>
-        <h1
-          class="hero-title text-[clamp(2.5rem,6vw,4.5rem)] leading-none mb-2 sm:mb-4 font-extrabold">Private
-          Transfers</h1>
-        <p
-          class="hero-description text-[clamp(0.9rem,1.2vw,1.5rem)] opacity-90 max-w-175 mx-auto px-2 sm:px-0">
-          Travel comfortably and safely from the airport to your hotel and back.
-        </p>
-      </div>
-    </div>
-
-    <!-- Degradado inferior para suavizar transición -->
-    <div
-      class="bottom-gradient-mask absolute bottom-0 w-full h-75 bg-linear-to-b from-transparent to-background z-2"></div>
-  </section>
-
-  <!-- MAIN CONTENT -->
-  <section class="main-content bg-muted/30 py-12 sm:py-20 dark:bg-background">
+  <!-- MAIN CONTENT SECTION -->
+  <section class="main-content bg-muted/30 py-12 sm:py-20 dark:bg-background" aria-labelledby="form-section-title">
     <div class="container-custom max-w-350 mx-auto px-4 sm:px-6">
-      <div
-        class="content-layout grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 sm:gap-12">
+      <div class="content-layout grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 sm:gap-12">
 
         <!-- FORMULARIO -->
-        <div
-          class="form-container bg-card p-4 sm:p-6 lg:p-10 rounded-xl sm:rounded-2xl border border-border">
-          <h2
-            class="form-main-title text-xl sm:text-2xl lg:text-3xl mb-6 sm:mb-8">Request
-            your transfer</h2>
+        <div class="form-container bg-card p-4 sm:p-6 lg:p-10 rounded-xl sm:rounded-2xl border border-border">
+          <h2 id="form-section-title" class="form-main-title text-xl sm:text-2xl lg:text-3xl font-bold mb-6 sm:mb-8">
+            Request your transfer
+          </h2>
 
-          <form [formGroup]="transferForm" (ngSubmit)="onSubmit()"
-            class="transfer-form flex flex-col gap-3 sm:gap-4">
+          <form [formGroup]="transferForm" (ngSubmit)="onSubmit()" class="transfer-form flex flex-col gap-3 sm:gap-4" novalidate>
 
             <!-- TRANSFER TYPE -->
-            <div
-              class="form-group full-width flex flex-col gap-1.5 sm:gap-2 mb-1 sm:mb-2">
-              <label for="transferType"
-                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">Transfer
-                Type <span class="text-red-500">*</span></label>
-              <select formControlName="transferType" id="transferType"
+            <div class="form-group full-width flex flex-col gap-1.5 sm:gap-2 mb-1 sm:mb-2">
+              <label for="transferType" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
+                Transfer Type <span class="text-red-500" aria-hidden="true">*</span>
+              </label>
+              <select 
+                id="transferType" 
+                name="transferType"
+                formControlName="transferType" 
+                autocomplete="off"
+                aria-required="true"
+                [attr.aria-invalid]="isInvalid('transferType')"
+                aria-describedby="transferType-error"
                 class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                 [class.border-red-500]="isInvalid('transferType')">
                 <option value="airport-hotel">Airport - Hotel</option>
@@ -60,212 +42,275 @@
                 <option value="hotel-hotel">Hotel - Hotel</option>
                 <option value="country">Interior of the country</option>
               </select>
-              @if (isInvalid('transferType')) { <span
-                class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Select
-                a transfer type</span> }
+              @if (isInvalid('transferType')) { 
+                <span id="transferType-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                  Select a transfer type
+                </span> 
+              }
             </div>
 
             <!-- PICKUP & DESTINATION -->
-            <div
-              class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+            <div class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="pickUpLocation"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="map-pin" [size]="14"
-                    class="text-accent"></lucide-icon> Pickup Location <span
-                    class="text-red-500">*</span></label>
-                <input id="pickUpLocation" formControlName="pickUpLocation"
+                <label for="pickUpLocation" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="map-pin" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon> 
+                  Pickup Location <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="pickUpLocation" 
+                  name="pickUpLocation"
+                  formControlName="pickUpLocation" 
                   type="text"
+                  autocomplete="off"
+                  aria-required="true"
+                  [attr.aria-invalid]="isInvalid('pickUpLocation')"
+                  aria-describedby="pickUpLocation-error"
                   class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="isInvalid('pickUpLocation')"
                   placeholder="Punta Cana Airport">
-                @if (isInvalid('pickUpLocation')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Required
-                  pickup Location</span> }
+                @if (isInvalid('pickUpLocation')) { 
+                  <span id="pickUpLocation-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Required pickup Location
+                  </span> 
+                }
               </div>
 
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="destination"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="hotel" [size]="14" class="text-accent"></lucide-icon>
-                  Destination <span class="text-red-500">*</span></label>
-                <input id="destination" formControlName="destination"
+                <label for="destination" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="hotel" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                  Destination <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="destination" 
+                  name="destination"
+                  formControlName="destination" 
                   type="text"
+                  autocomplete="off"
+                  aria-required="true"
+                  [attr.aria-invalid]="isInvalid('destination')"
+                  aria-describedby="destination-error"
                   class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="isInvalid('destination')"
                   placeholder="Hard Rock Hotel">
-                @if (isInvalid('destination')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Required
-                  destination</span> }
+                @if (isInvalid('destination')) { 
+                  <span id="destination-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Required destination
+                  </span> 
+                }
               </div>
             </div>
 
             <!-- FLIGHT & PASSENGERS -->
-            <div
-              class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+            <div class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="flightNumber"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="plane" [size]="14" class="text-accent"></lucide-icon>
-                  Flight number <span class="text-red-500">*</span></label>
-                <input id="flightNumber" formControlName="flightNumber"
+                <label for="flightNumber" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="plane" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                  Flight number <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="flightNumber" 
+                  name="flightNumber"
+                  formControlName="flightNumber" 
                   type="text"
-                  class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  autocomplete="off"
+                  aria-required="true"
+                  [attr.aria-invalid]="isInvalid('flightNumber')"
+                  aria-describedby="flightNumber-error"
+                  class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 uppercase"
                   [class.border-red-500]="isInvalid('flightNumber')"
                   placeholder="DL221">
-                @if (isInvalid('flightNumber')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Flight
-                  Number is Required</span> }
+                @if (isInvalid('flightNumber')) { 
+                  <span id="flightNumber-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Flight Number is Required
+                  </span> 
+                }
               </div>
 
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="numPassengers"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="users" [size]="14" class="text-accent"></lucide-icon>
-                  Passengers <span class="text-red-500">*</span></label>
-                <input id="numPassengers" formControlName="numPassengers"
-                  type="number" min="1"
+                <label for="numPassengers" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="users" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                  Passengers <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="numPassengers" 
+                  name="numPassengers"
+                  formControlName="numPassengers" 
+                  type="number" 
+                  min="1"
+                  inputmode="numeric"
+                  aria-required="true"
+                  [attr.aria-invalid]="isInvalid('numPassengers')"
+                  aria-describedby="numPassengers-error"
                   class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="isInvalid('numPassengers')"
                   placeholder="1">
-                @if (isInvalid('numPassengers')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Minimum
-                  1 passenger</span> }
+                @if (isInvalid('numPassengers')) { 
+                  <span id="numPassengers-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Minimum 1 passenger
+                  </span> 
+                }
               </div>
             </div>
 
             <!-- DATE & TIME -->
-            <div
-              class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+            <div class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="pickUpDate"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="calendar" [size]="14"
-                    class="text-accent"></lucide-icon> Date <span
-                    class="text-red-500">*</span></label>
-                <input id="pickUpDate" formControlName="pickUpDate" type="date"
-                  class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                <label for="pickUpDate" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="calendar" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon> 
+                  Date <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="pickUpDate" 
+                  name="pickUpDate"
+                  formControlName="pickUpDate" 
+                  type="date"
+                  aria-required="true"
                   [min]="minDate"
+                  [attr.aria-invalid]="isInvalid('pickUpDate')"
+                  aria-describedby="pickUpDate-error"
+                  class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="isInvalid('pickUpDate')">
-                @if (isInvalid('pickUpDate')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Invalid
-                  date (min 24h advance)</span> }
+                @if (isInvalid('pickUpDate')) { 
+                  <span id="pickUpDate-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Invalid date (min 24h advance)
+                  </span> 
+                }
               </div>
 
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="arrivalTime"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="clock" [size]="14" class="text-accent"></lucide-icon>
-                  Arrival Time <span class="text-red-500">*</span></label>
-                <input id="arrivalTime" formControlName="arrivalTime"
+                <label for="arrivalTime" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="clock" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                  Arrival Time <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="arrivalTime" 
+                  name="arrivalTime"
+                  formControlName="arrivalTime" 
                   type="time"
+                  aria-required="true"
+                  [attr.aria-invalid]="isInvalid('arrivalTime')"
+                  aria-describedby="arrivalTime-error"
                   class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="isInvalid('arrivalTime')">
-                @if (isInvalid('arrivalTime')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Invalid
-                  time</span> }
+                @if (isInvalid('arrivalTime')) { 
+                  <span id="arrivalTime-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Invalid time
+                  </span> 
+                }
               </div>
             </div>
 
             <!-- EMAIL & PHONE -->
-            <div
-              class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+            <div class="form-grid grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="email"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                    name="mail" [size]="14" class="text-accent"></lucide-icon>
-                  Email <span class="text-red-500">*</span></label>
-                <input id="email" formControlName="email" type="email"
-                  class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+                <label for="email" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="mail" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                  Email <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                  id="email" 
+                  name="email"
+                  formControlName="email" 
+                  type="email"
                   autocomplete="email"
+                  inputmode="email"
+                  aria-required="true"
+                  [attr.aria-invalid]="isInvalid('email')"
+                  aria-describedby="email-error"
+                  class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="isInvalid('email')"
                   placeholder="your@email.com">
-                @if (isInvalid('email')) { <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Invalid
-                  email</span> }
+                @if (isInvalid('email')) { 
+                  <span id="email-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                    Invalid email
+                  </span> 
+                }
               </div>
 
               <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-                <label for="phone"
-                  class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
-                  <lucide-icon name="phone" [size]="14"
-                    class="text-accent"></lucide-icon>
-                  Phone / WhatsApp <span class="text-red-500">*</span>
+                <label for="phone" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                  <lucide-icon name="phone" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                  Phone / WhatsApp <span class="text-red-500" aria-hidden="true">*</span>
                 </label>
-                <input
-                  id="phone"
-                  formControlName="phone"
+                <input 
+                  id="phone" 
+                  name="phone"
+                  formControlName="phone" 
                   type="tel"
-                  placeholder="1 (809) 836-9303"
                   autocomplete="tel"
+                  inputmode="tel"
+                  aria-required="true"
+                  [attr.aria-invalid]="transferForm.get('phone')?.invalid && transferForm.get('phone')?.touched"
+                  aria-describedby="phone-error"
+                  placeholder="1 (809) 836-9303"
                   (input)="phoneUtils.formatPhoneForDisplay($event, transferForm, 'phone')"
                   class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                   [class.border-red-500]="transferForm.get('phone')?.invalid && transferForm.get('phone')?.touched">
 
-                @if (transferForm.get('phone')?.invalid &&
-                transferForm.get('phone')?.touched) {
-                @if (transferForm.get('phone')?.errors?.['minDigits']) {
-                <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Minimum
-                  7 digits required</span>
-                } @else if (transferForm.get('phone')?.errors?.['maxDigits']) {
-                <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Maximum
-                  20 digits allowed</span>
-                } @else {
-                <span
-                  class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Enter
-                  a valid phone number</span>
-                }
+                @if (transferForm.get('phone')?.invalid && transferForm.get('phone')?.touched) {
+                  <div id="phone-error" role="alert">
+                    @if (transferForm.get('phone')?.errors?.['minDigits']) {
+                      <span class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5 block">Minimum 7 digits required</span>
+                    } @else if (transferForm.get('phone')?.errors?.['maxDigits']) {
+                      <span class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5 block">Maximum 20 digits allowed</span>
+                    } @else {
+                      <span class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5 block">Enter a valid phone number</span>
+                    }
+                  </div>
                 }
               </div>
             </div>
 
             <!-- FULL NAME -->
             <div class="form-group full-width flex flex-col gap-1.5 sm:gap-2">
-              <label for="fullName"
-                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1"><lucide-icon
-                  name="user" [size]="14" class="text-accent"></lucide-icon>
-                Full Name <span class="text-red-500">*</span></label>
-              <input id="fullName" formControlName="fullName" type="text"
-                class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
+              <label for="fullName" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                <lucide-icon name="user" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
+                Full Name <span class="text-red-500" aria-hidden="true">*</span>
+              </label>
+              <input 
+                id="fullName" 
+                name="fullName"
+                formControlName="fullName" 
+                type="text"
                 autocomplete="name"
+                aria-required="true"
+                [attr.aria-invalid]="isInvalid('fullName')"
+                aria-describedby="fullName-error"
+                class="form-control w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base placeholder:text-muted-foreground/70 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                 [class.border-red-500]="isInvalid('fullName')"
                 placeholder="Name and Surname">
-              @if (isInvalid('fullName')) { <span
-                class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5">Full
-                name is required</span> }
+              @if (isInvalid('fullName')) { 
+                <span id="fullName-error" class="error-msg text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+                  Full name is required
+                </span> 
+              }
             </div>
 
             <!-- PAYMENT INFO -->
-            <div
-              class="payment-info-box bg-muted/30 p-3 sm:p-4 rounded-xl text-[10px] sm:text-sm text-center">
-              <p><strong>Payment upon collection.</strong> Our driver will be
-                waiting for you with a sign with your name in the arrivals
-                area.</p>
+            <div class="payment-info-box bg-muted/30 p-3 sm:p-4 rounded-xl text-[10px] sm:text-sm text-center">
+              <p>
+                <strong>Payment upon collection.</strong> Our driver will be waiting for you with a sign with your name in the arrivals area.
+              </p>
             </div>
 
             <!-- BOTON -->
             <div class="btn-center-wrapper flex justify-center mt-4 sm:mt-8">
-              <app-button variant="default" size="full"
+              <app-button 
+                variant="default" 
+                size="full"
                 class="w-full text-sm sm:text-base py-2.5 sm:py-3.5"
-                [disabled]="isProcessing">
+                [disabled]="isProcessing"
+                aria-label="Book Transfer Request">
                 @if (isProcessing) {
-                <span class="flex items-center justify-center gap-2">
-                  <svg class="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10"
-                      stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  <span class="text-xs sm:text-sm">PROCESSING...</span>
-                </span>
+                  <span class="flex items-center justify-center gap-2">
+                    <svg class="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs sm:text-sm">PROCESSING...</span>
+                  </span>
                 } @else {
-                <span
-                  class="text-xs sm:text-sm font-semibold tracking-wide">BOOK
-                  TRANSFER</span>
+                  <span class="text-xs sm:text-sm font-semibold tracking-wide">BOOK TRANSFER</span>
                 }
               </app-button>
             </div>
@@ -273,120 +318,94 @@
         </div>
 
         <!-- SIDEBAR -->
-        <div class="info-sidebar flex flex-col gap-6 sm:gap-8">
+        <aside class="info-sidebar flex flex-col gap-6 sm:gap-8" aria-label="Información Adicional">
 
-          <div
-            class="info-card bg-card p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-border">
-            <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Why choose our
-              service?</h3>
+          <div class="info-card bg-card p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-border">
+            <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Why choose our service?</h2>
             <ul class="check-list flex flex-col gap-3 sm:gap-4">
-              <li
-                class="flex items-center gap-2 text-sm sm:text-base"><lucide-icon
-                  name="check" [size]="16"
-                  class="text-[#00802f] shrink-0"></lucide-icon> Modern,
-                air-conditioned vehicles</li>
-              <li
-                class="flex items-center gap-2 text-sm sm:text-base"><lucide-icon
-                  name="check" [size]="16"
-                  class="text-[#00802f] shrink-0"></lucide-icon> Bilingual
-                professional drivers</li>
-              <li
-                class="flex items-center gap-2 text-sm sm:text-base"><lucide-icon
-                  name="check" [size]="16"
-                  class="text-[#00802f] shrink-0"></lucide-icon> Real-time
-                flight tracking</li>
-              <li
-                class="flex items-center gap-2 text-sm sm:text-base"><lucide-icon
-                  name="check" [size]="16"
-                  class="text-[#00802f] shrink-0"></lucide-icon> Child seats
-                available</li>
-              <li
-                class="flex items-center gap-2 text-sm sm:text-base"><lucide-icon
-                  name="check" [size]="16"
-                  class="text-[#00802f] shrink-0"></lucide-icon> Free WiFi on
-                board</li>
-              <li
-                class="flex items-center gap-2 text-sm sm:text-base"><lucide-icon
-                  name="check" [size]="16"
-                  class="text-[#00802f] shrink-0"></lucide-icon> Complimentary
-                cold water</li>
+              <li class="flex items-center gap-2 text-sm sm:text-base">
+                <lucide-icon name="check" [size]="16" class="text-[#00802f] shrink-0" aria-hidden="true"></lucide-icon> 
+                Modern, air-conditioned vehicles
+              </li>
+              <li class="flex items-center gap-2 text-sm sm:text-base">
+                <lucide-icon name="check" [size]="16" class="text-[#00802f] shrink-0" aria-hidden="true"></lucide-icon> 
+                Bilingual professional drivers
+              </li>
+              <li class="flex items-center gap-2 text-sm sm:text-base">
+                <lucide-icon name="check" [size]="16" class="text-[#00802f] shrink-0" aria-hidden="true"></lucide-icon> 
+                Real-time flight tracking
+              </li>
+              <li class="flex items-center gap-2 text-sm sm:text-base">
+                <lucide-icon name="check" [size]="16" class="text-[#00802f] shrink-0" aria-hidden="true"></lucide-icon> 
+                Child seats available
+              </li>
+              <li class="flex items-center gap-2 text-sm sm:text-base">
+                <lucide-icon name="check" [size]="16" class="text-[#00802f] shrink-0" aria-hidden="true"></lucide-icon> 
+                Free WiFi on board
+              </li>
+              <li class="flex items-center gap-2 text-sm sm:text-base">
+                <lucide-icon name="check" [size]="16" class="text-[#00802f] shrink-0" aria-hidden="true"></lucide-icon> 
+                Complimentary cold water
+              </li>
             </ul>
           </div>
 
-          <div
-            class="info-card bg-card p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-border">
-            <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Types of
-              Vehicles</h3>
-            <div
-              class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
-              <div class="vehicle-info text-sm sm:text-base"><strong>Private
-                  Sedan</strong><span
-                  class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">1-3
-                  pax</span></div>
-              <div
-                class="vehicle-price font-bold text-primary text-sm sm:text-base">From
-                $35</div>
+          <div class="info-card bg-card p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-border">
+            <h2 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Types of Vehicles</h2>
+            <div class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
+              <div class="vehicle-info text-sm sm:text-base">
+                <strong>Private Sedan</strong>
+                <span class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">1-3 pax</span>
+              </div>
+              <div class="vehicle-price font-bold text-primary text-sm sm:text-base">From $35</div>
             </div>
-            <div
-              class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
-              <div class="vehicle-info text-sm sm:text-base"><strong>SUV
-                  Premium</strong><span
-                  class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">1-5
-                  pax</span></div>
-              <div
-                class="vehicle-price font-bold text-primary text-sm sm:text-base">From
-                $50</div>
+            <div class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
+              <div class="vehicle-info text-sm sm:text-base">
+                <strong>SUV Premium</strong>
+                <span class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">1-5 pax</span>
+              </div>
+              <div class="vehicle-price font-bold text-primary text-sm sm:text-base">From $50</div>
             </div>
-            <div
-              class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
-              <div class="vehicle-info text-sm sm:text-base"><strong>Van
-                  Executive</strong><span
-                  class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">1-10
-                  pax</span></div>
-              <div
-                class="vehicle-price font-bold text-primary text-sm sm:text-base">From
-                $65</div>
+            <div class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
+              <div class="vehicle-info text-sm sm:text-base">
+                <strong>Van Executive</strong>
+                <span class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">1-10 pax</span>
+              </div>
+              <div class="vehicle-price font-bold text-primary text-sm sm:text-base">From $65</div>
             </div>
-            <div
-              class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
-              <div
-                class="vehicle-info text-sm sm:text-base"><strong>Minibus</strong><span
-                  class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">11-20
-                  pax</span></div>
-              <div
-                class="vehicle-price font-bold text-primary text-sm sm:text-base">From
-                $120</div>
+            <div class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
+              <div class="vehicle-info text-sm sm:text-base">
+                <strong>Minibus</strong>
+                <span class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">11-20 pax</span>
+              </div>
+              <div class="vehicle-price font-bold text-primary text-sm sm:text-base">From $120</div>
             </div>
-            <div
-              class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
-              <div
-                class="vehicle-info text-sm sm:text-base"><strong>Bus</strong><span
-                  class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">21-45
-                  pax</span></div>
-              <div
-                class="vehicle-price font-bold text-primary text-sm sm:text-base">From
-                $200</div>
+            <div class="vehicle-item flex justify-between py-3 sm:py-4 border-b border-border last:border-none">
+              <div class="vehicle-info text-sm sm:text-base">
+                <strong>Bus</strong>
+                <span class="text-[10px] sm:text-xs text-muted-foreground ml-1 sm:ml-2">21-45 pax</span>
+              </div>
+              <div class="vehicle-price font-bold text-primary text-sm sm:text-base">From $200</div>
             </div>
           </div>
 
-          <div
-            class="info-card help-card bg-card p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-border">
-            <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Do you need
-              help?</h3>
-            <p class="text-sm sm:text-base mb-4">Contact us via WhatsApp and
-              we'll help you coordinate your transfer.</p>
+          <div class="info-card help-card bg-card p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-border">
+            <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Do you need help?</h3>
+            <p class="text-sm sm:text-base mb-4">Contact us via WhatsApp and we'll help you coordinate your transfer.</p>
             <div class="btn-center-wrapper flex justify-center">
-              <app-button variant="whatsapp" size="full"
+              <app-button 
+                variant="whatsapp" 
+                size="full"
                 class="w-full text-sm sm:text-base py-2.5 sm:py-3.5"
-                (onClick)="onWhatsAppQuery()" [disabled]="isProcessing">
-                <span
-                  class="text-xs sm:text-sm font-semibold tracking-wide">Write
-                  on WhatsApp</span>
+                (onClick)="onWhatsAppQuery()" 
+                [disabled]="isProcessing"
+                aria-label="Write on WhatsApp for transfer support">
+                <span class="text-xs sm:text-sm font-semibold tracking-wide">Write on WhatsApp</span>
               </app-button>
             </div>
           </div>
 
-        </div>
+        </aside>
       </div>
     </div>
   </section>

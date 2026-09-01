@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Pagination } from '../../ui/pagination/pagination';
 import { BlogCard } from '../../ui/blog-card/blog-card';
@@ -8,10 +7,12 @@ import { BlogResponse } from '../../../core/interfaces/blog/blog.interface';
 import { PaginationMetadata } from '../../../core/interfaces/shared/shared.interface';
 import { Subject, takeUntil } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
+import { HeroGeneric } from '../../ui/hero-generic/hero-generic';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-blog-page',
-  imports: [CommonModule, Pagination, BlogCard, IconsModule],
+  imports: [Pagination, BlogCard, IconsModule, HeroGeneric, TitleCasePipe],
   templateUrl: './blog-page.html',
   styleUrl: './blog-page.css',
 })
@@ -100,6 +101,12 @@ export class BlogPage implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       });
+  }
+
+  selectCategory(categoryId: string) {
+    if (this.currentCategory === categoryId) return;
+    this.currentCategory = categoryId;
+    this.loadBlogs(1, categoryId);
   }
 
   onCategoryChange(event: Event) {
