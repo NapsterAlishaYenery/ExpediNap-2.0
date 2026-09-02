@@ -1,82 +1,139 @@
-<div class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
-  <div class="breadcrumb-container container-custom max-w-350 mx-auto px-6">
-    <app-breadcrumb></app-breadcrumb>
-  </div>
-</div>
-
-@if (!isLoading && blog) {
-<main class="detail-container container-custom max-w-350 mx-auto px-6 pt-8 pb-20">
-
-  <section class="gallery-section mb-8">
-    @if (formattedImages) {
-    <app-image-gallery [images]="formattedImages"
-      type="blogs"></app-image-gallery>
-    }
-  </section>
-
-  <header class="blog-header mb-10 mt-4">
-    <div class="header-meta flex flex-wrap gap-6 text-muted-foreground font-medium">
-      <span class="meta-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="calendar" size="18" class="text-accent"></lucide-icon>
-        {{ blog.createdAt | date:'longDate' }}
-      </span>
-      <span class="meta-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="user" size="18" class="text-accent"></lucide-icon>
-        {{ blog.author }}
-      </span>
-      <span class="meta-tag flex items-center gap-2 text-sm">
-        <lucide-icon name="bookmark" size="18" class="text-accent"></lucide-icon>
-        {{ blog.type }}
-      </span>
+<div class="min-h-screen bg-background text-foreground">
+  <nav aria-label="Breadcrumb"
+    class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
+    <div
+      class="breadcrumb-container container-custom max-w-350 mx-auto px-4 sm:px-6">
+      <app-breadcrumb></app-breadcrumb>
     </div>
+  </nav>
 
-    <div class="categories-container flex flex-wrap gap-1.5 my-2">
-      @for (cat of blog.category; track cat) {
-      <app-badge variant="accent">{{ cat | titlecase }}</app-badge>
+  @if (!isLoading && blog) {
+  <article
+    class="detail-container container-custom max-w-350 mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 sm:pb-20"
+    itemscope
+    itemtype="https://schema.org/BlogPosting">
+
+    <!-- GALERÍA DE IMÁGENES -->
+    <section class="gallery-section mb-6 sm:mb-8" aria-label="Article gallery">
+      @if (formattedImages) {
+      <app-image-gallery [images]="formattedImages"
+        type="blogs"></app-image-gallery>
       }
+    </section>
+
+    <!-- ENCABEZADO DEL BLOG -->
+    <header class="blog-header mb-8 sm:mb-10 mt-2 sm:mt-4">
+      <div
+        class="header-meta flex flex-wrap gap-4 sm:gap-6 text-muted-foreground dark:text-muted-foreground/80 font-medium"
+        role="contentinfo">
+
+        <!-- FECHA -->
+        <span class="meta-tag flex items-center gap-2 text-xs sm:text-sm">
+          <lucide-icon name="calendar" size="18" class="text-accent"
+            aria-hidden="true"></lucide-icon>
+          <time [attr.datetime]="blog.createdAt" itemprop="datePublished">
+            {{ blog.createdAt | date:'longDate' }}
+          </time>
+        </span>
+
+        <!-- AUTOR -->
+        <span class="meta-tag flex items-center gap-2 text-xs sm:text-sm"
+          itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <lucide-icon name="user" size="18" class="text-accent"
+            aria-hidden="true"></lucide-icon>
+          <span itemprop="name">By {{ blog.author }}</span>
+        </span>
+
+        <!-- TIPO / CATEGORÍA PRINCIPAL -->
+        <span class="meta-tag flex items-center gap-2 text-xs sm:text-sm">
+          <lucide-icon name="bookmark" size="18" class="text-accent"
+            aria-hidden="true"></lucide-icon>
+          <span>{{ blog.type }}</span>
+        </span>
+      </div>
+
+      <!-- CATEGORÍAS EN BADGES -->
+      <div class="categories-container flex flex-wrap gap-1.5 my-3"
+        aria-label="Categories">
+        @for (cat of blog.category; track cat) {
+        <app-badge variant="accent">{{ cat | titlecase }}</app-badge>
+        }
+      </div>
+
+      <!-- TÍTULO PRINCIPAL DE LA NOTICIA -->
+      <h1
+        itemprop="headline"
+        class="main-title text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-[850] tracking-tighter leading-tight text-foreground mt-2">
+        {{ blog.title }}
+      </h1>
+    </header>
+
+    <!-- ESTRUCTURA PRINCIPAL + SIDEBAR -->
+    <div
+      class="blog-content-layout grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-8 sm:gap-12 lg:gap-16 items-start">
+
+      <!-- CUERPO DEL ARTÍCULO -->
+      <div class="blog-article-body min-w-0">
+
+        <!-- EXTRACTO / INTRODUCCIÓN -->
+        <div
+          itemprop="description"
+          class="blog-excerpt text-lg sm:text-xl lg:text-[1.35rem] leading-relaxed text-foreground/90 dark:text-foreground/95 font-medium mb-8 sm:mb-10 pl-4 sm:pl-6 border-l-4 sm:border-l-[5px] border-l-accent">
+          <p>{{ blog.excerpt }}</p>
+        </div>
+
+        <!-- CONTENIDO HTML SANITIZADO -->
+        <section
+          itemprop="articleBody"
+          class="blog-body text-base sm:text-lg leading-relaxed text-foreground/85 dark:text-foreground/90 max-w-180 prose dark:prose-invert"
+          [innerHTML]="safeContent">
+        </section>
+
+        <hr class="my-8 sm:my-10 border-border/50" aria-hidden="true">
+
+        <!-- BOTÓN REGRESAR -->
+        <nav class="footer-navigation mt-4" aria-label="Blog navigation">
+          <a routerLink="/blogs" aria-label="Return to all blog articles">
+            <app-button variant="hero" size="lg"
+              class="read-more-btn mt-6 sm:mt-8">
+              <lucide-icon name="arrow-left" class="arrow mr-2"
+                aria-hidden="true"></lucide-icon>
+              Go Back to Blog List
+            </app-button>
+          </a>
+        </nav>
+      </div>
+
+      <!-- SIDEBAR PROMOCIONAL -->
+      <aside class="blog-sidebar sticky top-28 max-lg:relative max-lg:top-0"
+        aria-label="Promotional sidebar">
+        <div
+          class="promo-card bg-card border border-border p-6 sm:p-9 rounded-2xl sm:rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+          <h2
+            class="text-lg sm:text-xl font-bold mb-3 text-card-foreground">Ready
+            for the adventure?</h2>
+          <p
+            class="text-sm sm:text-base text-muted-foreground dark:text-muted-foreground/90 mb-5">Book
+            your yacht or excursion today with Expedinap.</p>
+          <a routerLink="/excursions"
+            aria-label="View all available excursions">
+            <app-button variant="hero" className="w-full">
+              VIEW EXCURSIONS
+            </app-button>
+          </a>
+        </div>
+      </aside>
+
     </div>
-
-    <h1 class="main-title text-[3.5rem] font-[850] tracking-tighter leading-tight text-foreground mt-2 max-lg:text-[2.75rem] max-md:text-3xl">{{ blog.title }}</h1>
-  </header>
-
-  <div class="blog-content-layout grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-16 items-start max-lg:gap-12">
-    
-    <article class="blog-article">
-      <div class="blog-excerpt text-[1.35rem] leading-relaxed text-foreground/70 font-medium mb-10 pl-6 border-l-[5px] border-l-accent">
-        <p>{{ blog.excerpt }}</p>
-      </div>
-
-      <div class="blog-body text-lg leading-relaxed text-foreground/85 max-w-180" [innerHTML]="safeContent">
-      </div>
-
-      <hr class="my-10 border-slate-200 dark:border-slate-800">
-
-      <div class="footer-navigation mt-4">
-        <a routerLink="/blogs">
-          <app-button variant="hero" size="lg" class="read-more-btn mt-8">
-            <lucide-icon name="arrow-left" class="arrow mr-2"></lucide-icon>
-            Go Back to Blog List
-          </app-button>
-        </a>
-      </div>
-    </article>
-
-    <aside class="blog-sidebar sticky top-25 max-lg:relative max-lg:top-0 max-lg:hidden">
-      <div class="promo-card bg-card border border-border p-9 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
-        <h3 class="text-xl font-bold mb-3">Ready for the adventure?</h3>
-        <p class="text-muted-foreground mb-4">Book your yacht or excursion today with Expedinap.</p>
-        <a routerLink="/excursions">
-          <app-button variant="hero" className="w-full">
-            VIEW EXCURSIONS
-          </app-button>
-        </a>
-      </div>
-    </aside>
-  </div>
-</main>
-} @else if (isLoading) {
-<div class="loading-state min-h-[50vh] flex flex-col items-center justify-center gap-4 text-muted-foreground">
-  <div class="spinner w-12 h-12 rounded-full border-4 border-border border-t-accent animate-spin"></div>
-  <p>Loading article...</p>
+  </article>
+  } @else if (isLoading) {
+  <section
+    class="loading-state min-h-[50vh] flex flex-col items-center justify-center gap-4 text-muted-foreground"
+    aria-live="polite" aria-busy="true">
+    <div
+      class="spinner w-12 h-12 rounded-full border-4 border-border border-t-accent animate-spin"
+      role="status" aria-label="Loading content"></div>
+    <p>Loading article...</p>
+  </section>
+  }
 </div>
-}
