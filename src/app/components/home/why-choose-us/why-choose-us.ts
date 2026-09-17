@@ -11,23 +11,23 @@ export class WhyChooseUs {
   benefits = [
     {
       icon: 'shield',
-      title: 'Guaranteed Safety',
-      description: 'All our tours include comprehensive insurance and certified guides for your peace of mind.'
+      title: 'Book With Confidence',
+      description: 'We work with local tour and transportation providers and help you coordinate your reservation from start to finish.'
     },
     {
-      icon: 'dollar-sign',
-      title: 'Best Price Guarantee',
-      description: 'We offer the most competitive rates in the market without sacrificing service quality.'
+      icon: 'message-circle',
+      title: 'Real Human Support',
+      description: 'Have a question before booking? Contact us through WhatsApp and speak with someone about your reservation.'
     },
     {
-      icon: 'award',
-      title: 'Premium Quality',
-      description: 'State-of-the-art equipment and luxury vessels for unforgettable experiences.'
+      icon: 'credit-card',
+      title: 'Pay on Arrival',
+      description: 'For eligible experiences, you can request your reservation without paying by credit card in advance.'
     },
     {
       icon: 'headphonesIcon',
-      title: '24/7 Support',
-      description: 'Personalized assistance before, during, and after your excursion. Always available.'
+      title: 'Local Assistance',
+      description: 'We are based in the Dominican Republic and can help you with excursions, transfers and other experiences during your trip.'
     }
   ];
 }

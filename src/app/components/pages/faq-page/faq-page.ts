@@ -72,7 +72,7 @@ export class FaqPage implements OnInit {
     },
     {
       question: "How can I pay for my reservation?",
-      answer: "We accept credit/debit cards (Visa, Mastercard), local bank transfers, and cash payments on the day of the activity (with a prior reservation deposit).",
+      answer: "You can reserve your excursion online without paying in advance. 1. Choose your date → 2. Submit your reservation request → 3. We confirm availability with you by WhatsApp or email → 4. Pay once your reservation is confirmed. ",
       isOpen: false
     },
     {

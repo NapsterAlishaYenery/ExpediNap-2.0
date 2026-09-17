@@ -1,59 +1,77 @@
 <div class="min-h-screen bg-background text-foreground">
-  <nav aria-label="Breadcrumb" class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
+  <nav aria-label="Breadcrumb"
+    class="breadcrumb-wrapper bg-muted/30 py-3 border-b border-border mb-4">
     <div class="breadcrumb-container max-w-350 mx-auto px-4 sm:px-6">
       <app-breadcrumb></app-breadcrumb>
     </div>
   </nav>
 
   @if (!isLoading && yacht) {
-  <main class="detail-container container-custom max-w-350 mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 sm:pb-20">
+  <main
+    class="detail-container container-custom max-w-350 mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 sm:pb-20">
     <header class="detail-header mb-6 sm:mb-8">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2">
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl font-[850] tracking-tighter leading-tight text-foreground mb-2">
         {{ yacht.name | uppercase }}
       </h1>
-      <div class="header-meta flex flex-wrap gap-3 sm:gap-6 mt-3 text-muted-foreground font-medium" role="contentinfo">
-        <span class="location-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-          <lucide-icon name="users" size="16" class="text-accent" aria-hidden="true"></lucide-icon>
+      <div
+        class="header-meta flex flex-wrap gap-3 sm:gap-6 mt-3 text-muted-foreground font-medium"
+        role="contentinfo">
+        <span
+          class="location-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+          <lucide-icon name="users" size="16" class="text-accent"
+            aria-hidden="true"></lucide-icon>
           Capacity: {{ yacht.maxPax }} people
         </span>
-        <span class="duration-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-          <lucide-icon name="anchor" size="16" class="text-accent" aria-hidden="true"></lucide-icon>
+        <span
+          class="duration-tag flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+          <lucide-icon name="anchor" size="16" class="text-accent"
+            aria-hidden="true"></lucide-icon>
           Luxury Vessel
         </span>
       </div>
     </header>
 
-    <div class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 sm:gap-12 lg:gap-16 items-start">
-      
+    <div
+      class="content-grid grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 sm:gap-12 lg:gap-16 items-start">
+
       <!-- COLUMNA IZQUIERDA: Galería e Información -->
       <div class="main-column min-w-0">
-        
+
         <!-- GALERÍA -->
-        <section class="gallery-section mb-8 sm:mb-14" aria-label="Yacht image gallery">
+        <section class="gallery-section mb-8 sm:mb-14"
+          aria-label="Yacht image gallery">
           <app-image-gallery [images]="yacht.images"></app-image-gallery>
         </section>
 
         <div class="info-column">
           <!-- DESCRIPCIÓN -->
-          <section class="description-card mb-8 sm:mb-12 leading-relaxed text-base sm:text-lg text-muted-foreground dark:text-foreground/90" aria-labelledby="onboard-heading">
-            <h2 id="onboard-heading" class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">
+          <section
+            class="description-card mb-8 sm:mb-12 leading-relaxed text-base sm:text-lg text-muted-foreground dark:text-foreground/90"
+            aria-labelledby="onboard-heading">
+            <h2 id="onboard-heading"
+              class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">
               Onboard Experience
             </h2>
             <p>{{ yacht.description }}</p>
           </section>
 
           <!-- INCLUSIONES Y HORARIOS -->
-          <div class="details-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12 p-6 sm:p-10 bg-muted/20 rounded-2xl sm:rounded-3xl border border-border/50">
-            
+          <div
+            class="details-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12 p-6 sm:p-10 bg-muted/20 rounded-2xl sm:rounded-3xl border border-border/50">
+
             <!-- INCLUSIONES -->
             <section class="detail-block" aria-labelledby="inclusions-heading">
-              <h2 id="inclusions-heading" class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">
+              <h2 id="inclusions-heading"
+                class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">
                 What does it include?
               </h2>
               <ul class="check-list flex flex-col gap-3 list-none p-0">
                 @for (item of yacht.includes; track item) {
-                <li class="flex items-start gap-2.5 text-sm text-foreground leading-tight">
-                  <i class="bi bi-check-circle text-[#22c55e] shrink-0 mt-0.5" aria-hidden="true"></i>
+                <li
+                  class="flex items-start gap-2.5 text-sm text-foreground leading-tight">
+                  <i class="bi bi-check-circle text-[#22c55e] shrink-0 mt-0.5"
+                    aria-hidden="true"></i>
                   <span>{{ item | titlecase }}</span>
                 </li>
                 }
@@ -62,16 +80,21 @@
 
             <!-- HORARIOS DE SALIDA -->
             <section class="detail-block" aria-labelledby="departures-heading">
-              <h2 id="departures-heading" class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">
+              <h2 id="departures-heading"
+                class="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 text-foreground">
                 Departure Times
               </h2>
-              <div class="time-info text-muted-foreground dark:text-foreground/80 text-sm sm:text-base">
-                <p class="mb-2"><strong>Full Day:</strong> {{ yacht.timeAvailable.fullDay }}</p>
+              <div
+                class="time-info text-muted-foreground dark:text-foreground/80 text-sm sm:text-base">
+                <p class="mb-2"><strong>Full Day:</strong> {{
+                  yacht.timeAvailable.fullDay }}</p>
                 @if (yacht.timeAvailable.halfDay.length > 0) {
-                <p class="mb-2"><strong>Half Day:</strong> {{ yacht.timeAvailable.halfDay.join(' / ') }}</p>
+                <p class="mb-2"><strong>Half Day:</strong> {{
+                  yacht.timeAvailable.halfDay.join(' / ') }}</p>
                 }
                 @if (yacht.riverSunset.price) {
-                <p class="mt-2 text-accent"><strong>River Sunset:</strong> Available</p>
+                <p class="mt-2 text-accent"><strong>River Sunset:</strong>
+                  Available</p>
                 }
               </div>
             </section>
@@ -80,38 +103,85 @@
       </div>
 
       <!-- COLUMNA DERECHA: Formulario Sticky -->
-      <aside class="booking-column sticky top-8 z-10 self-start max-lg:relative max-lg:top-0 max-lg:order-first max-lg:max-w-125 max-lg:mx-auto" aria-label="Charter booking options">
-        <div class="booking-card-sticky bg-card border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-9 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
-          
+      <aside
+        class="booking-column sticky top-8 z-10 self-start max-lg:relative max-lg:top-0 max-lg:order-first max-lg:max-w-125 max-lg:mx-auto"
+        aria-label="Charter booking options">
+        <div
+          class="booking-card-sticky bg-card border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-9 shadow-[0_20px_40px_rgba(0,0,0,0.06)]">
+
           <h2 class="sr-only">Charter Price & Booking Form</h2>
 
           <!-- PRECIO ESTIMADO -->
-          <div class="price-header mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border text-center">
+          <div
+            class="price-header mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border text-center">
+
+            <!-- Reservation / Payment Message -->
+            <div
+              class="mb-5 sm:mb-6 rounded-xl border border-accent/20 bg-accent/5 px-4 py-3">
+
+              <div class="flex items-center justify-center gap-2">
+                <lucide-icon
+                  name="calendar-check"
+                  [size]="17"
+                  class="text-accent"
+                  aria-hidden="true">
+                </lucide-icon>
+
+                <span
+                  class="text-sm font-bold text-foreground">
+                  REQUEST AVAILABILITY
+                </span>
+              </div>
+
+              <p
+                class="mt-1 text-xs text-muted-foreground leading-relaxed">
+                No payment required to request your reservation.
+              </p>
+
+              <p
+                class="mt-1 text-xs font-semibold text-foreground">
+                Payment is only required after availability is confirmed.
+              </p>
+
+            </div>
+
+            <!-- PRECIO -->
             <div class="price-row">
+
               @if (selectedPrice > 0) {
-              <span class="current-price text-4xl sm:text-5xl font-extrabold text-foreground leading-none">
+              <span
+                class="current-price text-4xl sm:text-5xl font-extrabold text-foreground leading-none">
                 ${{ selectedPrice | number }}
               </span>
               } @else {
-              <span class="current-price text-4xl sm:text-5xl font-extrabold text-muted-foreground leading-none">
+              <span
+                class="current-price text-4xl sm:text-5xl font-extrabold text-muted-foreground leading-none">
                 N/A
               </span>
               }
+
             </div>
-            <span class="price-label block mt-1 sm:mt-2 text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">
+
+            <span
+              class="price-label block mt-1 sm:mt-2 text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">
               ESTIMATED PRICE (USD)
             </span>
+
           </div>
 
-          <form [formGroup]="bookingForm" class="booking-form flex flex-col gap-4 sm:gap-5" aria-label="Yacht charter reservation form">
-            
+          <form [formGroup]="bookingForm"
+            class="booking-form flex flex-col gap-4 sm:gap-5"
+            aria-label="Yacht charter reservation form">
+
             <!-- DESTINATION -->
             <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-              <label for="destination" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
-                Destination <span class="text-red-500" aria-hidden="true">*</span>
+              <label for="destination"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
+                Destination <span class="text-red-500"
+                  aria-hidden="true">*</span>
               </label>
-              <select 
-                id="destination" 
+              <select
+                id="destination"
                 name="destination"
                 formControlName="destination"
                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
@@ -125,16 +195,18 @@
 
             <!-- DURATION -->
             <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-              <label for="duration" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
+              <label for="duration"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
                 Duration <span class="text-red-500" aria-hidden="true">*</span>
               </label>
-              <select 
-                id="duration" 
+              <select
+                id="duration"
                 name="duration"
                 formControlName="duration"
                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10">
                 @if (bookingForm.get('destination')?.value === 'River Sunset') {
-                <option value="Half Day">Sunset Trip ({{yacht.riverSunset.timeTrip}})</option>
+                <option value="Half Day">Sunset Trip
+                  ({{yacht.riverSunset.timeTrip}})</option>
                 } @else {
                 <option value="Full Day">Full Day</option>
                 @if (shouldShowHalfDay()) {
@@ -146,12 +218,14 @@
 
             <!-- TRAVEL DATE -->
             <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-              <label for="travelDate" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
-                Travel Date <span class="text-red-500" aria-hidden="true">*</span>
+              <label for="travelDate"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
+                Travel Date <span class="text-red-500"
+                  aria-hidden="true">*</span>
               </label>
-              <input 
+              <input
                 type="date"
-                id="travelDate" 
+                id="travelDate"
                 name="travelDate"
                 formControlName="travelDate"
                 [min]="minDate"
@@ -160,13 +234,16 @@
                 aria-describedby="travelDate-hint travelDate-error"
                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                 [class.border-red-500]="bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched">
-              
-              <span id="travelDate-hint" class="hint text-[10px] sm:text-xs text-muted-foreground">
+
+              <span id="travelDate-hint"
+                class="hint text-[10px] sm:text-xs text-muted-foreground">
                 Bookings must be made at least 24 hours in advance.
               </span>
 
-              @if (bookingForm.get('travelDate')?.invalid && bookingForm.get('travelDate')?.touched) {
-              <span id="travelDate-error" class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+              @if (bookingForm.get('travelDate')?.invalid &&
+              bookingForm.get('travelDate')?.touched) {
+              <span id="travelDate-error"
+                class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
                 Please select a valid date.
               </span>
               }
@@ -176,23 +253,26 @@
 
             <!-- FULL NAME -->
             <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-              <label for="fullName" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
+              <label for="fullName"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
                 Full Name <span class="text-red-500" aria-hidden="true">*</span>
               </label>
-              <input 
+              <input
                 type="text"
-                id="fullName" 
+                id="fullName"
                 name="fullName"
                 formControlName="fullName"
-                placeholder="John Doe" 
+                placeholder="John Doe"
                 autocomplete="name"
                 [attr.aria-invalid]="bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched"
                 aria-describedby="fullName-error"
                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                 [class.border-red-500]="bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched">
 
-              @if (bookingForm.get('fullName')?.invalid && bookingForm.get('fullName')?.touched) {
-              <span id="fullName-error" class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+              @if (bookingForm.get('fullName')?.invalid &&
+              bookingForm.get('fullName')?.touched) {
+              <span id="fullName-error"
+                class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
                 Full name is required.
               </span>
               }
@@ -200,28 +280,33 @@
 
             <!-- EMAIL -->
             <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-              <label for="email" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
+              <label for="email"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1">
                 Email <span class="text-red-500" aria-hidden="true">*</span>
               </label>
-              <input 
+              <input
                 type="email"
-                id="email" 
+                id="email"
                 name="email"
                 inputmode="email"
                 formControlName="email"
-                placeholder="example@mail.com" 
+                placeholder="example@mail.com"
                 autocomplete="email"
                 [attr.aria-invalid]="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched"
                 aria-describedby="email-error"
                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                 [class.border-red-500]="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
 
-              @if (bookingForm.get('email')?.touched && bookingForm.get('email')?.errors?.['required']) {
-              <span id="email-error" class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+              @if (bookingForm.get('email')?.touched &&
+              bookingForm.get('email')?.errors?.['required']) {
+              <span id="email-error"
+                class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
                 Email is required.
               </span>
-              } @else if (bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched) {
-              <span id="email-error" class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+              } @else if (bookingForm.get('email')?.invalid &&
+              bookingForm.get('email')?.touched) {
+              <span id="email-error"
+                class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
                 Please enter a valid email address.
               </span>
               }
@@ -229,17 +314,20 @@
 
             <!-- PHONE -->
             <div class="form-group flex flex-col gap-1.5 sm:gap-2">
-              <label for="phone" class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
-                <lucide-icon name="phone" [size]="14" class="text-accent" aria-hidden="true"></lucide-icon>
-                Phone / WhatsApp <span class="text-red-500" aria-hidden="true">*</span>
+              <label for="phone"
+                class="text-xs sm:text-sm font-semibold text-muted-foreground ml-1 flex items-center gap-1">
+                <lucide-icon name="phone" [size]="14" class="text-accent"
+                  aria-hidden="true"></lucide-icon>
+                Phone / WhatsApp <span class="text-red-500"
+                  aria-hidden="true">*</span>
               </label>
-              <input 
+              <input
                 type="tel"
-                id="phone" 
+                id="phone"
                 name="phone"
                 inputmode="tel"
                 formControlName="phone"
-                placeholder="1 (809) 836-9303" 
+                placeholder="1 (809) 836-9303"
                 autocomplete="tel"
                 (input)="phoneUtils.formatPhoneForDisplay($event, bookingForm, 'phone')"
                 [attr.aria-invalid]="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched"
@@ -247,8 +335,10 @@
                 class="w-full px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-xl border border-border bg-background text-foreground text-sm sm:text-base transition-all duration-200 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10"
                 [class.border-red-500]="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
 
-              @if (bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched) {
-              <span id="phone-error" class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
+              @if (bookingForm.get('phone')?.invalid &&
+              bookingForm.get('phone')?.touched) {
+              <span id="phone-error"
+                class="text-red-500 text-[10px] sm:text-xs mt-0.5" role="alert">
                 @if (bookingForm.get('phone')?.errors?.['minDigits']) {
                 Minimum 7 digits required
                 } @else if (bookingForm.get('phone')?.errors?.['maxDigits']) {
@@ -262,47 +352,63 @@
 
             <!-- BOTONES DE ACCIÓN -->
             <div class="button-row flex flex-col gap-2.5 sm:gap-3 mt-4 sm:mt-6">
-              
+
               <!-- Botón BOOK NOW -->
-              <app-button 
-                variant="secondary" 
-                size="full" 
+              <app-button
+                variant="secondary"
+                size="full"
                 (onClick)="onBookNow()"
                 [disabled]="isProcessing"
-                aria-label="Save reservation directly in system"
+                aria-label="Request yacht availability"
                 class="w-full text-sm sm:text-base py-2.5 sm:py-3.5">
                 @if (isProcessing) {
                 <span class="flex items-center justify-center gap-2">
-                  <svg class="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg class="animate-spin h-4 w-4 sm:h-5 sm:w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" aria-hidden="true">
+                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                      stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                   <span class="text-xs sm:text-sm">PROCESSING...</span>
                 </span>
                 } @else {
-                <span class="text-xs sm:text-sm font-semibold tracking-wide">BOOK NOW</span>
+                <span
+                  class="text-xs sm:text-sm font-semibold tracking-wide">REQUEST
+                  AVAILABILITY</span>
                 }
               </app-button>
 
               <!-- Botón BOOK ON WHATSAPP -->
-              <app-button 
-                variant="whatsapp" 
+              <app-button
+                variant="whatsapp"
                 size="full"
-                (onClick)="onBookOnWhatsApp()" 
+                (onClick)="onBookOnWhatsApp()"
                 [disabled]="isProcessing"
                 aria-label="Contact directly on WhatsApp"
                 class="w-full text-sm sm:text-base py-2.5 sm:py-3.5">
-                <span class="text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2">
-                  <lucide-icon name="message-circle" [size]="16" aria-hidden="true"></lucide-icon>
+                <span
+                  class="text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2">
+                  <lucide-icon name="message-circle" [size]="16"
+                    aria-hidden="true"></lucide-icon>
                   BOOK ON WHATSAPP
                 </span>
               </app-button>
             </div>
 
             <!-- INFORMACIÓN ADICIONAL -->
-            <footer class="booking-info mt-3 sm:mt-4 text-[10px] sm:text-xs text-center text-muted-foreground border-t border-border pt-3">
-              <p>📌 <strong>BOOK NOW</strong> saves your reservation in our system.</p>
-              <p class="mt-1">📱 <strong>BOOK ON WHATSAPP</strong> opens WhatsApp directly without saving.</p>
+            <footer
+              class="booking-info mt-3 sm:mt-4 text-[10px] sm:text-xs text-center text-muted-foreground border-t border-border pt-3">
+
+              <p>
+                🔒 No payment required to request your reservation.
+              </p>
+
+              <p class="mt-1">
+                📱 We'll confirm availability with you by WhatsApp or email.
+              </p>
+
             </footer>
           </form>
         </div>
@@ -310,8 +416,12 @@
     </div>
   </main>
   } @else if (isLoading) {
-  <section class="loading-state min-h-[50vh] flex flex-col items-center justify-center py-16 sm:py-20 text-muted-foreground" aria-live="polite" aria-busy="true">
-    <div class="spinner w-10 h-10 sm:w-12 sm:h-12 border-4 border-muted border-t-accent rounded-full animate-spin mb-4" role="status" aria-label="Loading content"></div>
+  <section
+    class="loading-state min-h-[50vh] flex flex-col items-center justify-center py-16 sm:py-20 text-muted-foreground"
+    aria-live="polite" aria-busy="true">
+    <div
+      class="spinner w-10 h-10 sm:w-12 sm:h-12 border-4 border-muted border-t-accent rounded-full animate-spin mb-4"
+      role="status" aria-label="Loading content"></div>
     <p class="text-sm sm:text-base">Preparing the boats...</p>
   </section>
   }

@@ -157,6 +157,38 @@
           <!-- PRECIO -->
           <div
             class="price-header mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-border">
+
+            <!-- Reservation / Payment Message -->
+            <div
+              class="mb-5 sm:mb-6 rounded-xl border border-accent/20 bg-accent/5 px-4 py-3 sm:px-5 sm:py-4 text-center">
+
+              <div class="flex items-center justify-center gap-2">
+                <lucide-icon
+                  name="calendar-check"
+                  [size]="18"
+                  class="text-accent"
+                  aria-hidden="true">
+                </lucide-icon>
+
+                <span
+                  class="text-sm sm:text-base font-bold text-foreground">
+                  REQUEST AVAILABILITY
+                </span>
+              </div>
+
+              <p
+                class="mt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                No payment required to request your reservation.
+              </p>
+
+              <p
+                class="mt-1 text-xs sm:text-sm font-semibold text-foreground">
+                Pay once your reservation is confirmed.
+              </p>
+
+            </div>
+
+            <!-- PRECIOS -->
             <div class="price-row flex justify-between items-end w-full">
 
               <!-- Precio Adulto -->
@@ -165,8 +197,11 @@
                   class="current-price text-4xl sm:text-5xl font-extrabold text-primary leading-none">
                   ${{ excursion.pricing.adultPrice }}
                 </span>
+
                 <span
-                  class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Adult</span>
+                  class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">
+                  Adult
+                </span>
               </div>
 
               <!-- Precio Niño -->
@@ -175,8 +210,11 @@
                   class="current-price text-4xl sm:text-5xl font-extrabold text-primary leading-none">
                   ${{ excursion.pricing.childPrice }}
                 </span>
+
                 <span
-                  class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Child</span>
+                  class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">
+                  Child
+                </span>
               </div>
 
               <!-- Precio Infante -->
@@ -185,11 +223,15 @@
                   class="current-price text-4xl sm:text-5xl font-extrabold text-primary leading-none">
                   ${{ excursion.pricing.infantPrice || 0 }}
                 </span>
+
                 <span
-                  class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">Infant</span>
+                  class="price-label block text-[10px] sm:text-xs uppercase tracking-[1.2px] text-muted-foreground font-semibold">
+                  Infant
+                </span>
               </div>
 
             </div>
+
           </div>
 
           <form [formGroup]="bookingForm"
@@ -431,8 +473,8 @@
                 </span>
                 } @else {
                 <span
-                  class="text-xs sm:text-sm font-semibold tracking-wide">BOOK
-                  DIRECT</span>
+                  class="text-xs sm:text-sm font-semibold tracking-wide">REQUEST
+                  AVAILABILITY</span>
                 }
               </app-button>
 
@@ -453,9 +495,12 @@
           <!-- INFORMACIÓN ADICIONAL -->
           <footer
             class="booking-info mt-4 sm:mt-6 text-[10px] sm:text-xs text-center text-muted-foreground border-t border-border pt-3 sm:pt-4">
-            <p>💳 Secure booking. We'll send you payment instructions via
-              email.</p>
-            <p class="mt-1">📱 Or contact us directly on WhatsApp.</p>
+            <p>
+              🔒 No payment required to request your reservation.
+            </p>
+            <p class="mt-1">
+              📱 We'll confirm availability with you by WhatsApp or email.
+            </p>
           </footer>
         </div>
       </aside>
